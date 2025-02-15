@@ -25,6 +25,7 @@ const db = new sqlite3_1.default.Database(DB_PATH, (err) => {
     }
     else {
         console.log("Connected to SQLite database.");
+        db.run("PRAGMA foreign_keys = ON");
     }
 });
 app.use((0, cors_1.default)());
