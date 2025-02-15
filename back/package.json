@@ -7,7 +7,8 @@
     "build": "rm -rf out && mkdir out && tsc",
     "start": "cd out && node server.js",
     "dev": "ts-node src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-data": "sqlite3 database.db < test-data.sql"
   },
   "keywords": [],
   "author": "",
