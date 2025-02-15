@@ -90,8 +90,8 @@ CREATE TABLE FosterForms (
 	FOREIGN KEY(foster_id) REFERENCES Users(user_id)
 );
 
-CREATE TABLE References (
-	reference_id INTEGER PRIMARY KEY AUTOINCREMENT
+CREATE TABLE FosterReferences (
+	reference_id INTEGER PRIMARY KEY AUTOINCREMENT,
 	foster_form_id INTEGER,
 	reference_name TEXT,
 	relationship TEXT,
