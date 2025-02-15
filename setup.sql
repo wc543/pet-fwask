@@ -1,6 +1,15 @@
 CREATE TABLE Users (
 	user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	first_name TEXT,
+	last_name TEXT,
 	username TEXT,
+	address TEXT,
+	state TEXT,
+	city TEXT,
+	zip_code TEXT,
+	phone_number TEXT,
+	email TEXT,
+	date_of_birth DATE,
 	hashed_password TEXT NOT NULL, -- bcrypt or some other encrypt
 	role TEXT -- ADOPTER, FOSTER, STAFF
 );
@@ -45,18 +54,50 @@ CREATE TABLE AdoptionHistory (
 
 CREATE TABLE AdoptionForms (
 	adoption_form_id INTEGER PRIMARY KEY AUTOINCREMENT,
-	user_id INTEGER NOT NULL,
+	adopter_id INTEGER NOT NULL,
+	household_size INTEGER,
+	household_allergies TEXT,
+	current_pets TEXT,
+	previous_pet_experience TEXT,
+	adoption_reason TEXT,
+	ideal_pet_qualities TEXT,
+	max_alone_time TEXT,
+	care_plan_details TEXT,
+	financial_responsibility BOOLEAN,
+	pet_care_agreement BOOLEAN,
+	adoption_agreement BOOLEAN,
+	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	status TEXT, -- reject, accept, etc.
-	FOREIGN KEY(user_id) REFERENCES Users(user_id)
+	FOREIGN KEY(adopter_id) REFERENCES Users(user_id)
 );	
 
 CREATE TABLE FosterForms (
 	foster_form_id INTEGER PRIMARY KEY AUTOINCREMENT,
-	user_id INTEGER NOT NULL,
+	foster_id INTEGER NOT NULL,
 	foster_start_date DATE,
 	foster_end_date DATE,
+	household_size INTEGER,
+	household_allergies TEXT,
+	current_pets TEXT,
+	previous_foster_experience TEXT,
+	foster_reason TEXT,
+	max_alone_time TEXT,
+	care_plan_details TEXT,
+	pet_care_agreement BOOLEAN,
+	adoption_agreement BOOLEAN,
+	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	status TEXT, -- reject, accept, etc.
-	FOREIGN KEY(user_id) REFERENCES Users(user_id)
+	FOREIGN KEY(foster_id) REFERENCES Users(user_id)
+);
+
+CREATE TABLE References (
+	reference_id INTEGER PRIMARY KEY AUTOINCREMENT
+	foster_form_id INTEGER,
+	reference_name TEXT,
+	relationship TEXT,
+	phone_number TEXT,
+	email TEXT,
+	FOREIGN KEY(foster_form_id) REFERENCES FosterForms(foster_form_id)
 );
 
 CREATE TABLE Messages (
