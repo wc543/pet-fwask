@@ -8,7 +8,11 @@
     "start": "cd out && node server.js",
     "dev": "ts-node src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test-data": "sqlite3 database.db < test-data.sql"
+    "test-data": "sqlite3 database.db < test-data.sql",
+    "start-pm2": "PORT=3001 pm2 start npm --name 'Pet-FWASK' -- run start", 
+    "delete-pm2": "pm2 delete Pet-FWASK",
+    "restart-pm2": "pm2 restart Pet-FWASK",
+    "logs-pm2": "pm2 logs Pet-FWASK"
   },
   "keywords": [],
   "author": "",
