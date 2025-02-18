@@ -33,12 +33,12 @@ const db = new sqlite3_1.default.Database(DB_PATH, (err) => {
 });
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-app.use('/api/users', userRoutes_1.default);
-app.use('/api/pets', petRoutes_1.default);
-app.use('/api/forms', formRoutes_1.default);
 app.get("/", (_req, res) => {
     res.send("Pet Adoption Site API");
 });
+app.use('/api/users', userRoutes_1.default);
+app.use('/api/pets', petRoutes_1.default);
+app.use('/api/forms', formRoutes_1.default);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

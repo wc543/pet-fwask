@@ -2,16 +2,25 @@ CREATE TABLE Users (
 	user_id INTEGER PRIMARY KEY AUTOINCREMENT,
 	first_name TEXT,
 	last_name TEXT,
-	username TEXT,
+	username TEXT UNIQUE NOT NULL,
 	address TEXT,
 	state TEXT,
 	city TEXT,
 	zip_code TEXT,
 	phone_number TEXT,
-	email TEXT,
+	email TEXT UNIQUE NOT NULL,
 	date_of_birth DATE,
 	hashed_password TEXT NOT NULL, -- bcrypt or some other encrypt
-	role TEXT -- ADOPTER, FOSTER, STAFF
+	role TEXT DEFAULT 'ADOPTER' -- ADOPTER, FOSTER, STAFF
+);
+
+CREATE TABLE UserHousehold (
+	household_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	user_id INTEGER NOT NULL,
+	household_size INTEGER,
+	household_allergies TEXT,
+	current_pets TEXT,
+	FOREIGN KEY(user_id) REFERENCES Users(user_id)
 );
 
 CREATE TABLE Pets (
@@ -55,9 +64,6 @@ CREATE TABLE AdoptionHistory (
 CREATE TABLE AdoptionForms (
 	adoption_form_id INTEGER PRIMARY KEY AUTOINCREMENT,
 	adopter_id INTEGER NOT NULL,
-	household_size INTEGER,
-	household_allergies TEXT,
-	current_pets TEXT,
 	previous_pet_experience TEXT,
 	adoption_reason TEXT,
 	ideal_pet_qualities TEXT,
@@ -67,37 +73,44 @@ CREATE TABLE AdoptionForms (
 	pet_care_agreement BOOLEAN,
 	adoption_agreement BOOLEAN,
 	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	status TEXT, -- reject, accept, etc.
+	processed BOOLEAN DEFAULT FALSE,
 	FOREIGN KEY(adopter_id) REFERENCES Users(user_id)
 );	
 
-CREATE TABLE FosterForms (
-	foster_form_id INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE FosterParentForms (
+	foster_parent_form_id INTEGER PRIMARY KEY AUTOINCREMENT,
 	foster_id INTEGER NOT NULL,
-	foster_start_date DATE,
-	foster_end_date DATE,
-	household_size INTEGER,
-	household_allergies TEXT,
-	current_pets TEXT,
-	previous_foster_experience TEXT,
 	foster_reason TEXT,
 	max_alone_time TEXT,
 	care_plan_details TEXT,
 	pet_care_agreement BOOLEAN,
 	adoption_agreement BOOLEAN,
 	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	status TEXT, -- reject, accept, etc.
+	processed BOOLEAN DEFAULT FALSE,
 	FOREIGN KEY(foster_id) REFERENCES Users(user_id)
 );
 
 CREATE TABLE FosterReferences (
 	reference_id INTEGER PRIMARY KEY AUTOINCREMENT,
-	foster_form_id INTEGER,
+	foster_parent_form_id INTEGER NOT NULL,
 	reference_name TEXT,
 	relationship TEXT,
 	phone_number TEXT,
 	email TEXT,
-	FOREIGN KEY(foster_form_id) REFERENCES FosterForms(foster_form_id)
+	FOREIGN KEY(foster_parent_form_id) REFERENCES FosterParentForms(foster_parent_form_id)
+);
+
+CREATE TABLE FosterPetForms (
+	foster_pet_form_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	foster_id INTEGER NOT NULL,
+	foster_start_date DATE,
+	foster_end_date DATE,
+	previous_foster_experience TEXT,
+	foster_reason TEXT,
+	max_alone_time TEXT,
+	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	processed BOOLEAN DEFAULT FALSE,
+	FOREIGN KEY(foster_id) REFERENCES Users(user_id)
 );
 
 CREATE TABLE Messages (
@@ -109,5 +122,3 @@ CREATE TABLE Messages (
 	FOREIGN KEY(sender_id) REFERENCES Users(user_id),
 	FOREIGN KEY(receiver_id) REFERENCES Users(user_id)
 );
-
--- PRAGMA foreign_keys = ON; -- need to add this to server.ts to enable foreign keys
