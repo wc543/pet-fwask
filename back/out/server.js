@@ -10,6 +10,9 @@ const child_process_1 = require("child_process");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
+const petRoutes_1 = __importDefault(require("./routes/petRoutes"));
+const formRoutes_1 = __importDefault(require("./routes/formRoutes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3000;
@@ -30,6 +33,9 @@ const db = new sqlite3_1.default.Database(DB_PATH, (err) => {
 });
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
+app.use('/api/users', userRoutes_1.default);
+app.use('/api/pets', petRoutes_1.default);
+app.use('/api/forms', formRoutes_1.default);
 app.get("/", (_req, res) => {
     res.send("Pet Adoption Site API");
 });
