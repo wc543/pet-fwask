@@ -9,7 +9,7 @@
     "dev": "ts-node src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test-data": "sqlite3 database.db < test-data.sql",
-    "start-pm2": "PORT=3001 pm2 start npm --name 'Pet-FWASK' -- run start", 
+    "start-pm2": "PORT=3001 pm2 start npm --name 'Pet-FWASK' -- run start",
     "delete-pm2": "pm2 delete Pet-FWASK",
     "restart-pm2": "pm2 restart Pet-FWASK",
     "logs-pm2": "pm2 logs Pet-FWASK"
@@ -18,13 +18,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "back": "file:",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "nodemon": "^3.1.9",
     "sqlite3": "^5.1.7",
-    "ws": "^8.18.0"
+    "zod": "^3.24.2"
   },
   "description": "",
   "devDependencies": {

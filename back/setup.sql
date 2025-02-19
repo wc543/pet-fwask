@@ -103,11 +103,21 @@ CREATE TABLE FosterReferences (
 CREATE TABLE Messages (
 	message_id INTEGER PRIMARY KEY AUTOINCREMENT,
 	sender_id INTEGER NOT NULL,
-	receiver_id INTEGER NOT NULL,
+	-- receiver_id INTEGER NOT NULL,
+	conversation_id INTEGER NOT NULL,
 	message TEXT NOT NULL,
 	time_sent TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY(sender_id) REFERENCES Users(user_id),
+	FOREIGN KEY(chat_id) REFERENCES ChatRooms(chat_id),
 	FOREIGN KEY(receiver_id) REFERENCES Users(user_id)
+);
+
+CREATE TABLE Conversations (
+  conversation_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  adopter_id INTEGER NOT NULL,
+  employee_id INTEGER NOT NULL,
+  pet_id INTEGER REFERENCES Pets(pet_id) ON DELETE SET NULL, -- Optional, if conversation is tied to a pet
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- PRAGMA foreign_keys = ON; -- need to add this to server.ts to enable foreign keys

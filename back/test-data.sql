@@ -44,9 +44,12 @@ INSERT INTO FosterReferences (foster_form_id, reference_name, relationship, phon
 (1, 'Mike Johnson', 'Co-worker', '345-678-9012', 'mike.johnson@example.com'),
 (2, 'Mary Smith', 'Co-worker', '234-567-8901', 'mary.smith@example.com');
 
+-- Conversations Table
+INSERT INTO Conversations (adopter_id, employee_id, pet_id) VALUES
+(8, 2, 2),
+
 -- Messages Table
-INSERT INTO Messages (sender_id, receiver_id, message) VALUES
-(1, 2, 'Hello, I am interested in fostering Bella.'),
-(3, 1, 'Hey, Fluffy has been adopted!'),
-(2, 3, 'Your adoption form for Bella has been rejected.'),
-(6, 7, 'I am interested in adopting Max!');
+INSERT INTO Messages (sender_id, receiver_id, conversation_id, message) VALUES
+(8, 2, 'Hello, I am interested in fostering Bella.'),
+(2, 8, 'Hey, Bella has been adopted! Sorry!'),
+(8, 2, 'Thank you anyways!'),
