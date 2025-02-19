@@ -9,6 +9,7 @@
     "dev": "ts-node src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test-data": "sqlite3 database.db < test-data.sql",
+    "watch": "npm run build && tsc-watch --onSuccess \"npm run start\"",
     "start-pm2": "PORT=3001 pm2 start npm --name 'Pet-FWASK' -- run start",
     "delete-pm2": "pm2 delete Pet-FWASK",
     "restart-pm2": "pm2 restart Pet-FWASK",
@@ -34,6 +35,7 @@
     "@types/sqlite3": "^3.1.11",
     "@types/ws": "^8.5.14",
     "ts-node": "^10.9.2",
+    "tsc-watch": "^6.2.1",
     "typescript": "^5.7.3"
   }
 }
