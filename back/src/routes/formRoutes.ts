@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import db from '../db';
+import db from '../db.js';
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {

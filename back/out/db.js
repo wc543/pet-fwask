@@ -1,23 +1,11 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const sqlite3_1 = __importDefault(require("sqlite3"));
-const util_1 = require("util");
-const path_1 = __importDefault(require("path"));
-sqlite3_1.default.verbose();
-const DB_PATH = path_1.default.join(__dirname, "../database.db");
-const db = new sqlite3_1.default.Database(DB_PATH, (err) => {
-    if (err) {
-        console.error("Error connecting to database:", err.message);
-    }
-    else {
-        console.log("Connected to SQLite database.");
-        db.run("PRAGMA foreign_keys = ON");
-    }
+import sqlite3 from 'sqlite3';
+import { open } from 'sqlite';
+import * as url from "url";
+let __dirname = url.fileURLToPath(new URL("..", import.meta.url));
+let dbfile = `${__dirname}database.db`;
+let db = await open({
+    filename: dbfile,
+    driver: sqlite3.Database,
 });
-const all = (0, util_1.promisify)(db.all.bind(db));
-const get = (0, util_1.promisify)(db.get.bind(db));
-const run = (0, util_1.promisify)(db.run.bind(db));
-exports.default = { db, all, get, run };
+await db.get("PRAGMA foreign_keys = ON");
+export default db;

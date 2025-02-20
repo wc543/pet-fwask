@@ -1,25 +1,20 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
-const petRoutes_1 = __importDefault(require("./routes/petRoutes"));
-const formRoutes_1 = __importDefault(require("./routes/formRoutes"));
-dotenv_1.default.config();
-const app = (0, express_1.default)();
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import userRouter from './routes/userRoutes.js';
+import petRouter from './routes/petRoutes.js';
+import formRouter from './routes/formRoutes.js';
+dotenv.config();
+const app = express();
 const PORT = process.env.PORT || 3000;
-app.use((0, cors_1.default)());
-app.use(express_1.default.json());
+app.use(cors());
+app.use(express.json());
 app.get("/", (_req, res) => {
     res.send("Pet Adoption Site API");
 });
-app.use('/api/users', userRoutes_1.default);
-app.use('/api/pets', petRoutes_1.default);
-app.use('/api/forms', formRoutes_1.default);
+app.use('/api/users', userRouter);
+app.use('/api/pets', petRouter);
+app.use('/api/forms', formRouter);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

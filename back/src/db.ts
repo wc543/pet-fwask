@@ -1,21 +1,13 @@
-import sqlite3 from "sqlite3";
+import sqlite3 from 'sqlite3'
+import { open } from 'sqlite'
+import * as url from "url";
 
-import { promisify } from "util";
-import path from "path";
-
-sqlite3.verbose();
-const DB_PATH = path.join(__dirname, "../database.db");
-const db = new sqlite3.Database(DB_PATH, (err) => {
-  if (err) {
-    console.error("Error connecting to database:", err.message);
-  } else {
-    console.log("Connected to SQLite database.");
-    db.run("PRAGMA foreign_keys = ON");
-  }
+let __dirname = url.fileURLToPath(new URL("..", import.meta.url));
+let dbfile = `${__dirname}database.db`;
+let db = await open({
+    filename: dbfile,
+    driver: sqlite3.Database,
 });
+await db.get("PRAGMA foreign_keys = ON");
 
-const all = promisify(db.all.bind(db));
-const get = promisify(db.get.bind(db));
-const run = promisify(db.run.bind(db));
-
-export default {db, all, get, run};
+export default db;

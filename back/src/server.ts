@@ -2,9 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import userRouter from './routes/userRoutes';
-import petRouter from './routes/petRoutes';
-import formRouter from './routes/formRoutes';
+import userRouter from './routes/userRoutes.js';
+import petRouter from './routes/petRoutes.js';
+import formRouter from './routes/formRoutes.js';
 
 dotenv.config();
 
