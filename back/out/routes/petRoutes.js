@@ -22,7 +22,10 @@ async function getPetsByUser(req, res) {
         }
         console.log("user", user);
         const user_id = user.user_id;
+        console.log("id", user_id);
         const pets = await db.all(`SELECT * FROM Pets WHERE created_by_id = ?`, [user_id]);
+        console.log("pets", pets);
+        res.json(pets);
         if (!pets) {
             res.status(404).json({ message: "No pets created by this user" });
         }
