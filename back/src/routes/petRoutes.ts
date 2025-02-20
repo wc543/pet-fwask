@@ -36,6 +36,6 @@ async function getPetsByUser(req: Request, res: Response) {
 };
 
 router.get('/', getPets);
-router.get('/:username', getPetsByUser);
+router.get('/user/:username', getPetsByUser);
 
 export default router;
