@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sqlite3_1 = __importDefault(require("sqlite3"));
 const util_1 = require("util");
 const path_1 = __importDefault(require("path"));
+sqlite3_1.default.verbose();
 const DB_PATH = path_1.default.join(__dirname, "../database.db");
 const db = new sqlite3_1.default.Database(DB_PATH, (err) => {
     if (err) {

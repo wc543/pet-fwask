@@ -1,7 +1,9 @@
 import sqlite3 from "sqlite3";
+
 import { promisify } from "util";
 import path from "path";
 
+sqlite3.verbose();
 const DB_PATH = path.join(__dirname, "../database.db");
 const db = new sqlite3.Database(DB_PATH, (err) => {
   if (err) {
