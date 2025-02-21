@@ -229,9 +229,17 @@ afterEach(async () => {
   await db.run("DELETE FROM Users");
 });
 
-// GET requests (pet)
+// GET requests (pet) ---------------
 
 test("GET /pets/ returns all pets", async () => {
   let { data } = await axios.get("/pets");
   expect(data).toEqual({ pets });
 });
+
+test("GET /pets/user/:username returns pets made by user", async () => {
+  let petsByAlice = [];
+  petsByAlice.push(pets[0]);
+  petsByAlice.push(pets[1]);
+  let { data } = await axios.get("/pets/user/alice");
+  expect(data).toEqual({ "pets": petsByAlice });
+})
