@@ -1,5 +1,6 @@
 import axios from "axios";
 import sqlite3 from "sqlite3";
+import db from './db.js';
 sqlite3.verbose();
 let port = 3000;
 let host = "localhost";
@@ -201,3 +202,21 @@ let users = [
         "role": "ADOPTER"
     }
 ];
+// set up test ---------------
+beforeEach(async () => {
+    for (let { user_id, first_name, last_name, username, address, state, city, zip_code, phone_number, email, date_of_birth, hashed_password, role } of users) {
+        await db.run("INSERT INTO Users(user_id, first_name, last_name, username, address, state, city, zip_code, phone_number, email, date_of_birth, hashed_password, role) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user_id, first_name, last_name, username, address, state, city, zip_code, phone_number, email, date_of_birth, hashed_password, role]);
+    }
+    for (let { pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes } of pets) {
+        await db.run("INSERT INTO Pets(pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes]);
+    }
+});
+afterEach(async () => {
+    await db.run("DELETE FROM Pets");
+    await db.run("DELETE FROM Users");
+});
+// GET requests (pet)
+test("GET /pets/ returns all pets", async () => {
+    let { data } = await axios.get("/pets");
+    expect(data).toEqual({ pets });
+});
