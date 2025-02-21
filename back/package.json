@@ -11,7 +11,7 @@
     "build": "rm -rf out && mkdir out && tsc",
     "start": "cd out && node server.js",
     "dev": "ts-node src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand --rootDir=src",
     "test-data": "sqlite3 database.db < test-data.sql",
     "watch": "npm run build && tsc-watch --onSuccess \"npm run start\"",
     "start-pm2": "PORT=3001 pm2 start npm --name 'Pet-FWASK' -- run start",
@@ -40,9 +40,13 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.13",
+    "@types/jest": "^29.2.5",
     "@types/node": "^22.13.4",
     "@types/sqlite3": "^3.1.11",
     "@types/ws": "^8.5.14",
+    "axios": "^1.6.5",
+    "jest": "^29.3.1",
+    "ts-jest": "^29.0.3",
     "ts-node": "^10.9.2",
     "tsc-watch": "^6.2.1",
     "typescript": "^5.7.3"

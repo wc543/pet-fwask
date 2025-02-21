@@ -206,3 +206,14 @@ let users = [
     "role": "ADOPTER"
   }
 ];
+
+// set up test ---------------
+
+beforeEach(async () => {
+  for (let { pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes } of pets) {
+    await db.run(
+      "INSERT INTO pets(pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes],
+    );
+  }
+});
