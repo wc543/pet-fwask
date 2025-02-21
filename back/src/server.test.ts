@@ -216,4 +216,15 @@ beforeEach(async () => {
       [pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes],
     );
   }
+  for (let { user_id, first_name, last_name, username, address, state, city, zip_code, phone_number, email, date_of_birth, hashed_password, role } of users) {
+    await db.run(
+      "INSERT INTO pets(user_id, first_name, last_name, username, address, state, city, zip_code, phone_number, email, date_of_birth, hashed_password, role) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [user_id, first_name, last_name, username, address, state, city, zip_code, phone_number, email, date_of_birth, hashed_password, role],
+    );
+  }
 });
+
+afterEach(async () => {
+  await db.run("DELETE FROM Pets");
+  await db.run("DELETE FROM Users");
+})
