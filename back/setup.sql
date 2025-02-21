@@ -32,7 +32,7 @@ CREATE TABLE Pets (
 	gender TEXT,
 	age INTEGER,
 	color TEXT,
-	created_by_id INTEGER NOT NULL,
+	created_by_id INTEGER NOT NULL, -- Employee's id
 	fosterable BOOLEAN,
 	pet_image_url TEXT, -- use text to image
 	shelter_time DATE, -- YYYY-MM-DD
@@ -116,9 +116,21 @@ CREATE TABLE FosterPetForms (
 CREATE TABLE Messages (
 	message_id INTEGER PRIMARY KEY AUTOINCREMENT,
 	sender_id INTEGER NOT NULL,
-	receiver_id INTEGER NOT NULL,
+	conversation_id INTEGER NOT NULL,
 	message TEXT NOT NULL,
 	time_sent TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY(sender_id) REFERENCES Users(user_id),
-	FOREIGN KEY(receiver_id) REFERENCES Users(user_id)
+	FOREIGN KEY(conversation_id) REFERENCES Conversations(conversation_id) ON DELETE CASCADE
 );
+
+CREATE TABLE Conversations (
+  	conversation_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  	user_id INTEGER NOT NULL,
+  	owner_id INTEGER NOT NULL, -- ideally employee user
+  	pet_id INTEGER REFERENCES Pets(pet_id) ON DELETE SET NULL, -- Optional, if conversation is tied to a pet
+  	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY(user_id) REFERENCES Users(user_id),
+	FOREIGN KEY(owner_id) REFERENCES Users(user_id)
+);
+
+-- PRAGMA foreign_keys = ON; -- need to add this to server.ts to enable foreign keys

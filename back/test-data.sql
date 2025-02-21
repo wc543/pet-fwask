@@ -59,9 +59,14 @@ INSERT INTO FosterPetForms (foster_id, foster_start_date, foster_end_date, previ
 (1, '2024-12-01', '2025-01-01', 'Fostered 2 dogs before', 'Want to provide a temporary home', '8 hours', FALSE),
 (2, '2024-10-01', NULL, 'No experience yet', 'Looking to help foster', '6 hours', FALSE); 
 
+-- Conversations Table
+INSERT INTO Conversations (user_id, owner_id, pet_id) VALUES
+(7, 2, 3),
+(6, 2, 3);
+
 -- Messages Table
-INSERT INTO Messages (sender_id, receiver_id, message) VALUES
-(1, 2, 'Hello, I am interested in fostering Bella.'),
-(3, 1, 'Hey, Fluffy has been adopted!'),
-(2, 3, 'Your adoption form for Bella has been rejected.'),
-(6, 7, 'I am interested in adopting Max!');
+INSERT INTO Messages (sender_id, conversation_id, message) VALUES
+(7, 1,  'Hello, I am interested in adopting Max.'),
+(2, 1, 'Hey, Max has been adopted! Sorry!'),
+(7, 1, 'Thank you anyways!'),
+(6, 2,  'Hello! I am interested in adopting Max.');
