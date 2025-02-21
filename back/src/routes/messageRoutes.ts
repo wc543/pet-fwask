@@ -3,6 +3,7 @@ const router = express.Router();
 import {Message, MessageTimeRow, messageBodySchema, conversationBodySchema} from "../types.js";
 import db from '../db.js';
 
+//Gets messages based on specifc conversation_id (will use to obtain all messages in the chat view)
 router.get("/:conversation_id", async (req : Request, res : Response) => {
     const {conversation_id} = req.params;
     try {
@@ -18,8 +19,9 @@ router.get("/:conversation_id", async (req : Request, res : Response) => {
       console.error("Database error:", err);
       return res.status(500).json({ error: "Internal server error" });
     }
-  });
-  
+});
+
+//Post a message to the database
 router.post("/", async (req : Request, res : Response) => {
     const parseResults = messageBodySchema.safeParse(req.body);
     if(!parseResults.success){
@@ -41,8 +43,7 @@ router.post("/", async (req : Request, res : Response) => {
       console.error("Database error:", err);
       return res.status(500).json({ error: "Internal server error" });
     }
-  
-  });
+});
   
 export default router;
 

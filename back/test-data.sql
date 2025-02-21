@@ -54,17 +54,19 @@ INSERT INTO FosterReferences (foster_parent_form_id, reference_name, relationshi
 (1, 'Mike Johnson', 'Co-worker', '345-678-9012', 'mike.johnson@example.com'),
 (2, 'Mary Smith', 'Co-worker', '234-567-8901', 'mary.smith@example.com');
 
--- Conversations Table
-INSERT INTO Conversations (adopter_id, employee_id, pet_id) VALUES
-(8, 2, 2);
-
 -- FosterPetForms Table
 INSERT INTO FosterPetForms (foster_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, processed) VALUES
 (1, '2024-12-01', '2025-01-01', 'Fostered 2 dogs before', 'Want to provide a temporary home', '8 hours', FALSE),
 (2, '2024-10-01', NULL, 'No experience yet', 'Looking to help foster', '6 hours', FALSE); 
 
+-- Conversations Table
+INSERT INTO Conversations (user_id, owner_id, pet_id) VALUES
+(7, 2, 3),
+(6, 2, 3);
+
 -- Messages Table
 INSERT INTO Messages (sender_id, conversation_id, message) VALUES
-(8, 1,  'Hello, I am interested in fostering Bella.'),
-(2, 1, 'Hey, Bella has been adopted! Sorry!'),
-(8, 1, 'Thank you anyways!');
+(7, 1,  'Hello, I am interested in adopting Max.'),
+(2, 1, 'Hey, Max has been adopted! Sorry!'),
+(7, 1, 'Thank you anyways!'),
+(6, 2,  'Hello! I am interested in adopting Max.');

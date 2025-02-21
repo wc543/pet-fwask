@@ -120,15 +120,17 @@ CREATE TABLE Messages (
 	message TEXT NOT NULL,
 	time_sent TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY(sender_id) REFERENCES Users(user_id),
-	FOREIGN KEY(conversation_id) REFERENCES Conversations(conversation_id)
+	FOREIGN KEY(conversation_id) REFERENCES Conversations(conversation_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Conversations (
-  conversation_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER NOT NULL,
-  employee_id INTEGER NOT NULL,
-  pet_id INTEGER REFERENCES Pets(pet_id) ON DELETE SET NULL, -- Optional, if conversation is tied to a pet
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  	conversation_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  	user_id INTEGER NOT NULL,
+  	owner_id INTEGER NOT NULL, -- ideally employee user
+  	pet_id INTEGER REFERENCES Pets(pet_id) ON DELETE SET NULL, -- Optional, if conversation is tied to a pet
+  	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY(user_id) REFERENCES Users(user_id),
+	FOREIGN KEY(owner_id) REFERENCES Users(user_id)
 );
 
 -- PRAGMA foreign_keys = ON; -- need to add this to server.ts to enable foreign keys

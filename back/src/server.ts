@@ -35,7 +35,7 @@ const io = new Server(server, {
       methods: ["GET", "POST"]
     }
 });
-
+//TODO - Socket.io methods (Florence)
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
