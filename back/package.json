@@ -1,6 +1,10 @@
 {
   "name": "back",
   "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "main": "index.js",
   "scripts": {
     "setup": "rm -f database.db && sqlite3 database.db < setup.sql",
@@ -9,6 +13,7 @@
     "dev": "ts-node src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test-data": "sqlite3 database.db < test-data.sql",
+    "watch": "npm run build && tsc-watch --onSuccess \"npm run start\"",
     "start-pm2": "PORT=3001 pm2 start npm --name 'Pet-FWASK' -- run start",
     "delete-pm2": "pm2 delete Pet-FWASK",
     "restart-pm2": "pm2 restart Pet-FWASK",
@@ -23,7 +28,9 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "moment": "^2.30.1",
     "nodemon": "^3.1.9",
+    "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7",
     "zod": "^3.24.2"
   },
@@ -35,6 +42,7 @@
     "@types/sqlite3": "^3.1.11",
     "@types/ws": "^8.5.14",
     "ts-node": "^10.9.2",
+    "tsc-watch": "^6.2.1",
     "typescript": "^5.7.3"
   }
 }

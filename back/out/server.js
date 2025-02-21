@@ -1,38 +1,20 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
-const sqlite3_1 = __importDefault(require("sqlite3"));
-const child_process_1 = require("child_process");
-const path_1 = __importDefault(require("path"));
-const fs_1 = __importDefault(require("fs"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-const app = (0, express_1.default)();
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import userRouter from './routes/userRoutes.js';
+import petRouter from './routes/petRoutes.js';
+import formRouter from './routes/formRoutes.js';
+dotenv.config();
+const app = express();
 const PORT = process.env.PORT || 3000;
-const DB_PATH = path_1.default.join(__dirname, "../database.db");
-// Initialize Database if not exists
-if (!fs_1.default.existsSync(DB_PATH)) {
-    console.log("Database file not found. Initializing database...");
-    (0, child_process_1.execSync)(`sqlite3 ${DB_PATH} < ${path_1.default.join(__dirname, "../setup.sql")}`);
-}
-const db = new sqlite3_1.default.Database(DB_PATH, (err) => {
-    if (err) {
-        console.error("Error connecting to database:", err.message);
-    }
-    else {
-        console.log("Connected to SQLite database.");
-        db.run("PRAGMA foreign_keys = ON");
-    }
-});
-app.use((0, cors_1.default)());
-app.use(express_1.default.json());
+app.use(cors());
+app.use(express.json());
 app.get("/", (_req, res) => {
     res.send("Pet Adoption Site API");
 });
+app.use('/api/users', userRouter);
+app.use('/api/pets', petRouter);
+app.use('/api/forms', formRouter);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
