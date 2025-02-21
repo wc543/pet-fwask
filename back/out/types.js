@@ -37,3 +37,16 @@ let userBodySchema = z.object({
     hashed_password: z.string(),
     role: z.string(),
 });
+//MESSAGES TYPES
+export const messageBodySchema = z.object({
+    sender_id: z.number().min(1),
+    message: z.string().min(1),
+    conversation_id: z.string().min(1)
+});
+//CONVERSATIONS TYPES
+export const conversationBodySchema = z.object({
+    conversation_id: z.number().min(1),
+    user_id: z.number().min(1),
+    employee_id: z.string().min(1),
+    pet_id: z.string().min(1).optional()
+});

@@ -56,7 +56,7 @@ INSERT INTO FosterReferences (foster_parent_form_id, reference_name, relationshi
 
 -- Conversations Table
 INSERT INTO Conversations (adopter_id, employee_id, pet_id) VALUES
-(8, 2, 2),
+(8, 2, 2);
 
 -- FosterPetForms Table
 INSERT INTO FosterPetForms (foster_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, processed) VALUES
@@ -64,7 +64,7 @@ INSERT INTO FosterPetForms (foster_id, foster_start_date, foster_end_date, previ
 (2, '2024-10-01', NULL, 'No experience yet', 'Looking to help foster', '6 hours', FALSE); 
 
 -- Messages Table
-INSERT INTO Messages (sender_id, receiver_id, conversation_id, message) VALUES
-(8, 2, 'Hello, I am interested in fostering Bella.'),
-(2, 8, 'Hey, Bella has been adopted! Sorry!'),
-(8, 2, 'Thank you anyways!'),
+INSERT INTO Messages (sender_id, conversation_id, message) VALUES
+(8, 1,  'Hello, I am interested in fostering Bella.'),
+(2, 1, 'Hey, Bella has been adopted! Sorry!'),
+(8, 1, 'Thank you anyways!');
