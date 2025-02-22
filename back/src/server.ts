@@ -35,7 +35,6 @@ const io = new Server(server, {
       methods: ["GET", "POST"]
     }
 });
-//TODO - Socket.io methods (Florence)
 
 io.on('connection', (socket) =>{
   console.log('a user connected');
