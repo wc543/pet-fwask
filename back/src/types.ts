@@ -59,10 +59,9 @@ export type MessageTimeRow = {time_sent : string}
 
 //CONVERSATIONS TYPES
 export const conversationBodySchema = z.object({
-    conversation_id : z.number().min(1),
     user_id : z.number().min(1),
-    owner_id : z.string().min(1),
-    pet_id : z.string().min(1).optional()
+    owner_id : z.number().min(1),
+    pet_id : z.number().min(1).optional()
 })
 
 export type Conversation = z.infer<typeof conversationBodySchema>

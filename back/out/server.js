@@ -29,7 +29,18 @@ const io = new Server(server, {
         methods: ["GET", "POST"]
     }
 });
-//TODO - Socket.io methods (Florence)
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('join conversation', async (conversation_id, callback) => {
+        await socket.join(conversation_id);
+        callback({ status: 'conversation join acknowledged' });
+    });
+    socket.on('leave conversation', async (conversation_id, callback) => {
+        await socket.leave(conversation_id);
+        callback({ status: 'conversation left acknowledged' });
+    });
+    socket.on('disconnect', () => console.log('user disconnected'));
+});
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });

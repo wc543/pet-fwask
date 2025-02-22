@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 const router = express.Router();
-import {Message, MessageTimeRow, messageBodySchema, conversationBodySchema} from "../types.js";
+import { MessageTimeRow, messageBodySchema} from "../types.js";
 import db from '../db.js';
 
 //Gets messages based on specifc conversation_id (will use to obtain all messages in the chat view)
