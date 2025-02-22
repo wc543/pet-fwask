@@ -231,3 +231,21 @@ test("GET /pets/id/:id returns pet with id", async () => {
     let { data } = await axios.get("/pets/id/1");
     expect(data).toEqual({ "pets": pets[0] });
 });
+test("DELETE /pets/:id deletes pet", async () => {
+    let { status } = await axios.delete("/pets/1");
+    expect(status).toEqual(204);
+});
+test("DELETE /pets/:id invalid id returns error", async () => {
+    try {
+        let { status } = await axios.delete("/pets/xyz");
+    }
+    catch (error) {
+        let errorObj = error;
+        if (errorObj.response === undefined) {
+            throw errorObj;
+        }
+        let { response } = errorObj;
+        expect(response.status).toEqual(404);
+        expect(response.data).toEqual({ error: "Pet not found" });
+    }
+});

@@ -46,8 +46,19 @@ async function getPetById(req: Request, res: Response) {
   }
 };
 
+// Delete pet by id
+async function deletePet(req: Request, res: Response) {
+  const { id } = req.params;
+  const result = await db.run("DELETE FROM Pets WHERE pet_id = ?", [id]);
+  if (result.changes === 0) {
+    res.status(404).json({ error: "Pet not found" });
+  }
+  res.status(204).send();
+};
+
 router.get('/', getPets);
 router.get('/user/:username', getPetsByUser);
 router.get('/id/:id', getPetById);
+router.delete('/:id', deletePet);
 
 export default router;
