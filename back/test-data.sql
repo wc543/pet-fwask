@@ -64,6 +64,10 @@ INSERT INTO Conversations (user_id, owner_id, pet_id) VALUES
 (7, 2, 3),
 (6, 2, 3);
 
+-- Conversations Table (Without pet_id)
+INSERT INTO Conversations (user_id, owner_id) VALUES
+(5, 2);
+
 -- Messages Table
 INSERT INTO Messages (sender_id, conversation_id, message) VALUES
 (7, 1,  'Hello, I am interested in adopting Max.'),

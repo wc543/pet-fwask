@@ -40,19 +40,18 @@ const io = new Server(server, {
 io.on('connection', (socket) =>{
   console.log('a user connected');
 
-  socket.on('join conversation', async (roomId : string, callback: ({status}: any) => void ) =>{ //TODO any type
-    await socket.join(roomId);
-    callback({ status: 'room join acknowledged'});
+  socket.on('join conversation', async (conversation_id : string, callback: ({status}: any) => void ) =>{ //TODO any type
+    await socket.join(conversation_id);
+    callback({ status: 'conversation join acknowledged'});
   });
 
-  socket.on('leave conversation',async (roomId : string, callback: ({status}: any) => void ) =>{ //TODO any type
-    await socket.leave(roomId);
-    callback({ status: 'room left acknowledged'});
+  socket.on('leave conversation',async (conversation_id : string, callback: ({status}: any) => void ) =>{ //TODO any type
+    await socket.leave(conversation_id);
+    callback({ status: 'conversation left acknowledged'});
   });
 
   socket.on('disconnect', () => console.log('user disconnected'));
 });
-
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

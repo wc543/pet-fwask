@@ -43,13 +43,15 @@ router.post("/", async (req : Request, res : Response) => {
     if(!parseResults.success){
       return res.status(400).json({ error: "Bad Request" });
     }
-    let {conversation_id, user_id, owner_id, pet_id} = parseResults.data;
+    let { user_id, owner_id, pet_id} = parseResults.data;
     try {
-      await db.run(
-        `INSERT INTO Conversations (user_id, owner_id, pet_id, conversation_id) VALUES (?, ?, ?, ?)`, [user_id, owner_id, pet_id, conversation_id]
+      const conversation = await db.get<ConversationRow>(
+        `INSERT INTO Conversations (user_id, owner_id, pet_id) VALUES (?, ?, ?) RETURNING conversation_id`, [user_id, owner_id, pet_id || null]
       );
-  
-      res.status(200).json();
+      if (!conversation) {
+        return res.status(500).json({ error: "Failed to create a new conversation" });
+      }
+      res.status(200).json({ conversation_id: conversation.conversation_id});
     } catch (err) {
       console.error("Database error:", err);
       return res.status(500).json({ error: "Internal server error" });
