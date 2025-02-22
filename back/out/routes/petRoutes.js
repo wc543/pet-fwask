@@ -87,9 +87,31 @@ async function postPet(req, res) {
     return res.status(201).json(result);
 }
 ;
+// Edit (put) pet by id
+async function editPet(req, res) {
+    const { id } = req.params;
+    let parseResult = petBodySchema.safeParse(req.body);
+    if (!parseResult.success) {
+        return res.status(400).json({ errors: parseError(parseResult.error) });
+    }
+    let { name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes } = parseResult.data;
+    let result;
+    try {
+        result = await db.run("UPDATE Pets \
+      SET name = ?, type = ?, breed = ?, size = ?, gender = ?, age = ?, color = ?, created_by_id = ?, fosterable = ?, pet_image_url = ?, shelter_time = ?, current_foster = ?, current_adopter = ?, notes = ? \
+      WHERE pet_id = ?", [name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes]);
+    }
+    catch (err) {
+        let error = err;
+        return res.status(500).json({ error: error.toString() });
+    }
+    return res.status(201).json(result);
+}
+;
 router.get('/', getPets);
 router.get('/user/:username', getPetsByUser);
 router.get('/id/:id', getPetById);
 router.delete('/:id', deletePet);
 router.post('/', postPet);
+router.put('/:id', editPet);
 export default router;
