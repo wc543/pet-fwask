@@ -99,7 +99,7 @@ async function editPet(req, res) {
     try {
         result = await db.run("UPDATE Pets \
       SET name = ?, type = ?, breed = ?, size = ?, gender = ?, age = ?, color = ?, created_by_id = ?, fosterable = ?, pet_image_url = ?, shelter_time = ?, current_foster = ?, current_adopter = ?, notes = ? \
-      WHERE pet_id = ?", [name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes]);
+      WHERE pet_id = ?", [name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes, id]);
     }
     catch (err) {
         let error = err;

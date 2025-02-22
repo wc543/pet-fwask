@@ -25,8 +25,8 @@ let petBodySchema = z.object({
     shelter_time: z.string().refine((s) => {
         return moment(s, "YYYY-MM-DD", true).toString() !== "Invalid date";
     }),
-    current_foster: z.number(),
-    current_adopter: z.number(),
+    current_foster: z.number().nullable(),
+    current_adopter: z.number().nullable(),
     notes: z.string().nullable().optional(),
 });
 let userBodySchema = z.object({

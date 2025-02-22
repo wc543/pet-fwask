@@ -290,3 +290,19 @@ test("POST /pets valid body creates pet", async () => {
     throw errorObj;
   }
 });
+
+// PUT requests (pet) ---------------
+
+test("PUT /pets/:id edits pet", async () => {
+  let editedPet = { name:"Diva", type:"Cat", breed:"Siamese", size:2, gender:"Female", age:1, color:"Cream", created_by_id:2, fosterable:false, pet_image_url:"image_url_2", shelter_time:"2025-02-22", current_foster:2, current_adopter:null, notes:"Hi" };
+  let expectedPet = { pet_id:1, name:"Diva", type:"Cat", breed:"Siamese", size:2, gender:"Female", age:1, color:"Cream", created_by_id:2, fosterable:0, pet_image_url:"image_url_2", shelter_time:"2025-02-22", current_foster:2, current_adopter:null, notes:"Hi" };
+  try {
+    let { status } = await axios.put("/pets/1", editedPet);
+    expect(status).toEqual(201);
+    let { data } = await axios.get("/pets/id/1");
+    expect(data.pets).toEqual(expectedPet);
+  } catch (error) {
+    let errorObj = error as AxiosError;
+    throw errorObj;
+  }
+});
