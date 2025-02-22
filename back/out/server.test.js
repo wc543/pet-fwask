@@ -227,3 +227,7 @@ test("GET /pets/user/:username returns pets made by user", async () => {
     let { data } = await axios.get("/pets/user/alice");
     expect(data).toEqual({ "pets": petsByAlice });
 });
+test("GET /pets/id/:id returns pet with id", async () => {
+    let { data } = await axios.get("/pets/id/1");
+    expect(data).toEqual({ "pets": pets[0] });
+});
