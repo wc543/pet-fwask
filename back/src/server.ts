@@ -1,4 +1,4 @@
-import express, {  Request, Response} from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { Server } from 'socket.io';
@@ -55,3 +55,5 @@ io.on('connection', (socket) =>{
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+export default app;

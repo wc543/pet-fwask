@@ -2,6 +2,8 @@ import axios, { AxiosError } from "axios";
 import sqlite3 from "sqlite3";
 import db from './db.js';
 import { stat } from "fs";
+import request from 'supertest';
+import app from './server.js'; // Your Express app exported from server.ts
 
 sqlite3.verbose();
 
