@@ -1,14 +1,15 @@
 import express from 'express';
 import db from '../db.js';
 const router = express.Router();
+import { parseError, petBodySchema } from '../types.js';
 // Get all pets
 async function getPets(req, res) {
     try {
         const result = await db.all("SELECT * FROM Pets");
-        res.json({ pets: result });
+        return res.json({ pets: result });
     }
     catch (error) {
-        res.status(500).json({ error: "Failed to fetch pets" });
+        return res.status(500).json({ error: "Failed to fetch pets" });
     }
 }
 ;
@@ -18,17 +19,17 @@ async function getPetsByUser(req, res) {
     try {
         const user = await db.get(`SELECT * FROM Users WHERE username = ?`, [username]);
         if (!user) {
-            res.status(400).json({ error: "Username does not exist" });
+            return res.status(400).json({ error: "Username does not exist" });
         }
         const user_id = user.user_id;
         const result = await db.all(`SELECT * FROM Pets WHERE created_by_id = ?`, [user_id]);
         if (!result) {
-            res.status(404).json({ message: "No pets created by this user" });
+            return res.status(404).json({ message: "No pets created by this user" });
         }
-        res.json({ pets: result });
+        return res.json({ pets: result });
     }
     catch (error) {
-        res.status(500).json({ error: "Failed to fetch pets by user" });
+        return res.status(500).json({ error: "Failed to fetch pets by user" });
     }
 }
 ;
@@ -38,12 +39,12 @@ async function getPetById(req, res) {
     try {
         const result = await db.get("SELECT * FROM Pets WHERE pet_id = ?", [id]);
         if (!result) {
-            res.status(400).json({ error: "Pet does not exist" });
+            return res.status(400).json({ error: "Pet does not exist" });
         }
-        res.json({ pets: result });
+        return res.json({ pets: result });
     }
     catch (error) {
-        res.status(404).json({ error: "Failed to fetch pet by id" });
+        return res.status(404).json({ error: "Failed to fetch pet by id" });
     }
 }
 ;
@@ -52,13 +53,43 @@ async function deletePet(req, res) {
     const { id } = req.params;
     const result = await db.run("DELETE FROM Pets WHERE pet_id = ?", [id]);
     if (result.changes === 0) {
-        res.status(404).json({ error: "Pet not found" });
+        return res.status(404).json({ error: "Pet not found" });
     }
-    res.status(204).send();
+    return res.status(204).send();
+}
+;
+// Post pet
+async function postPet(req, res) {
+    let parseResult = petBodySchema.safeParse(req.body);
+    if (!parseResult.success) {
+        return res.status(400).json({ errors: parseError(parseResult.error) });
+    }
+    let { name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes } = parseResult.data;
+    let dbResult;
+    let result;
+    let maxId;
+    let newId;
+    try {
+        maxId = await db.get("SELECT MAX(pet_id) FROM Pets");
+        if (!maxId) {
+            newId = 1;
+        }
+        else {
+            newId = (maxId["MAX(pet_id)"]) + 1;
+        }
+        dbResult = await db.run("INSERT INTO Pets(pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [newId, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes]);
+        result = await db.get("SELECT * FROM Pets WHERE pet_id = ?", [newId]);
+    }
+    catch (err) {
+        let error = err;
+        return res.status(500).json({ error: error.toString() });
+    }
+    return res.status(201).json(result);
 }
 ;
 router.get('/', getPets);
 router.get('/user/:username', getPetsByUser);
 router.get('/id/:id', getPetById);
 router.delete('/:id', deletePet);
+router.post('/', postPet);
 export default router;

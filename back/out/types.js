@@ -1,8 +1,17 @@
 import { z } from "zod";
 import moment from "moment";
+function parseError(zodError) {
+    let { formErrors, fieldErrors } = zodError.flatten();
+    // fancy functional programming
+    return [
+        ...formErrors,
+        ...Object.entries(fieldErrors).map(([property, message]) => `"${property}": ${message}`),
+    ];
+}
+;
+export { parseError };
 // objects for parsing
 let petBodySchema = z.object({
-    pet_id: z.number(),
     name: z.string(),
     type: z.string(),
     breed: z.string(),
@@ -18,10 +27,9 @@ let petBodySchema = z.object({
     }),
     current_foster: z.number(),
     current_adopter: z.number(),
-    notes: z.string(),
+    notes: z.string().nullable().optional(),
 });
 let userBodySchema = z.object({
-    user_id: z.number(),
     first_name: z.string(),
     last_name: z.string(),
     username: z.string(),
@@ -37,6 +45,7 @@ let userBodySchema = z.object({
     hashed_password: z.string(),
     role: z.string(),
 });
+export { petBodySchema, userBodySchema };
 //MESSAGES TYPES
 export const messageBodySchema = z.object({
     sender_id: z.number().min(1),

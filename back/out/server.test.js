@@ -204,16 +204,14 @@ let users = [
 ];
 // set up test ---------------
 beforeEach(async () => {
-    for (let { user_id, first_name, last_name, username, address, state, city, zip_code, phone_number, email, date_of_birth, hashed_password, role } of users) {
-        await db.run("INSERT INTO Users(user_id, first_name, last_name, username, address, state, city, zip_code, phone_number, email, date_of_birth, hashed_password, role) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user_id, first_name, last_name, username, address, state, city, zip_code, phone_number, email, date_of_birth, hashed_password, role]);
-    }
-    for (let { pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes } of pets) {
-        await db.run("INSERT INTO Pets(pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes]);
-    }
+    await Promise.all(users.map(({ user_id, first_name, last_name, username, address, state, city, zip_code, phone_number, email, date_of_birth, hashed_password, role }) => db.run("INSERT INTO Users(user_id, first_name, last_name, username, address, state, city, zip_code, phone_number, email, date_of_birth, hashed_password, role) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [user_id, first_name, last_name, username, address, state, city, zip_code, phone_number, email, date_of_birth, hashed_password, role])));
+    await Promise.all(pets.map(({ pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes }) => db.run("INSERT INTO Pets(pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [pet_id, name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter, notes])));
 });
 afterEach(async () => {
-    await db.run("DELETE FROM Pets");
-    await db.run("DELETE FROM Users");
+    await Promise.all([
+        db.run("DELETE FROM Pets"),
+        db.run("DELETE FROM Users")
+    ]);
 });
 // GET requests (pet) ---------------
 test("GET /pets/ returns all pets", async () => {
@@ -235,6 +233,7 @@ test("DELETE /pets/:id deletes pet", async () => {
     let { status } = await axios.delete("/pets/1");
     expect(status).toEqual(204);
 });
+// DELETE requests ---------------
 test("DELETE /pets/:id invalid id returns error", async () => {
     try {
         let { status } = await axios.delete("/pets/xyz");
@@ -247,5 +246,19 @@ test("DELETE /pets/:id invalid id returns error", async () => {
         let { response } = errorObj;
         expect(response.status).toEqual(404);
         expect(response.data).toEqual({ error: "Pet not found" });
+    }
+});
+// POST requests (pet) ---------------
+test("POST /pets valid body creates pet", async () => {
+    let { name, type, breed, size, gender, age, color, created_by_id, pet_image_url, shelter_time, current_foster, current_adopter, notes } = pets[0];
+    let validPet = { name, type, breed, size, gender, age, color, created_by_id, fosterable: true, pet_image_url, shelter_time, current_foster, current_adopter, notes };
+    try {
+        let { status, data } = await axios.post("/pets", validPet);
+        expect(status).toEqual(201);
+        expect(data.pet_id).toEqual(6);
+    }
+    catch (error) {
+        let errorObj = error;
+        throw errorObj;
     }
 });
