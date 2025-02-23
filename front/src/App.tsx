@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import React, { useState } from 'react';
+import SignupForm from './components/SignUpForm';
+import LoginForm from './components/LoginForm';
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
