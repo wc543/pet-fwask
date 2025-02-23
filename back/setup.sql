@@ -63,7 +63,7 @@ CREATE TABLE AdoptionHistory (
 
 CREATE TABLE AdoptionForms (
 	adoption_form_id INTEGER PRIMARY KEY AUTOINCREMENT,
-	adopter_id INTEGER NOT NULL,
+	user_id INTEGER NOT NULL,
 	previous_pet_experience TEXT,
 	adoption_reason TEXT,
 	ideal_pet_qualities TEXT,
@@ -74,12 +74,13 @@ CREATE TABLE AdoptionForms (
 	adoption_agreement BOOLEAN,
 	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	processed BOOLEAN DEFAULT FALSE,
-	FOREIGN KEY(adopter_id) REFERENCES Users(user_id)
+	form_type TEXT DEFAULT 'Adoption',
+	FOREIGN KEY(user_id) REFERENCES Users(user_id)
 );	
 
 CREATE TABLE FosterParentForms (
 	foster_parent_form_id INTEGER PRIMARY KEY AUTOINCREMENT,
-	foster_id INTEGER NOT NULL,
+	user_id INTEGER NOT NULL,
 	foster_reason TEXT,
 	max_alone_time TEXT,
 	care_plan_details TEXT,
@@ -87,7 +88,8 @@ CREATE TABLE FosterParentForms (
 	adoption_agreement BOOLEAN,
 	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	processed BOOLEAN DEFAULT FALSE,
-	FOREIGN KEY(foster_id) REFERENCES Users(user_id)
+	form_type TEXT DEFAULT 'FosterParent',
+	FOREIGN KEY(user_id) REFERENCES Users(user_id)
 );
 
 CREATE TABLE FosterReferences (
@@ -102,7 +104,7 @@ CREATE TABLE FosterReferences (
 
 CREATE TABLE FosterPetForms (
 	foster_pet_form_id INTEGER PRIMARY KEY AUTOINCREMENT,
-	foster_id INTEGER NOT NULL,
+	user_id INTEGER NOT NULL,
 	foster_start_date DATE,
 	foster_end_date DATE,
 	previous_foster_experience TEXT,
@@ -110,7 +112,8 @@ CREATE TABLE FosterPetForms (
 	max_alone_time TEXT,
 	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	processed BOOLEAN DEFAULT FALSE,
-	FOREIGN KEY(foster_id) REFERENCES Users(user_id)
+	form_type TEXT DEFAULT 'FosterPet',
+	FOREIGN KEY(user_id) REFERENCES Users(user_id)
 );
 
 CREATE TABLE Messages (

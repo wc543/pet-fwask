@@ -59,9 +59,8 @@ const EmployeeForm: React.FC = () => {
           <thead>
             <tr>
               <th>Form Type</th>
+              <th>Submitted By (User ID)</th>
               <th>Status</th>
-              <th>User ID</th>
-              <th>Form ID</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -70,11 +69,8 @@ const EmployeeForm: React.FC = () => {
               forms.map((form, index) => (
                 <tr key={`${form.form_type}-${form.adoption_form_id || form.foster_parent_form_id || form.foster_pet_form_id || index}`}>
                   <td>{form.form_type}</td>
-                  <td>{form.processed ? "Processed" : "Pending"}</td>
                   <td>{form.user_id}</td>
-                  <td>
-                    {form.adoption_form_id || form.foster_parent_form_id || form.foster_pet_form_id || 'N/A'}
-                  </td>
+                  <td>{form.processed ? "Processed" : "Pending"}</td>
                   <td>
                     <button onClick={() => handleViewForm(form)}>View</button>
                   </td>

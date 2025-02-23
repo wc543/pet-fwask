@@ -38,12 +38,12 @@ INSERT INTO AdoptionHistory (user_id, pet_id) VALUES
 (2, 3);
 
 -- AdoptionForms Table
-INSERT INTO AdoptionForms (adopter_id, previous_pet_experience, adoption_reason, ideal_pet_qualities, max_alone_time, care_plan_details, financial_responsibility, pet_care_agreement, adoption_agreement, processed) VALUES
+INSERT INTO AdoptionForms (user_id, previous_pet_experience, adoption_reason, ideal_pet_qualities, max_alone_time, care_plan_details, financial_responsibility, pet_care_agreement, adoption_agreement, processed) VALUES
 (3, 'Had pets before', 'Looking for a family dog', 'Friendly, playful', '8 hours', 'Walks, food, and playtime', TRUE, TRUE, TRUE, FALSE),
 (2, 'No prior experience', 'Looking for a cat', 'Independent, quiet', '6 hours', 'Feeding and light play', TRUE, FALSE, TRUE, FALSE);
 
 -- FosterParentForms Table
-INSERT INTO FosterParentForms (foster_id, foster_reason, max_alone_time, care_plan_details, pet_care_agreement, adoption_agreement, processed) VALUES
+INSERT INTO FosterParentForms (user_id, foster_reason, max_alone_time, care_plan_details, pet_care_agreement, adoption_agreement, processed) VALUES
 (1, 'Want to provide a temporary home', '8 hours', 'Feeding and playtime, along with vet visits', TRUE, TRUE, FALSE),
 (2, 'Looking to help foster', '6 hours', 'Daily feeding and basic care', FALSE, FALSE, FALSE);
 
@@ -55,7 +55,7 @@ INSERT INTO FosterReferences (foster_parent_form_id, reference_name, relationshi
 (2, 'Mary Smith', 'Co-worker', '234-567-8901', 'mary.smith@example.com');
 
 -- FosterPetForms Table
-INSERT INTO FosterPetForms (foster_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, processed) VALUES
+INSERT INTO FosterPetForms (user_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, processed) VALUES
 (1, '2024-12-01', '2025-01-01', 'Fostered 2 dogs before', 'Want to provide a temporary home', '8 hours', FALSE),
 (2, '2024-10-01', NULL, 'No experience yet', 'Looking to help foster', '6 hours', FALSE); 
 
