@@ -41,7 +41,7 @@ const SignupForm: React.FC = () => {
     e.preventDefault();
     try {
       // Replace with your actual backend URL
-      const response = await axios.post('http://your-backend-url/api/users/signup', formData);
+      const response = await axios.post('http://localhost:3000/api/users/signup', formData);
       localStorage.setItem('jwt', response.data.token);
       setMessage('Account created successfully!');
       setError('');

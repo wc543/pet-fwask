@@ -4,6 +4,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 // import './index.css'
 import NavBar from './components/NavBar/NavBar.tsx'
 import NotFound from './components/NotFound/NotFound.tsx'
+import SignupForm from './components/SignUpForm';
+import LoginForm from './components/LoginForm';
 
 let router = createBrowserRouter([
   {
@@ -28,6 +30,14 @@ let router = createBrowserRouter([
       {
         path: "/messages",
         element: null
+      },
+      {
+        path: "/signup",
+        element: <SignupForm />
+      },
+      {
+        path: "/login",
+        element: <LoginForm />
       },
       {
         path: "*",

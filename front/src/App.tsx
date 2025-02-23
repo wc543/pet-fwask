@@ -1,37 +1,45 @@
 import React, { useState } from 'react';
 import SignupForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function Home() {
   return (
-    <>
+    <div>
       <div>
-        <a href="https://vite.dev" target="_blank">
+        <a href="https://vite.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://react.dev" target="_blank">
+        <a href="https://react.dev" target="_blank" rel="noreferrer">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+      <h1>Welcome to the Pet Adoption App</h1>
+      <p>
+        Click the links below to sign up or log in.
       </p>
-    </>
-  )
+      <nav>
+        <Link to="/signup">Sign Up</Link> |{' '}
+        <Link to="/login">Login</Link>
+      </nav>
+    </div>
+  );
 }
+
+const App: React.FC = () => {
+
+  return (
+    <Router>
+      <Routes>
+      <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SignupForm />} />
+        <Route path="/login" element={<LoginForm />} />
+      </Routes>
+    </Router>
+  );
+};
 
 export default App
