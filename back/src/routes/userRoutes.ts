@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 const router = express.Router();
 import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
+import authMiddleware from '../authMiddleware.js';
 
 router.get('/', async (req: Request, res: Response) => {
     try {
