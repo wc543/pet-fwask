@@ -6,6 +6,7 @@ import NavBar from './components/NavBar/NavBar.tsx'
 import NotFound from './components/NotFound/NotFound.tsx'
 import SignupForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
+import EmployeeForm from './components/EmployeeForm/EmployeeForm'
 
 let router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ let router = createBrowserRouter([
       },
       {
         path: "/forms",
-        element: null
+        element: <EmployeeForm />
       },
       {
         path: "/messages",

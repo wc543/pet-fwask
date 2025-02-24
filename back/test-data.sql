@@ -20,11 +20,11 @@ INSERT INTO UserHousehold (user_id, household_size, household_allergies, current
 
 -- Pets Table
 INSERT INTO Pets (name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter) VALUES
-('Fluffy', 'Dog', 'Golden Retriever', 5, 'Male', 3, 'Golden', 1, TRUE, 'image_url_1', '2024-12-01', 1, 6),
-('Bella', 'Cat', 'Siamese', 2, 'Female', 2, 'Cream', 1, TRUE, 'image_url_2', '2024-11-15', 2, NULL),
-('Max', 'Dog', 'Labrador', 4, 'Male', 4, 'Black', 2, TRUE, 'image_url_3', '2024-10-10', NULL, 7),
-('Luna', 'Cat', 'Persian', 3, 'Female', 1, 'White', 3, FALSE, 'image_url_4', '2024-09-05', NULL, NULL),
-('Rex', 'Dog', 'Bulldog', 6, 'Male', 5, 'Brindle', 2, TRUE, 'image_url_5', '2023-12-22', NULL, NULL);
+('Fluffy', 'Dog', 'Golden Retriever', 5, 'Male', 3, 'Golden', 4, TRUE, 'image_url_1', '2024-12-01', 1, 6),
+('Bella', 'Cat', 'Siamese', 2, 'Female', 2, 'Cream', 3, TRUE, 'image_url_2', '2024-11-15', 2, NULL),
+('Max', 'Dog', 'Labrador', 4, 'Male', 4, 'Black', 4, TRUE, 'image_url_3', '2024-10-10', NULL, 7),
+('Luna', 'Cat', 'Persian', 3, 'Female', 1, 'White', 4, FALSE, 'image_url_4', '2024-09-05', NULL, NULL),
+('Rex', 'Dog', 'Bulldog', 6, 'Male', 5, 'Brindle', 4, TRUE, 'image_url_5', '2023-12-22', NULL, NULL);
 
 -- FosterHistory Table
 INSERT INTO FosterHistory (user_id, pet_id, start_date, end_date) VALUES
@@ -38,12 +38,12 @@ INSERT INTO AdoptionHistory (user_id, pet_id) VALUES
 (2, 3);
 
 -- AdoptionForms Table
-INSERT INTO AdoptionForms (adopter_id, previous_pet_experience, adoption_reason, ideal_pet_qualities, max_alone_time, care_plan_details, financial_responsibility, pet_care_agreement, adoption_agreement, processed) VALUES
-(3, 'Had pets before', 'Looking for a family dog', 'Friendly, playful', '8 hours', 'Walks, food, and playtime', TRUE, TRUE, TRUE, FALSE),
-(2, 'No prior experience', 'Looking for a cat', 'Independent, quiet', '6 hours', 'Feeding and light play', TRUE, FALSE, TRUE, FALSE);
+INSERT INTO AdoptionForms (user_id, pet_id, previous_pet_experience, adoption_reason, ideal_pet_qualities, max_alone_time, care_plan_details, financial_responsibility, pet_care_agreement, adoption_agreement, processed) VALUES
+(3, 1, 'Had pets before', 'Looking for a family dog', 'Friendly, playful', '8 hours', 'Walks, food, and playtime', TRUE, TRUE, TRUE, FALSE),
+(2, 2, 'No prior experience', 'Looking for a cat', 'Independent, quiet', '6 hours', 'Feeding and light play', TRUE, FALSE, TRUE, FALSE);
 
 -- FosterParentForms Table
-INSERT INTO FosterParentForms (foster_id, foster_reason, max_alone_time, care_plan_details, pet_care_agreement, adoption_agreement, processed) VALUES
+INSERT INTO FosterParentForms (user_id, foster_reason, max_alone_time, care_plan_details, pet_care_agreement, adoption_agreement, processed) VALUES
 (1, 'Want to provide a temporary home', '8 hours', 'Feeding and playtime, along with vet visits', TRUE, TRUE, FALSE),
 (2, 'Looking to help foster', '6 hours', 'Daily feeding and basic care', FALSE, FALSE, FALSE);
 
@@ -55,9 +55,9 @@ INSERT INTO FosterReferences (foster_parent_form_id, reference_name, relationshi
 (2, 'Mary Smith', 'Co-worker', '234-567-8901', 'mary.smith@example.com');
 
 -- FosterPetForms Table
-INSERT INTO FosterPetForms (foster_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, processed) VALUES
-(1, '2024-12-01', '2025-01-01', 'Fostered 2 dogs before', 'Want to provide a temporary home', '8 hours', FALSE),
-(2, '2024-10-01', NULL, 'No experience yet', 'Looking to help foster', '6 hours', FALSE); 
+INSERT INTO FosterPetForms (user_id, pet_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, processed) VALUES
+(1, 2, '2024-12-01', '2025-01-01', 'Fostered 2 dogs before', 'Want to provide a temporary home', '8 hours', FALSE),
+(2, 3,'2024-10-01', NULL, 'No experience yet', 'Looking to help foster', '6 hours', FALSE); 
 
 -- Conversations Table
 INSERT INTO Conversations (user_id, owner_id, pet_id) VALUES
