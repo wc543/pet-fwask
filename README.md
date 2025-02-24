@@ -27,7 +27,7 @@ npm install
 npm run setup  # Initializes database
 npm run start    # Starts the backend
 ```
-The backend will run at `http://localhost:3000/`.
+The backend will run at `http://localhost:3001/`.
 
 ### **3. Setup the Frontend**
 ```sh

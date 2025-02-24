@@ -20,7 +20,7 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
     try {
       // Replace with your actual backend URL
-      const response = await axios.post('http://localhost:3000/api/users/signin', formData);
+      const response = await axios.post('/api/users/signin', formData);
       localStorage.setItem('jwt', response.data.token);
       setMessage('Sign-in successful!');
       setError('');

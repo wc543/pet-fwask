@@ -14,7 +14,7 @@
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --runInBand --rootDir=src",
     "test-data": "sqlite3 database.db < test-data.sql",
     "watch": "npm run build && tsc-watch --onSuccess \"npm run start\"",
-    "start-pm2": "PORT=3001 pm2 start npm --name 'Pet-FWASK' -- run start",
+    "start-pm2": "pm2 start npm --name 'Pet-FWASK' -- run start",
     "delete-pm2": "pm2 delete Pet-FWASK",
     "restart-pm2": "pm2 restart Pet-FWASK",
     "logs-pm2": "pm2 logs Pet-FWASK"

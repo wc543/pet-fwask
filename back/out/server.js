@@ -12,16 +12,11 @@ import path from "path";
 import { fileURLToPath } from "url";
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
+let reactAssetsPath = path.join(path.dirname(fileURLToPath(import.meta.url)), "../../front/dist");
+app.use(express.static(reactAssetsPath));
 app.use(cors());
 app.use(express.json());
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const reactAssetsPath = path.join(__dirname, "../../front/dist");
-app.use(express.static(reactAssetsPath));
-app.get("/", (_req, res) => {
-    res.send("Pet Adoption Site API");
-});
 app.use('/api/users', userRouter);
 app.use('/api/pets', petRouter);
 app.use('/api/forms', formRouter);
@@ -49,6 +44,9 @@ io.on('connection', (socket) => {
         callback({ status: 'conversation left acknowledged' });
     });
     socket.on('disconnect', () => console.log('user disconnected'));
+});
+app.get("*", (req, res) => {
+    return res.sendFile("index.html", { root: reactAssetsPath });
 });
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

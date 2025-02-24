@@ -23,7 +23,7 @@ const EmployeeForm: React.FC = () => {
       setLoading(true);
       setError('');
       
-      const response = await fetch("http://localhost:3000/api/forms");
+      const response = await fetch("/api/forms");
       if (!response.ok) {
         throw new Error("Failed to fetch forms");
       }
