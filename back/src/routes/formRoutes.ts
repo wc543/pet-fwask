@@ -14,9 +14,9 @@ router.get('/', async (req: Request, res: Response) => {
     const foster_pet_forms = await db.all("SELECT * FROM FosterPetForms");
     
     const forms = [
-      ...adoption_forms.map((form: any) => ({ ...form, form_type: 'Adoption' })),
-      ...foster_parent_forms.map((form: any) => ({ ...form, form_type: 'Foster Parent' })),
-      ...foster_pet_forms.map((form: any) => ({ ...form, form_type: 'Foster Pets' })),
+      ...adoption_forms.map((form: any) => ({ ...form, form_type: 'adoption' })),
+      ...foster_parent_forms.map((form: any) => ({ ...form, form_type: 'foster-parent' })),
+      ...foster_pet_forms.map((form: any) => ({ ...form, form_type: 'foster-pets' })),
     ];
 
     res.json(forms);
