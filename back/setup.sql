@@ -4,7 +4,7 @@ CREATE TABLE Users (
 	last_name TEXT,
 	username TEXT UNIQUE NOT NULL,
 	address TEXT,
-	state TEXT,h
+	state TEXT,
 	city TEXT,
 	zip_code TEXT,
 	phone_number TEXT,

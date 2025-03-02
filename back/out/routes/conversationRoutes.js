@@ -9,7 +9,6 @@ router.get("/:conversation_id", async (req, res) => {
     try {
         const conversation = await db.get(`SELECT * FROM Conversations
          WHERE conversation_id = ? `, [conversation_id]);
-        console.log("conversations: " + conversation);
         res.status(200).json(conversation);
     }
     catch (err) {

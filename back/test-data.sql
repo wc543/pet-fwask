@@ -66,8 +66,8 @@ INSERT INTO Conversations (user_id, owner_id, pet_id) VALUES
 
 -- Conversations Table (Without pet_id)
 INSERT INTO Conversations (user_id, owner_id) VALUES
-(5, 2);
-(7, 4),
+(5, 2),
+(7, 4);
 
 -- Messages Table
 INSERT INTO Messages (sender_id, conversation_id, message) VALUES

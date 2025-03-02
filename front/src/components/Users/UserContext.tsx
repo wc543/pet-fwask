@@ -3,7 +3,7 @@ import axios from 'axios';
 
 //Used to get general information(that's not protected info, like address) of all users. Can be retrived by identify the user_id
 interface User {
-  user_id: string | number,
+  user_id: string ,
   first_name: string,
   role: string,
   username: string;

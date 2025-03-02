@@ -51,7 +51,7 @@ useEffect( () => {
       socket.off('chat message', handleNewMessage);
     };
   }
-, [conversation_id]);
+, []);
   
   return(
     <>      

@@ -13,7 +13,6 @@ router.get("/:conversation_id",  async (req : Request, res : Response) => {
          WHERE conversation_id = ? `,
         [conversation_id]
       );
-      console.log("conversations: " + conversation);
       res.status(200).json(conversation);
     } catch (err) {
       console.error("Database error:", err);
