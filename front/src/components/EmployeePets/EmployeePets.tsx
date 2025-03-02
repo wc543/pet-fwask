@@ -60,6 +60,11 @@ const EmployeePets: React.FC = () => {
         <div>
             <h2>Pets</h2>
 
+            <div>
+                <button onClick={() => navigate(`/pets/create`)}>Add Pet</button>
+                <br/>
+                <br/>
+            </div>
             {loading ? (
                 <div>Loading...</div>
             ) : (
