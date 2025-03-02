@@ -2,6 +2,7 @@ import express from 'express';
 const router = express.Router();
 import { conversationBodySchema } from "../types.js";
 import db from '../db.js';
+import authMiddleware from '../authMiddleware.js';
 // Gets conversation based on it's id
 router.get("/:conversation_id", async (req, res) => {
     const { conversation_id } = req.params;
@@ -51,7 +52,7 @@ router.post("/", async (req, res) => {
 });
 //Deletes a conversation based on its conversation_id
 //TODO add user authorization to ensure only the logged in OWNER (not the other user) can delete their own conversation
-router.delete("/:conversation_id", async (req, res) => {
+router.delete("/:conversation_id", authMiddleware, async (req, res) => {
     const { conversation_id } = req.params;
     try {
         const conversation = await db.run(`DELETE FROM Conversations
