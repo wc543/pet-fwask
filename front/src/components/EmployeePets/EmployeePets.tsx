@@ -38,7 +38,7 @@ const EmployeePets: React.FC = () => {
 
             const data = await response.json();
             console.log(data);
-            setPets(data);
+            setPets(data.pets);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to fetch pets");
         } finally {
@@ -49,6 +49,11 @@ const EmployeePets: React.FC = () => {
     useEffect(() => {
         fetchPets();
     }, []);
+
+    const handleViewPet = (pet: Pet) => {
+        const petId = pet.pet_id;
+        navigate(`/pets/id/${petId}`);
+    };
 
     return (
         <>
@@ -73,9 +78,13 @@ const EmployeePets: React.FC = () => {
                     </thead>
                     <tbody>
                         {pets.length > 0 ? (
-                            pets.map((pet) => (
-                                <tr>
-                                    <td>{pet.pet_image_url}</td>
+                            pets.map((pet, index) => (
+                                <tr key={index}>
+                                    <td className='pet_image_td'>
+                                        <div className='pet_image_wrapper'>
+                                            <img className="pet_image" src={`../../../public/${pet.pet_image_url}`}/>
+                                        </div>
+                                    </td>
                                     <td>{pet.name}</td>
                                     <td>{pet.type}</td>
                                     <td>{pet.breed}</td>
@@ -83,7 +92,7 @@ const EmployeePets: React.FC = () => {
                                     <td>{pet.gender}</td>
                                     <td>{pet.size}</td>
                                     <td>
-                                        <button>View</button>
+                                        <button onClick={() => handleViewPet(pet)}>View</button>
                                     </td>
                                 </tr>
                             ))
