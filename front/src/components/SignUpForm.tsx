@@ -1,6 +1,7 @@
 // SignupForm.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 interface SignupFormData {
   first_name: string;
@@ -32,6 +33,7 @@ const SignupForm: React.FC = () => {
   });
   const [message, setMessage] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const navigate = useNavigate(); // React Router navigation hook
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -45,6 +47,9 @@ const SignupForm: React.FC = () => {
       localStorage.setItem('jwt', response.data.token);
       setMessage('Account created successfully!');
       setError('');
+
+      // Redirect to home page
+      navigate('/');
     } catch (err: any) {
       setError(err.response?.data?.error || 'Failed to create account.');
       setMessage('');

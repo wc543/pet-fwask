@@ -7,6 +7,7 @@ import NotFound from './components/NotFound/NotFound.tsx'
 import SignupForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
 import EmployeeForm from './components/EmployeeForm/EmployeeForm';
+<<<<<<< Updated upstream
 import {io} from 'socket.io-client'
 import { ConversationHistory } from './components/Chats/Conversations/ConversationHistory.tsx';
 import { ConversationPage } from './components/Chats/Conversations/ConversationPage.tsx';
@@ -17,6 +18,9 @@ export const socket = io('ws://localhost:3001', {
   ackTimeout: 10000,
   retries: 3,
 });
+=======
+import Logout from './components/Logout';
+>>>>>>> Stashed changes
 
 let router = createBrowserRouter([
   {
@@ -53,6 +57,10 @@ let router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginForm />
+      },
+      {
+        path: "/logout",
+        element: <Logout />
       },
       {
         path: "*",
