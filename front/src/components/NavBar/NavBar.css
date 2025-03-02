@@ -6,7 +6,7 @@
     align-items: center;
 }
 
-.nav-link {
+.nav-link, .nav-user {
     text-decoration: none;
     color: white;
     font-size: 16px;

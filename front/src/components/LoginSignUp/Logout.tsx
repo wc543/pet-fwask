@@ -1,15 +1,18 @@
 // Logout.tsx
+import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../AuthContext';
 
 const Logout: React.FC = () => {
+  const { logout } = useContext(AuthContext)!;
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem('jwt'); // Clear JWT token
-    navigate('/login'); // Redirect to login
-  };
+  useEffect(() => {
+    logout(); // Call logout to clear user state
+    navigate('/login'); // Redirect to login page
+  }, [logout, navigate]);
 
-  return <button onClick={handleLogout}>Logout</button>;
+return null;
 };
 
 export default Logout;

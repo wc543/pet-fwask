@@ -38,7 +38,7 @@ router.post('/signup', async (req, res) => {
         const newUser = await db.get(`SELECT * FROM Users WHERE user_id = ?`, [result.lastID]);
         // Generate a JWT token for the new user
         const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_here';
-        const token = jwt.sign({ user_id: newUser.user_id, username: newUser.username, role: newUser.role }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ user_id: newUser.user_id, username: newUser.username, email: newUser.email, role: newUser.role }, JWT_SECRET, { expiresIn: '1h' });
         res.status(201).json({ token, user: { user_id: newUser.user_id, username: newUser.username, role: newUser.role } });
     }
     catch (error) {
@@ -60,8 +60,8 @@ router.post('/signin', async (req, res) => {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
         // Generate a JWT token that includes the user's ID and role
-        const token = jwt.sign({ user_id: user.user_id, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token, user: { user_id: user.user_id, username: user.username, role: user.role } });
+        const token = jwt.sign({ user_id: user.user_id, username: user.username, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
+        res.json({ token, user: { user_id: user.user_id, username: user.username, email: user.email, role: user.role } });
     }
     catch (error) {
         console.error('Sign-in error:', error);
@@ -70,10 +70,15 @@ router.post('/signin', async (req, res) => {
 });
 router.get('/me', authMiddleware, async (req, res) => {
     try {
+        console.log("Authenticated user:", req.user); // Debugging log
         const user = await db.get('SELECT user_id, username, email, role FROM Users WHERE user_id = ?', [req.user.user_id]);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
         res.json(user);
     }
     catch (error) {
+        console.error("Error fetching user profile:", error);
         res.status(500).json({ message: 'Error fetching user profile' });
     }
 });
