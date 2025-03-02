@@ -14,6 +14,7 @@ import { ConversationPage } from './components/Chats/Conversations/ConversationP
 import { UserProvider } from './components/Users/UserContext.tsx';
 import Dashboard from './components/Dashboard/Dashboard.tsx';
 import Logout from './components/LoginSignUp/Logout.tsx';
+import { PetProvider } from './components/Pets/PetContext.tsx'
 
 export const socket = io('ws://localhost:3001', {
   ackTimeout: 10000,
@@ -34,7 +35,7 @@ let router = createBrowserRouter([
       },
       {
         path: "/pets",
-        element: <EmployeePets />
+        element: <PetProvider><EmployeePets></EmployeePets></PetProvider>
       },
       {
         path: "/forms",
