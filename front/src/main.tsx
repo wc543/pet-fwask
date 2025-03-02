@@ -11,6 +11,7 @@ import {io} from 'socket.io-client'
 import { ConversationHistory } from './components/Chats/Conversations/ConversationHistory.tsx';
 import { ConversationPage } from './components/Chats/Conversations/ConversationPage.tsx';
 import { UserProvider } from './components/Users/UserContext.tsx';
+import Dashboard from './components/Dashboard/Dashboard.tsx'
 
 export const socket = io('ws://localhost:3001', {
   ackTimeout: 10000,
@@ -27,7 +28,7 @@ let router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: null
+        element: <Dashboard />
       },
       {
         path: "/pets",

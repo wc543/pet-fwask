@@ -56,7 +56,7 @@ INSERT INTO FosterReferences (foster_parent_form_id, reference_name, relationshi
 
 -- FosterPetForms Table
 INSERT INTO FosterPetForms (user_id, pet_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, processed) VALUES
-(1, 2, '2024-12-01', '2025-01-01', 'Fostered 2 dogs before', 'Want to provide a temporary home', '8 hours', FALSE),
+(1, 2, '2024-12-01', '2026-01-01', 'Fostered 2 dogs before', 'Want to provide a temporary home', '8 hours', TRUE),
 (2, 3,'2024-10-01', NULL, 'No experience yet', 'Looking to help foster', '6 hours', FALSE); 
 
 -- Conversations Table

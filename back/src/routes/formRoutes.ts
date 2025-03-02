@@ -9,9 +9,33 @@ type Form =
 
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const adoption_forms = await db.all("SELECT * FROM AdoptionForms");
-    const foster_parent_forms = await db.all("SELECT * FROM FosterParentForms");
-    const foster_pet_forms = await db.all("SELECT * FROM FosterPetForms");
+    const adoption_forms = await db.all(
+      `
+      SELECT 
+        AdoptionForms.*,
+        Users.username AS user_name
+      FROM AdoptionForms
+      INNER JOIN Users ON AdoptionForms.user_id = Users.user_id;
+      `
+    );
+    const foster_parent_forms = await db.all(
+      `
+      SELECT 
+        FosterParentForms.*,
+        Users.username AS user_name
+      FROM FosterParentForms
+      INNER JOIN Users ON FosterParentForms.user_id = Users.user_id;
+      `
+    );
+    const foster_pet_forms = await db.all(
+      `
+      SELECT 
+        FosterPetForms.*,
+        Users.username AS user_name
+      FROM FosterPetForms
+      INNER JOIN Users ON FosterPetForms.user_id = Users.user_id;
+      `
+    );
     
     const forms = [
       ...adoption_forms.map((form: any) => ({ ...form, form_type: 'adoption' })),
@@ -22,6 +46,27 @@ router.get('/', async (req: Request, res: Response) => {
     res.json(forms);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch all forms" });
+  }
+});
+
+router.get('/foster-expiration', async (req: Request, res: Response) => {
+  try {
+      const expiration = await db.all(
+          `
+          SELECT 
+              FosterPetForms.foster_pet_form_id,
+              FosterPetForms.foster_end_date,
+              FosterPetForms.pet_id,
+              Pets.name AS pet_name
+          FROM FosterPetForms
+          INNER JOIN Pets ON FosterPetForms.pet_id = Pets.pet_id
+          WHERE FosterPetForms.processed = TRUE;
+          `
+      );
+
+      res.json(expiration);
+  } catch (error) {
+      res.status(500).json({ error: "Failed to fetch foster expiration data" });
   }
 });
 
