@@ -6,6 +6,7 @@ import NavBar from './components/NavBar/NavBar.tsx'
 import NotFound from './components/NotFound/NotFound.tsx'
 import SignupForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
+import EmployeePets from './components/EmployeePets/EmployeePets.tsx'
 import EmployeeForm from './components/EmployeeForm/EmployeeForm';
 import {io} from 'socket.io-client'
 import { ConversationHistory } from './components/Chats/Conversations/ConversationHistory.tsx';
@@ -33,7 +34,7 @@ let router = createBrowserRouter([
       },
       {
         path: "/pets",
-        element: null
+        element: <EmployeePets />
       },
       {
         path: "/forms",

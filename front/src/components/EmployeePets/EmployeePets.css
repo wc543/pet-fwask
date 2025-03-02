@@ -1,0 +1,23 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    border: 1px solid black;
+}
+
+button {
+    padding: 5px 10px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.pet_image_td {
+    width: 200px;
+}
+
+.pet_image_wrapper, .pet_image {
+    width: 100%;
+}
