@@ -2,9 +2,10 @@ import express, { Request, Response } from 'express';
 const router = express.Router();
 import {ConversationRow, conversationBodySchema} from "../types.js";
 import db from '../db.js';
+import authMiddleware from '../authMiddleware.js';
 
 // Gets conversation based on it's id
-router.get("/:conversation_id", async (req : Request, res : Response) => {
+router.get("/:conversation_id",  async (req : Request, res : Response) => {
     const {conversation_id} = req.params;
     try {
       const conversation = await db.get(
@@ -12,7 +13,6 @@ router.get("/:conversation_id", async (req : Request, res : Response) => {
          WHERE conversation_id = ? `,
         [conversation_id]
       );
-      console.log("conversations: " + conversation);
       res.status(200).json(conversation);
     } catch (err) {
       console.error("Database error:", err);
@@ -21,7 +21,7 @@ router.get("/:conversation_id", async (req : Request, res : Response) => {
   });
 
 // Gets conversation based on specifc user (will use to load all conversation for user's chat page)
-router.get("/:user_id/user", async (req : Request, res : Response) => {
+router.get("/:user_id/user",  async (req : Request, res : Response) => {
     const {user_id} = req.params;
     try {
       const conversation = await db.all<ConversationRow[]>(
@@ -60,7 +60,7 @@ router.post("/", async (req : Request, res : Response) => {
   
 //Deletes a conversation based on its conversation_id
 //TODO add user authorization to ensure only the logged in OWNER (not the other user) can delete their own conversation
-router.delete("/:conversation_id", async (req : Request, res : Response) => {
+router.delete("/:conversation_id", authMiddleware, async (req : Request, res : Response) => {
   const {conversation_id} = req.params;
   try {
     const conversation = await db.run(

@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import { messageBodySchema } from "../types.js";
+import { messageBodySchema, parseError } from "../types.js";
 import db from '../db.js';
 //Gets messages based on specifc conversation_id (will use to obtain all messages in the chat view)
 router.get("/:conversation_id", async (req, res) => {
@@ -16,11 +16,26 @@ router.get("/:conversation_id", async (req, res) => {
         return res.status(500).json({ error: "Internal server error" });
     }
 });
+//Gets latest messages based on specifc conversation_id 
+router.get("/:conversation_id/latest/", async (req, res) => {
+    const { conversation_id } = req.params;
+    try {
+        const messages = await db.all(`SELECT * FROM Messages
+       WHERE conversation_id = ? 
+         ORDER BY time_sent DESC
+         LIMIT 1`, [conversation_id]);
+        res.json(messages);
+    }
+    catch (err) {
+        console.error("Database error:", err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+});
 //Post a message to the database
 router.post("/", async (req, res) => {
     const parseResults = messageBodySchema.safeParse(req.body);
     if (!parseResults.success) {
-        return res.status(400).json({ error: "Bad Request" });
+        return res.status(400).json({ error: parseError(parseResults.error) });
     }
     let { sender_id, message, conversation_id } = parseResults.data;
     try {

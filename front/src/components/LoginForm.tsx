@@ -1,16 +1,19 @@
 // LoginForm.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginFormData {
-  email: string;
+  username: string;
   password: string;
 }
 
 const LoginForm: React.FC = () => {
-  const [formData, setFormData] = useState<LoginFormData>({ email: '', password: '' });
+  const [formData, setFormData] = useState<LoginFormData>({ username: '', password: '' });
   const [message, setMessage] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const navigate = useNavigate(); // React Router navigation hook
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({...formData, [e.target.name]: e.target.value});
@@ -24,6 +27,9 @@ const LoginForm: React.FC = () => {
       localStorage.setItem('jwt', response.data.token);
       setMessage('Sign-in successful!');
       setError('');
+
+      // Redirect to home page
+      navigate('/');
     } catch (err: any) {
       setError(err.response?.data?.error || 'Invalid credentials. Please try again.');
       setMessage('');
@@ -33,7 +39,7 @@ const LoginForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit}>
       <h2>Login</h2>
-      <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+      <input type="username" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required />
       <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
       <button type="submit">Login</button>
       {message && <p style={{ color: 'green' }}>{message}</p>}
