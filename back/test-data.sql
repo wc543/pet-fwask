@@ -6,7 +6,7 @@ INSERT INTO Users (first_name, last_name, username, hashed_password, role, addre
 ('David', 'Williams', 'david', 'hashed_password_4', 'STAFF', '101 Maple St', 'CA', 'San Francisco', '94101', '555-234-5678', 'david@example.com', '1982-08-10'),
 ('Eve', 'Brown', 'eve', 'hashed_password_5', 'FOSTER', '202 Birch St', 'TX', 'Austin', '73301', '555-345-6789', 'eve@example.com', '1987-01-30'),
 ('Grace', 'Taylor', 'grace', 'hashed_password_6', 'ADOPTER', '303 Cedar St', 'FL', 'Miami', '33101', '555-456-7890', 'grace@example.com', '1995-02-25'),
-('Hank', 'Wilson', 'hank', 'hashed_password_7', 'ADOPTER', '404 Spruce St', 'TX', 'Houston', '77001', '555-567-8901', 'hank@example.com', '1988-09-11');
+('Hank', 'Wilson', 'hank123', 'hashed_password_7', 'ADOPTER', '404 Spruce St', 'TX', 'Houston', '77001', '555-567-8901', 'hank@example.com', '1988-09-11');
 
 -- UserHousehold Table
 INSERT INTO UserHousehold (user_id, household_size, household_allergies, current_pets) VALUES
@@ -66,11 +66,15 @@ INSERT INTO Conversations (user_id, owner_id, pet_id) VALUES
 
 -- Conversations Table (Without pet_id)
 INSERT INTO Conversations (user_id, owner_id) VALUES
-(5, 2);
+(5, 2),
+(7, 4);
 
 -- Messages Table
 INSERT INTO Messages (sender_id, conversation_id, message) VALUES
 (7, 1,  'Hello, I am interested in adopting Max.'),
 (2, 1, 'Hey, Max has been adopted! Sorry!'),
 (7, 1, 'Thank you anyways!'),
+(7, 4,  'Hey, I have a question about vaccines'),
+(4, 4, 'Hey, what up? Have you adopted a dog here before'),
+(7, 4, 'Thank you anyways!'),
 (6, 2,  'Hello! I am interested in adopting Max.');

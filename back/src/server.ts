@@ -35,6 +35,7 @@ app.get("*", (req, res) => {
 //Handle Socket.io Connection
 const server = createServer(app);
 const io = new Server(server, {
+  connectionStateRecovery: {},
   cors: {
     origin: "*",
     methods: ["GET", "POST"]
