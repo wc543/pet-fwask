@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import './EmployeePets.css';
 
 interface Pet {
@@ -87,7 +88,7 @@ const EmployeePets: React.FC = () => {
                                 <tr key={index}>
                                     <td className='pet_image_td'>
                                         <div className='pet_image_wrapper'>
-                                            <img className="pet_image" src={`../../../public/${pet.pet_image_url}`}/>
+                                            <img className="pet_image" src={`/${pet.pet_image_url}`}/>
                                         </div>
                                     </td>
                                     <td>{pet.name}</td>

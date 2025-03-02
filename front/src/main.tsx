@@ -14,6 +14,7 @@ import { ConversationPage } from './components/Chats/Conversations/ConversationP
 import { UserProvider } from './components/Users/UserContext.tsx';
 import Dashboard from './components/Dashboard/Dashboard.tsx';
 import Logout from './components/LoginSignUp/Logout.tsx';
+import { PetProvider } from './components/Pets/PetContext.tsx'
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Users/Profile.tsx';
 import { AuthProvider } from './components/AuthContext.tsx';
@@ -37,7 +38,7 @@ let router = createBrowserRouter([
       },
       {
         path: "/pets",
-        element: <EmployeePets />
+        element: <PetProvider><EmployeePets></EmployeePets></PetProvider>
       },
       {
         path: "/forms",
