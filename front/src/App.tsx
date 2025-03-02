@@ -1,6 +1,6 @@
 import React from 'react';
-import SignupForm from './components/SignUpForm';
-import LoginForm from './components/LoginForm';
+import SignupForm from './components/LoginSignUp/SignUpForm';
+import LoginForm from './components/LoginSignUp/LoginForm';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';

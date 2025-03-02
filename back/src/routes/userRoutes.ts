@@ -5,6 +5,7 @@ const router = express.Router();
 import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
 import authMiddleware from '../authMiddleware.js';
+import { AuthRequest } from '../authMiddleware.js';
 
 router.get('/', async (req: Request, res: Response) => {
     try {
@@ -93,6 +94,15 @@ router.post('/signin', async (req: Request, res: Response) => {
   } catch (error) {
     console.error('Sign-in error:', error);
     res.status(500).json({ message: 'Error signing in' });
+  }
+});
+
+router.get('/me', authMiddleware, async (req: AuthRequest, res) => {
+  try {
+    const user = await db.get('SELECT user_id, username, email, role FROM Users WHERE user_id = ?', [req.user.user_id]);
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user profile' });
   }
 });
 
