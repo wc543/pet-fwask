@@ -84,7 +84,7 @@ const AddPet: React.FC = () => {
                     <MenuItem value={2}>Large</MenuItem>
                     <MenuItem value={3}>Extra-Large</MenuItem>
                 </TextField>
-                <TextField select required label="Gender" value={petName} onChange={e => setPetGender(e.target.value)}>
+                <TextField select required label="Gender" value={petGender} onChange={e => setPetGender(e.target.value)}>
                     <MenuItem value="Female">Female</MenuItem>
                     <MenuItem value="Male">Male</MenuItem>
                 </TextField>
