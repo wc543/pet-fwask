@@ -34,6 +34,7 @@ const SignupForm: React.FC = () => {
   });
   const [message, setMessage] = useState<string>('');
   const [error, setError] = useState<string>('');
+  const { login } = useContext(AuthContext)!;
   const navigate = useNavigate(); // React Router navigation hook
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +47,10 @@ const SignupForm: React.FC = () => {
       // Replace with your actual backend URL
       const response = await axios.post('/api/users/signup', formData);
       localStorage.setItem('jwt', response.data.token);
+      
+      // Update AuthContext so the NavBar re-renders immediately
+      login(response.data.token);
+
       setMessage('Account created successfully!');
       setError('');
 
