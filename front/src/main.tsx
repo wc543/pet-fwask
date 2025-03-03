@@ -18,6 +18,7 @@ import { PetProvider } from './components/Pets/PetContext.tsx'
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Users/Profile.tsx';
 import { AuthProvider } from './components/AuthContext.tsx';
+import ViewAdoptionForm from './components/EmployeeForm/ViewAdoptionForm.tsx'
 
 export const socket = io('ws://localhost:3001', {
   ackTimeout: 10000,
@@ -68,6 +69,10 @@ let router = createBrowserRouter([
       {
         path: "/logout",
         element: <Logout />
+      },
+      {
+        path: "forms/adoption/:adoptionFormId",
+        element: <ViewAdoptionForm/>,
       },
       {
         path: "*",

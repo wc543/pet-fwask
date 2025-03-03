@@ -43,16 +43,10 @@ INSERT INTO AdoptionForms (user_id, pet_id, previous_pet_experience, adoption_re
 (2, 2, 'No prior experience', 'Looking for a cat', 'Independent, quiet', '6 hours', 'Feeding and light play', TRUE, FALSE, TRUE, FALSE);
 
 -- FosterParentForms Table
-INSERT INTO FosterParentForms (user_id, foster_reason, max_alone_time, care_plan_details, pet_care_agreement, adoption_agreement, processed) VALUES
-(1, 'Want to provide a temporary home', '8 hours', 'Feeding and playtime, along with vet visits', TRUE, TRUE, FALSE),
-(2, 'Looking to help foster', '6 hours', 'Daily feeding and basic care', FALSE, FALSE, FALSE);
+INSERT INTO FosterParentForms (user_id, foster_reason, pet_care_agreement, adoption_agreement, processed) VALUES
+(1, 'Want to provide a temporary home', TRUE, TRUE, FALSE),
+(2, 'Looking to help foster', FALSE, FALSE, FALSE);
 
--- FosterReferences Table
-INSERT INTO FosterReferences (foster_parent_form_id, reference_name, relationship, phone_number, email) VALUES
-(1, 'John Doe', 'Friend', '123-456-7890', 'john.doe@example.com'),
-(1, 'Jane Doe', 'Neighbor', '234-567-8901', 'jane.doe@example.com'),
-(1, 'Mike Johnson', 'Co-worker', '345-678-9012', 'mike.johnson@example.com'),
-(2, 'Mary Smith', 'Co-worker', '234-567-8901', 'mary.smith@example.com');
 
 -- FosterPetForms Table
 INSERT INTO FosterPetForms (user_id, pet_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, processed) VALUES

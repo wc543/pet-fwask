@@ -76,6 +76,18 @@ CREATE TABLE AdoptionForms (
 	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	processed BOOLEAN DEFAULT FALSE,
 	form_type TEXT DEFAULT 'Adoption',
+	status TEXT, 
+	first_name TEXT,
+    last_name TEXT,
+	address TEXT,
+    state TEXT,
+    city TEXT,
+    zip_code TEXT,
+    phone_number TEXT,
+ 	household_size INTEGER,
+    household_allergies TEXT,
+    current_pets TEXT,
+	email TEXT UNIQUE,
 	FOREIGN KEY(user_id) REFERENCES Users(user_id),
 	FOREIGN KEY(pet_id) REFERENCES Pets(pet_id)
 );	
@@ -84,24 +96,24 @@ CREATE TABLE FosterParentForms (
 	foster_parent_form_id INTEGER PRIMARY KEY AUTOINCREMENT,
 	user_id INTEGER NOT NULL,
 	foster_reason TEXT,
-	max_alone_time TEXT,
-	care_plan_details TEXT,
 	pet_care_agreement BOOLEAN,
 	adoption_agreement BOOLEAN,
 	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	processed BOOLEAN DEFAULT FALSE,
 	form_type TEXT DEFAULT 'FosterParent',
+	status TEXT, 
+	first_name TEXT,
+    last_name TEXT,
+	address TEXT,
+    state TEXT,
+    city TEXT,
+    zip_code TEXT,
+    phone_number TEXT,
+ 	household_size INTEGER,
+    household_allergies TEXT,
+    current_pets TEXT,
+	email TEXT UNIQUE,
 	FOREIGN KEY(user_id) REFERENCES Users(user_id)
-);
-
-CREATE TABLE FosterReferences (
-	reference_id INTEGER PRIMARY KEY AUTOINCREMENT,
-	foster_parent_form_id INTEGER NOT NULL,
-	reference_name TEXT,
-	relationship TEXT,
-	phone_number TEXT,
-	email TEXT,
-	FOREIGN KEY(foster_parent_form_id) REFERENCES FosterParentForms(foster_parent_form_id)
 );
 
 CREATE TABLE FosterPetForms (
@@ -116,6 +128,18 @@ CREATE TABLE FosterPetForms (
 	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	processed BOOLEAN DEFAULT FALSE,
 	form_type TEXT DEFAULT 'FosterPet',
+	status, TEXT
+	first_name TEXT,
+    last_name TEXT,
+	address TEXT,
+    state TEXT,
+    city TEXT,
+    zip_code TEXT,
+    phone_number TEXT,
+ 	household_size INTEGER,
+    household_allergies TEXT,
+    current_pets TEXT,
+	email TEXT UNIQUE,
 	FOREIGN KEY(user_id) REFERENCES Users(user_id),
 	FOREIGN KEY(pet_id) REFERENCES Pets(pet_id)
 );
