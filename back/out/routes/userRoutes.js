@@ -1,10 +1,9 @@
 import express from 'express';
 import db from '../db.js';
 import bcrypt from 'bcrypt';
-const router = express.Router();
 import jwt from 'jsonwebtoken';
+const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
-import authMiddleware from '../authMiddleware.js';
 router.get('/', async (req, res) => {
     try {
         const users = await db.all("SELECT * FROM Users");
@@ -38,7 +37,7 @@ router.post('/signup', async (req, res) => {
         const newUser = await db.get(`SELECT * FROM Users WHERE user_id = ?`, [result.lastID]);
         // Generate a JWT token for the new user
         const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_here';
-        const token = jwt.sign({ user_id: newUser.user_id, username: newUser.username, role: newUser.role }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ user_id: newUser.user_id, username: newUser.username, email: newUser.email, role: newUser.role }, JWT_SECRET, { expiresIn: '1h' });
         res.status(201).json({ token, user: { user_id: newUser.user_id, username: newUser.username, role: newUser.role } });
     }
     catch (error) {
@@ -60,21 +59,56 @@ router.post('/signin', async (req, res) => {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
         // Generate a JWT token that includes the user's ID and role
-        const token = jwt.sign({ user_id: user.user_id, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token, user: { user_id: user.user_id, username: user.username, role: user.role } });
+        const token = jwt.sign({ user_id: user.user_id, username: user.username, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
+        res.json({ token, user: { user_id: user.user_id, username: user.username, email: user.email, role: user.role } });
     }
     catch (error) {
         console.error('Sign-in error:', error);
         res.status(500).json({ message: 'Error signing in' });
     }
 });
-router.get('/me', authMiddleware, async (req, res) => {
+router.get('/me', async (req, res) => {
     try {
-        const user = await db.get('SELECT user_id, username, email, role FROM Users WHERE user_id = ?', [req.user.user_id]);
+        // Get the Authorization header
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            return res.status(401).json({ message: "Authorization header missing" });
+        }
+        // Extract the token from header (assumes "Bearer <token>")
+        const token = authHeader.split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ message: "Token missing" });
+        }
+        // Verify the token directly in the endpoint
+        const decoded = jwt.verify(token, JWT_SECRET);
+        console.log("Decoded token:", decoded); // This should appear in the terminal
+        // Check if the token has the user_id property
+        if (!decoded || !decoded.user_id) {
+            return res.status(401).json({ message: "Invalid token payload" });
+        }
+        // Query the database for the user based on user_id from the token
+        const user = await db.get('SELECT user_id, username, email, role FROM Users WHERE user_id = ?', [1]);
+        console.log("Database query result:", user); // This should also log to the terminal
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        // Return the user data
         res.json(user);
     }
     catch (error) {
-        res.status(500).json({ message: 'Error fetching user profile' });
+        console.error("Error in /me endpoint:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+router.get('/test-all', async (req, res) => {
+    try {
+        const users = await db.all("SELECT * FROM Users");
+        console.log("Test-all endpoint, users:", users);
+        res.json(users);
+    }
+    catch (error) {
+        console.error("Error in test-all endpoint:", error);
+        res.status(500).json({ message: "Error fetching all users" });
     }
 });
 export default router;

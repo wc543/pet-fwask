@@ -16,6 +16,10 @@ import { UserProvider } from './components/Users/UserContext.tsx';
 import Dashboard from './components/Dashboard/Dashboard.tsx';
 import Logout from './components/LoginSignUp/Logout.tsx';
 import { PetProvider } from './components/Pets/PetContext.tsx'
+import ProtectedRoute from './components/ProtectedRoute';
+import Profile from './components/Users/Profile.tsx';
+import { AuthProvider } from './components/AuthContext.tsx';
+import ViewAdoptionForm from './components/EmployeeForm/ViewAdoptionForm.tsx'
 
 export const socket = io('ws://localhost:3001', {
   ackTimeout: 10000,
@@ -55,6 +59,11 @@ let router = createBrowserRouter([
         element: <UserProvider><ConversationPage></ConversationPage></UserProvider>
       },
       {
+        path: "/profile",
+        element: <ProtectedRoute />,
+        children: [{ path: "", element: <Profile /> }],
+      },      
+      {
         path: "/signup",
         element: <SignupForm />
       },
@@ -67,6 +76,10 @@ let router = createBrowserRouter([
         element: <Logout />
       },
       {
+        path: "forms/adoption/:adoptionFormId",
+        element: <ViewAdoptionForm/>,
+      },
+      {
         path: "*",
         element: <NotFound />
       }
@@ -76,6 +89,8 @@ let router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>,
 )

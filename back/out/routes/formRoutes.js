@@ -56,10 +56,35 @@ router.get('/foster-expiration', async (req, res) => {
 //post adoption form
 router.post('/adoption', async (req, res) => {
     try {
-        const { user_id, pet_id, previous_pet_experience, adoption_reason, ideal_pet_qualities, max_alone_time, care_plan_details, financial_responsibility, pet_care_agreement, adoption_agreement, submitted_at, processed, } = req.body;
+        const { user_id, pet_id, previous_pet_experience, adoption_reason, ideal_pet_qualities, max_alone_time, care_plan_details, financial_responsibility, pet_care_agreement, adoption_agreement, submitted_at, processed, status, first_name, last_name, address, state, city, zip_code, phone_number, household_size, household_allergies, current_pets, email } = req.body;
         let form_type = "Adoption";
-        const result = await db.run(`INSERT INTO AdoptionForms (user_id, pet_id, previous_pet_experience, adoption_reason, ideal_pet_qualities, max_alone_time, care_plan_details, financial_resposibility , pet_care_agreement, adoption_agreement, submitted_at, processed, form_type)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [user_id, pet_id, previous_pet_experience, adoption_reason, ideal_pet_qualities, max_alone_time, care_plan_details, financial_responsibility, pet_care_agreement, adoption_agreement, submitted_at, processed || false, form_type]);
+        const result = await db.run(`INSERT INTO AdoptionForms (
+      user_id, 
+      pet_id, 
+      previous_pet_experience, 
+      adoption_reason, 
+      ideal_pet_qualities,
+      max_alone_time, 
+      care_plan_details, 
+      financial_resposibility, 
+      pet_care_agreement, 
+      adoption_agreement, 
+      submitted_at, 
+      processed, 
+      status,
+      form_type
+      first_name,
+    	last_name,
+      address,
+    	state,
+    	city,
+    	zip_code,
+    	phone_number,
+ 	    household_size,
+    	household_allergies,
+    	current_pets,
+    	email)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [user_id, pet_id, previous_pet_experience, adoption_reason, ideal_pet_qualities, max_alone_time, care_plan_details, financial_responsibility, pet_care_agreement, adoption_agreement, submitted_at, processed || false, status || "NEEDS PROCESSING", form_type, first_name, last_name, address, state, city, zip_code, phone_number, household_size, household_allergies, current_pets, email]);
         res.status(201).json({ message: 'Adoption form submitted', userId: result.lastID });
     }
     catch (error) {
@@ -69,10 +94,32 @@ router.post('/adoption', async (req, res) => {
 //post foster pet form
 router.post('/foster-pet', async (req, res) => {
     try {
-        const { user_id, pet_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, submitted_at, processed, } = req.body;
+        const { user_id, pet_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, submitted_at, processed, first_name, last_name, address, state, city, zip_code, phone_number, household_size, household_allergies, current_pets, email, status } = req.body;
         let form_type = "Foster Pet";
-        const result = await db.run(`INSERT INTO FosterPetForms (user_id, pet_id,foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time,submitted_at, processed, form_type)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [user_id, pet_id, , foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, submitted_at, processed || false, form_type]);
+        const result = await db.run(`INSERT INTO FosterPetForms (
+      user_id, 
+      pet_id,
+      foster_start_date, 
+      foster_end_date, 
+      previous_foster_experience, 
+      foster_reason, 
+      max_alone_time,
+      submitted_at,
+      processed, 
+      status,
+      form_type, 
+      first_name,
+    	last_name,
+      address,
+    	state,
+    	city,
+    	zip_code,
+    	phone_number,
+ 	    household_size,
+    	household_allergies,
+    	current_pets,
+    	email)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [user_id, pet_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, submitted_at, processed || false, status || "NEEDS PROCESSING", form_type, first_name, last_name, address, state, city, zip_code, phone_number, household_size, household_allergies, current_pets, email]);
         res.status(201).json({ message: 'Foster pet form submitted', userId: result.lastID });
     }
     catch (error) {
@@ -82,10 +129,29 @@ router.post('/foster-pet', async (req, res) => {
 //post foster parent form
 router.post('/foster-parent', async (req, res) => {
     try {
-        const { user_id, foster_reason, max_alone_time, care_plan_details, pet_care_agreement, adoption_agreement, submitted_at, processed, } = req.body;
+        const { user_id, foster_reason, pet_care_agreement, adoption_agreement, submitted_at, processed, status, first_name, last_name, address, state, city, zip_code, phone_number, household_size, household_allergies, current_pets, email } = req.body;
         let form_type = "Foster Parent";
-        const result = await db.run(`INSERT INTO FosterParentForms (user_id,foster_reason, max_alone_time, care_plan_details, pet_care_agreement, adoption_agreement, submitted_at , processed,form_type)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`, [user_id, foster_reason, max_alone_time, care_plan_details, pet_care_agreement, adoption_agreement, submitted_at, processed || false, form_type]);
+        const result = await db.run(`INSERT INTO FosterParentForms (
+        user_id,
+        foster_reason,
+        pet_care_agreement,
+        adoption_agreement,
+        submitted_at,
+        processed,
+        status,
+        form_type, 
+        first_name,
+    	  last_name,
+        address,
+    	  state,
+    	  city,
+    	  zip_code,
+    	  phone_number,
+ 	      household_size,
+    	  household_allergies,
+    	  current_pets,
+    	  email)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [user_id, foster_reason, pet_care_agreement, adoption_agreement, submitted_at, processed || false, status || "NEEDS PROCESSING", form_type, first_name, last_name, address, state, city, zip_code, phone_number, household_size, household_allergies, current_pets, email]);
         res.status(201).json({ message: 'Foster parent form submitted', userId: result.lastID });
     }
     catch (error) {
@@ -97,9 +163,19 @@ router.put("/adoption/:id", async (req, res) => {
     let id = req.params.id;
     let result;
     try {
-        const { processed } = req.body;
+        const { processed, status } = req.body;
         try {
-            result = await db.all("UPDATE AdoptionForms SET processed=$1 WHERE adoption_form_id = $2 RETURNING *;", [processed, id]);
+            result = await db.all("UPDATE AdoptionForms SET processed=$1, status=$2 WHERE adoption_form_id = $3 RETURNING *;", [processed, status, id]);
+            if (status == "APPROVED") {
+                let adoption_info = await db.get('SELECT user_id, pet_id FROM AdoptionForms WHERE adoption_form_id=$1;', [id]);
+                //set current_adopter in pet table
+                await db.all("UPDATE Pets SET current_adopter=$1, WHERE pet_id = $2;", [adoption_info.user_id, adoption_info.pet_id]);
+                //add row to AdoptionHistory table: user_id and pet_id
+                await db.run(`INSERT INTO AdoptionHistory (
+            user_id,
+            pet_id
+           VALUES (?, ?)`, [adoption_info.user_id, adoption_info.pet_id]);
+            }
         }
         catch (err) {
             let error = err;
@@ -112,13 +188,27 @@ router.put("/adoption/:id", async (req, res) => {
     return res.json({ result });
 });
 //put foster pet form status
+//to do: put status text
+//to do: if status is approved
 router.put("/foster-pet/:id", async (req, res) => {
     let id = req.params.id;
     let result;
     try {
-        const { processed } = req.body;
+        const { processed, status } = req.body;
         try {
-            result = await db.all("UPDATE FosterPetForms SET processed=$1 WHERE foster_pet_form_id = $2 RETURNING *;", [processed, id]);
+            result = await db.all("UPDATE FosterPetForms SET processed=$1, status=$2 WHERE foster_pet_form_id = $3 RETURNING *;", [processed, status, id]);
+            if (status == "APPROVED") {
+                let foster_info = await db.get('SELECT user_id, pet_id, foster_start_date, foster_end_date FROM FosterPetForms WHERE foster_pet_form_id=$1;', [id]);
+                //set current_foster in pet table
+                await db.all("UPDATE Pets SET current_foster=$1, WHERE pet_id = $2;", [foster_info.user_id, foster_info.pet_id]);
+                //add row to FosterHistory table: user_id, pet_id, start_date, & end_date
+                await db.run(`INSERT INTO FosterHistory (
+              user_id,
+              pet_id,
+              start_date,
+              end_date
+             VALUES (?, ?, ?, ?)`, [foster_info.user_id, foster_info.pet_id, foster_info.foster_start_date, foster_info.foster_end_date]);
+            }
         }
         catch (err) {
             let error = err;
@@ -135,9 +225,14 @@ router.put("/foster-parent/:id", async (req, res) => {
     let id = req.params.id;
     let result;
     try {
-        const { processed } = req.body;
+        const { processed, status } = req.body;
         try {
-            result = await db.all("UPDATE FosterParentForms SET processed=$1 WHERE foster_parent_form_id=$2 RETURNING *;", [processed, id]);
+            result = await db.all("UPDATE FosterParentForms SET processed=$1, status=$2 WHERE foster_parent_form_id=$3 RETURNING *;", [processed, status, id]);
+            if (status == "APPROVED") {
+                let foster_parent_info = await db.get('SELECT user_id, FROM FosterParentForms WHERE foster_parent_form_id=$1;', [id]);
+                //set role in Users table to "FOSTER"
+                await db.all("UPDATE Users SET role=$1, WHERE user_id = $2;", ["FOSTER", foster_parent_info.user_id]);
+            }
         }
         catch (err) {
             let error = err;
@@ -150,7 +245,6 @@ router.put("/foster-parent/:id", async (req, res) => {
     return res.json({ result });
 });
 //view adoption form
-//To Do: concatenate userid fields?
 router.get('/adoption/:id', async (req, res) => {
     let id = req.params.id;
     let result;
@@ -161,10 +255,9 @@ router.get('/adoption/:id', async (req, res) => {
         let error = err;
         return res.status(500).json({ error: error.toString() });
     }
-    return res.json(result);
+    return res.json({ result });
 });
 //view foster pet form
-//To Do: concatenate userid fields?
 router.get('/foster-pet/:id', async (req, res) => {
     let id = req.params.id;
     let result;
@@ -175,10 +268,9 @@ router.get('/foster-pet/:id', async (req, res) => {
         let error = err;
         return res.status(500).json({ error: error.toString() });
     }
-    return res.json(result);
+    return res.json({ result });
 });
 //view foster parent form
-//To Do: concatenate userid fields?
 router.get('/foster-parent/:id', async (req, res) => {
     let id = req.params.id;
     let result;
@@ -189,8 +281,10 @@ router.get('/foster-parent/:id', async (req, res) => {
         let error = err;
         return res.status(500).json({ error: error.toString() });
     }
-    return res.json(result);
+    return res.json({ result });
 });
+//to do
+//get user ID fields that are used in form fields
 //get adoption form list
 //when passed user id, returns all forms submitted by that user
 //when passed employee id, returns all forms associated with employee
@@ -207,7 +301,7 @@ router.get('/adoptionList/:id', async (req, res) => {
             let error = err;
             return res.status(500).json({ error: error.toString() });
         }
-        return res.json(result);
+        return res.json({ result });
     }
     else if (userRole.role === "STAFF") {
         let associatedPets;
@@ -218,7 +312,7 @@ router.get('/adoptionList/:id', async (req, res) => {
                 result.push(form);
             }
         }
-        return res.json(result);
+        return res.json({ result });
     }
     else {
         return res.status(201).json({ error: "invalid user" });
