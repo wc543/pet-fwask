@@ -16,7 +16,7 @@ const Profile: React.FC = () => {
           return;
         }
 
-        const response = await axios.get('http://localhost:3001/api/users/me', {
+        const response = await axios.get('api/users/me', {
           headers: { Authorization: `Bearer ${token}` }
         });
 
