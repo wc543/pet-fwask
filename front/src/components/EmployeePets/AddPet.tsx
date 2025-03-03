@@ -99,6 +99,7 @@ const AddPet: React.FC = () => {
                     <DatePicker label="Basic date picker" />
                 </LocalizationProvider>
                 <Button onClick={() => alert("to do")}>Upload image</Button>
+                <Button variant="contained" type="submit" >Add Pet</Button>
             </FormControl>
         </Box>
         </>
