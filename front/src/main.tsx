@@ -7,6 +7,7 @@ import NotFound from './components/NotFound/NotFound.tsx'
 import SignupForm from './components/LoginSignUp/SignUpForm.tsx';
 import LoginForm from './components/LoginSignUp/LoginForm.tsx';
 import EmployeePets from './components/EmployeePets/EmployeePets.tsx'
+import AddPet from './components/EmployeePets/AddPet.tsx';
 import EmployeeForm from './components/EmployeeForm/EmployeeForm';
 import {io} from 'socket.io-client'
 import { ConversationHistory } from './components/Chats/Conversations/ConversationHistory.tsx';
@@ -36,6 +37,10 @@ let router = createBrowserRouter([
       {
         path: "/pets",
         element: <PetProvider><EmployeePets></EmployeePets></PetProvider>
+      },
+      {
+        path: "/pets/create",
+        element: <PetProvider><AddPet></AddPet></PetProvider>
       },
       {
         path: "/forms",
