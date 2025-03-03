@@ -16,9 +16,11 @@ const Profile: React.FC = () => {
           return;
         }
 
-        const response = await axios.get('/api/users/me', {
+        const response = await axios.get('http://localhost:3001/api/users/me', {
           headers: { Authorization: `Bearer ${token}` }
         });
+
+        console.log("Profile API response:", response.data); // Debugging log
 
         if (!response.data || Object.keys(response.data).length === 0) {
           setError('User profile not found');
@@ -26,7 +28,6 @@ const Profile: React.FC = () => {
           setUser(response.data);
         }
 
-        console.log("Profile API response:", response.data); // ✅ Debugging log
       } catch (err) {
         setError('Failed to load user profile');
       } finally {

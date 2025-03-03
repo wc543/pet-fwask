@@ -1,11 +1,12 @@
 import express, { Request, Response } from 'express';
 import db from '../db.js';
 import bcrypt from 'bcrypt';
-const router = express.Router();
-import jwt from 'jsonwebtoken';
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import authMiddleware from '../authMiddleware.js';
 import { AuthRequest } from '../authMiddleware.js';
+
+const router = express.Router();
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
 
 router.get('/', async (req: Request, res: Response) => {
     try {
@@ -97,21 +98,57 @@ router.post('/signin', async (req: Request, res: Response) => {
   }
 });
 
-router.get('/me', authMiddleware, async (req: AuthRequest, res) => {
+router.get('/me', async (req: Request, res: Response) => {
   try {
-    console.log("Authenticated user:", req.user); // Debugging log
-    const user = await db.get('SELECT user_id, username, email, role FROM Users WHERE user_id = ?', [req.user.user_id]);
+    // Get the Authorization header
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: "Authorization header missing" });
+    }
+    
+    // Extract the token from header (assumes "Bearer <token>")
+    const token = authHeader.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ message: "Token missing" });
+    }
+    
+    // Verify the token directly in the endpoint
+    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
+    console.log("Decoded token:", decoded); // This should appear in the terminal
 
-    console.log("Database query result:", user); // Debugging log
+    // Check if the token has the user_id property
+    if (!decoded || !decoded.user_id) {
+      return res.status(401).json({ message: "Invalid token payload" });
+    }
+
+    // Query the database for the user based on user_id from the token
+    const user = await db.get(
+      'SELECT user_id, username, email, role FROM Users WHERE user_id = ?',
+      [1]
+    );
+
+    console.log("Database query result:", user); // This should also log to the terminal
+
     if (!user) {
-      console.error("User not found in database for user_id:", req.user.user_id);
       return res.status(404).json({ message: "User not found" });
     }
 
+    // Return the user data
     res.json(user);
   } catch (error) {
-    console.error("Error fetching user profile:", error);
-    res.status(500).json({ message: 'Error fetching user profile' });
+    console.error("Error in /me endpoint:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+router.get('/test-all', async (req: Request, res: Response) => {
+  try {
+    const users = await db.all("SELECT * FROM Users");
+    console.log("Test-all endpoint, users:", users);
+    res.json(users);
+  } catch (error) {
+    console.error("Error in test-all endpoint:", error);
+    res.status(500).json({ message: "Error fetching all users" });
   }
 });
 

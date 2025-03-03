@@ -22,6 +22,10 @@ app.use('/api/pets', petRouter);
 app.use('/api/forms', formRouter);
 app.use('/api/messages', messageRouter);
 app.use('/api/conversations', conversationRoutes);
+app.use((req, res, next) => {
+    console.log(`Incoming request: ${req.method} ${req.url}`);
+    next();
+});
 app.get("*", (req, res) => {
     return res.sendFile("index.html", { root: reactAssetsPath });
 });

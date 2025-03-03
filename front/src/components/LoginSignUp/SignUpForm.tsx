@@ -1,7 +1,8 @@
 // SignupForm.tsx
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../AuthContext';
 
 interface SignupFormData {
   first_name: string;
