@@ -21,10 +21,10 @@ INSERT INTO UserHousehold (user_id, household_size, household_allergies, current
 -- Pets Table
 INSERT INTO Pets (name, type, breed, size, gender, age, color, created_by_id, fosterable, pet_image_url, shelter_time, current_foster, current_adopter) VALUES
 ('Fluffy', 'Dog', 'Golden Retriever', 5, 'Male', 3, 'Golden', 4, TRUE, 'fluffy.png', '2024-12-01', 1, 6),
-('Bella', 'Cat', 'Siamese', 2, 'Female', 2, 'Cream', 3, TRUE, 'image_url_2', '2024-11-15', 2, NULL),
-('Max', 'Dog', 'Labrador', 4, 'Male', 4, 'Black', 4, TRUE, 'image_url_3', '2024-10-10', NULL, 7),
-('Luna', 'Cat', 'Persian', 3, 'Female', 1, 'White', 4, FALSE, 'image_url_4', '2024-09-05', NULL, NULL),
-('Rex', 'Dog', 'Bulldog', 6, 'Male', 5, 'Brindle', 4, TRUE, 'image_url_5', '2023-12-22', NULL, NULL);
+('Bella', 'Cat', 'Siamese', 2, 'Female', 2, 'Cream', 3, TRUE, NULL, '2024-11-15', 2, NULL),
+('Max', 'Dog', 'Labrador', 4, 'Male', 4, 'Black', 4, TRUE, NULL, '2024-10-10', NULL, 7),
+('Luna', 'Cat', 'Persian', 3, 'Female', 1, 'White', 4, FALSE, NULL, '2024-09-05', NULL, NULL),
+('Rex', 'Dog', 'Bulldog', 6, 'Male', 5, 'Brindle', 4, TRUE, NULL, '2023-12-22', NULL, NULL);
 
 -- FosterHistory Table
 INSERT INTO FosterHistory (user_id, pet_id, start_date, end_date) VALUES

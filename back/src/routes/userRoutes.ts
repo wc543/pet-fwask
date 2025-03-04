@@ -80,7 +80,7 @@ router.post('/signin', async (req: Request, res: Response) => {
     if (!user) {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
-    
+        
     // Compare the provided password with the stored hashed password
     const isMatch = await bcrypt.compare(password, user.hashed_password);
     
