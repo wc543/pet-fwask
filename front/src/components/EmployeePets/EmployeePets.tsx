@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Pet } from './types.ts'
 import './EmployeePets.css';
-import { Button, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableRow, TextField } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
 
 const EmployeePets: React.FC = () => {
@@ -10,6 +10,11 @@ const EmployeePets: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+    const [filterType, setFilterType] = useState('Any');
+    const [filterBreed, setFilterBreed] = useState('');
+    const [filterSize, setFilterSize] = useState('Any');
+    const [filterFosterable, setfilterFosterable] = useState('Any');
 
     const fetchPets = async () => {
         try {
@@ -46,7 +51,43 @@ const EmployeePets: React.FC = () => {
         <div id="content">
 
             <div>
+                <div id='top'>
+                <FormControl fullWidth className="filterForm">
+                    <InputLabel>Type</InputLabel>
+                    <Select label='Type' value={filterType} onChange={e => setFilterType(e.target.value)}>
+                        <MenuItem value='Any'>Any</MenuItem>
+                        <MenuItem value="Cat">Cat</MenuItem>
+                        <MenuItem value="Dog">Dog</MenuItem>
+                        <MenuItem value="Bird">Bird</MenuItem>
+                        <MenuItem value="Rabbit">Rabbit</MenuItem>
+                        <MenuItem value="Reptile">Reptile</MenuItem>
+                        <MenuItem value="Horse">Horse</MenuItem>
+                        <MenuItem value="Other">Other</MenuItem>
+                    </Select>
+                </FormControl>
+                <FormControl fullWidth className="filterForm">
+                    <TextField label='Breed' value={filterBreed} onChange={e => setFilterBreed(e.target.value)}/>
+                </FormControl>
+                <FormControl fullWidth className="filterForm">
+                    <InputLabel>Size</InputLabel>
+                    <Select label='Size' value={filterSize} onChange={e => setFilterSize(e.target.value)}>
+                        <MenuItem value={'Any'}>Any</MenuItem>
+                        <MenuItem value={0}>Small</MenuItem>
+                        <MenuItem value={1}>Medium</MenuItem>
+                        <MenuItem value={2}>Large</MenuItem>
+                        <MenuItem value={3}>Extra-Large</MenuItem>
+                    </Select>
+                </FormControl>
+                <FormControl fullWidth className='filterForm'>
+                    <InputLabel>Fosterable</InputLabel>
+                    <Select label='Fosterable' value={filterFosterable} onChange={e => setfilterFosterable(e.target.value)}>
+                        <MenuItem value={'Any'}>Any</MenuItem>
+                        <MenuItem value={0}>Fosterable</MenuItem>
+                        <MenuItem value={1}>Not Fosterable</MenuItem>
+                    </Select>
+                </FormControl>
                 <Button sx={{ backgroundColor: "black"}} variant="contained" onClick={() => navigate(`/pets/create`)}>Add Pet</Button>
+                </div>
                 <br/>
                 <br/>
             </div>

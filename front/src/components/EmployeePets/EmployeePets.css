@@ -3,6 +3,11 @@
     margin: 3%
 }
 
+#top {
+    display: flex;
+    flex-direction: row;
+}
+
 #petsTable {
     border-radius: 5px;
     border-collapse: separate;
