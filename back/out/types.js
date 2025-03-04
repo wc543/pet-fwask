@@ -21,7 +21,7 @@ let petBodySchema = z.object({
     color: z.string(),
     created_by_id: z.number(),
     fosterable: z.boolean(),
-    pet_image_url: z.string(),
+    pet_image_url: z.string().nullable().optional(),
     shelter_time: z.string().refine((s) => {
         return moment(s, "YYYY-MM-DD", true).toString() !== "Invalid date";
     }),

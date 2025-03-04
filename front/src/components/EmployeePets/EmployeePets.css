@@ -1,23 +1,44 @@
-table {
+#content {
+    justify-content: center;
+    margin: 3%
+}
+
+#petsTable {
+    border-radius: 5px;
+    border-collapse: separate;
+}
+
+.petImageCell {
+    width: 15%;
+    justify-content: center;
+}
+
+.pet_image_wrapper {
     width: 100%;
-    border-collapse: collapse;
 }
 
-th, td {
-    padding: 8px;
-    border: 1px solid black;
+.pet_image {
+    display: block;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-button {
-    padding: 5px 10px;
-    border: 1px solid black;
-    cursor: pointer;
+.petsTableCell {
+    border-top: 1px solid black;
+    border-left: hidden;
+    border-right: hidden;
 }
 
-.pet_image_td {
-    width: 200px;
+#firstRow {
+    border-top: hidden;
 }
 
-.pet_image_wrapper, .pet_image {
-    width: 100%;
+.action_buttons_wrapper {
+    text-align: center;
+}
+
+.action_buttons_wrapper > * {
+    width: 5%;
+    color: black;
 }
