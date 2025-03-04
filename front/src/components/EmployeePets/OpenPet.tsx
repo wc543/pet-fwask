@@ -49,7 +49,7 @@ const OpenPet: React.FC = () => {
                                 <img id="image" src={selectedPet.pet_image_url ? (`/${selectedPet.pet_image_url}`) : ('/no_image.png')}/>
                                 <h2>{selectedPet.name}</h2>
                             </div>
-                            <div id="edit_wrapper">
+                            <div id="employee_buttons">
                                 <Button onClick={() => navigate(`/pets/edit/${selectedPet.pet_id}`)}><EditIcon htmlColor='black'/></Button>
                             </div>
                         </div>

@@ -103,7 +103,7 @@ const AddPet: React.FC = () => {
                 };
                 console.log(newPet);
             let response = await axios.post('/api/pets/', newPet);
-            console.log("Posted new pet successfully :", response.data);
+            console.log("Posted new pet successfully:", response.data);
 
             setPetName('');
             setPetType('');

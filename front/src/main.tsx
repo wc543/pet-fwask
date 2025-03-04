@@ -19,8 +19,9 @@ import { PetProvider } from './components/Pets/PetContext.tsx'
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Users/Profile.tsx';
 import { AuthProvider } from './components/AuthContext.tsx';
-import ViewAdoptionForm from './components/EmployeeForm/ViewAdoptionForm.tsx'
-import OpenPet from './components/EmployeePets/OpenPet.tsx'
+import ViewAdoptionForm from './components/EmployeeForm/ViewAdoptionForm.tsx';
+import OpenPet from './components/EmployeePets/OpenPet.tsx';
+import EditPet from './components/EmployeePets/EditPet.tsx';
 
 export const socket = io('ws://localhost:3001', {
   ackTimeout: 10000,
@@ -50,6 +51,10 @@ let router = createBrowserRouter([
       {
         path: "/pets/create",
         element: <PetProvider><AddPet></AddPet></PetProvider>
+      },
+      {
+        path: "pets/edit/:id",
+        element: <PetProvider><EditPet></EditPet></PetProvider>
       },
       {
         path: "/forms",
