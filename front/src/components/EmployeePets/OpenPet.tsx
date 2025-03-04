@@ -11,6 +11,7 @@ const OpenPet: React.FC = () => {
     let [loading, setLoading] = useState(false);
     let [error, setError] = useState('');
     let {id} = useParams();
+    const navigate = useNavigate();
 
     const fetchPet = async () => {
         try {
@@ -38,41 +39,46 @@ const OpenPet: React.FC = () => {
 
     return (
         <>
-        {selectedPet ? (
-            <Box className="Box" sx={{ minWidth: 120}}>
-                <div id="wrapper">
-                    <div id="top_wrapper">
-                        <div id="image_wrapper">
-                            <img id="image" src={selectedPet.pet_image_url ? (`/${selectedPet.pet_image_url}`) : ('/no_image.png')}/>
-                            <h2>{selectedPet.name}</h2>
+        {!loading ? (
+            <>
+            {selectedPet ? (
+                <Box className="Box" sx={{ minWidth: 120}}>
+                    <div id="wrapper">
+                        <div id="top_wrapper">
+                            <div id="image_wrapper">
+                                <img id="image" src={selectedPet.pet_image_url ? (`/${selectedPet.pet_image_url}`) : ('/no_image.png')}/>
+                                <h2>{selectedPet.name}</h2>
+                            </div>
+                            <div id="edit_wrapper">
+                                <Button onClick={() => navigate(`/pets/edit/${selectedPet.pet_id}`)}><EditIcon htmlColor='black'/></Button>
+                            </div>
                         </div>
-                        <div id="edit_wrapper">
-                            <Button><EditIcon htmlColor='black'/></Button>
+                        <div id="bottom_wrapper">
+                            <div id="col1">
+                                <p>Type: {selectedPet.type}</p>
+                                <p>Breed: {selectedPet.breed}</p>
+                                <p>Size: {selectedPet.size}</p>
+                                <p>Gender: {selectedPet.gender}</p>
+                                <p>Age: {selectedPet.age}</p>
+                            </div>
+                            <div id="col2">
+                                <p>Color: {selectedPet.color}</p>
+                                <p>Arrival date: {selectedPet.shelter_time.toString()}</p>
+                                <p>Note: {selectedPet.note}</p>
+                            </div>
+                            <div id="col3">
+                                <Button style={{marginLeft: 'auto'}}><ModeCommentIcon htmlColor='black'/></Button>
+                                <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Foster</Button>
+                                <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Adopt</Button>
+                            </div>
                         </div>
                     </div>
-                    <div id="bottom_wrapper">
-                        <div id="col1">
-                            <p>Type: {selectedPet.type}</p>
-                            <p>Breed: {selectedPet.breed}</p>
-                            <p>Size: {selectedPet.size}</p>
-                            <p>Gender: {selectedPet.gender}</p>
-                            <p>Age: {selectedPet.age}</p>
-                        </div>
-                        <div id="col2">
-                            <p>Color: {selectedPet.color}</p>
-                            <p>Arrival date: {selectedPet.shelter_time.toString()}</p>
-                            <p>Note: {selectedPet.note}</p>
-                        </div>
-                        <div id="col3">
-                            <Button style={{marginLeft: 'auto'}}><ModeCommentIcon htmlColor='black'/></Button>
-                            <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Foster</Button>
-                            <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Adopt</Button>
-                        </div>
-                    </div>
-                </div>
-            </Box>
-            ) : (
-            <div>Error fetching pet</div>
+                </Box>
+                ) : (
+                <div>Error fetching pet</div>
+            )}
+        </>) : (
+            <div>Loading...</div>
         )}
         </>
       );
