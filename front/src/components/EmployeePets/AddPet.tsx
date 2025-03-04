@@ -1,6 +1,6 @@
 import './AddPet.css';
 import axios from 'axios';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
@@ -9,6 +9,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AuthContext } from '../AuthContext';
 
 // error handling - referenced from activity 3b utils.ts
 // https://medium.com/with-orus/the-5-commandments-of-clean-error-handling-in-typescript-93a9cbdf1af5
@@ -60,13 +61,30 @@ const AddPet: React.FC = () => {
     let [petNote, setPetNote] = useState('');
     let [eligibleFoster, setEligibleFoster] = useState(false);
     let [arrivalDate, setArrivalDate] = useState<Dayjs | null>(dayjs());
-    let [petImage, setPetImage] = useState('');
+    let [petImageUrl, setPetImageUrl] = useState('');
+    let [petImageFile, setPetImageFile] = useState<File | null>(null);
     const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement | null>(null);
+
+    const auth = useContext(AuthContext);
+    console.log("user id: ", auth?.user.user_id);
 
     const handleAddPet = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            // upload pet image
+            let generatedPetImageUrl = "";
+            if (petImageFile) {
+                const formData = new FormData();
+                formData.append('image', petImageFile);
+                let response = await axios.post('/api/upload', formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+                generatedPetImageUrl = response.data.filePath;
+                console.log('File uploaded:', generatedPetImageUrl);
+            }
+
+            // post pet
             let newPet = {
                     name: petName,
                     type: petType,
@@ -75,9 +93,9 @@ const AddPet: React.FC = () => {
                     gender: petGender,
                     age: petAge,
                     color: petColor,
-                    created_by_id: 1,   // TODO - change
+                    created_by_id: auth?.user.user_id,
                     fosterable: eligibleFoster,
-                    pet_image_url: petImage,
+                    pet_image_url: generatedPetImageUrl,
                     shelter_time: arrivalDate ? arrivalDate.format('YYYY-MM-DD') : null,
                     current_foster: null,
                     current_adopter: null,
@@ -85,7 +103,7 @@ const AddPet: React.FC = () => {
                 };
                 console.log(newPet);
             let response = await axios.post('/api/pets/', newPet);
-            console.log("Posted new pe successfully :", response.data);
+            console.log("Posted new pet successfully :", response.data);
 
             setPetName('');
             setPetType('');
@@ -97,7 +115,8 @@ const AddPet: React.FC = () => {
             setPetNote('');
             setEligibleFoster(false);
             setArrivalDate(null);
-            setPetImage('');
+            setPetImageUrl('');
+            setPetImageFile(null);
             alert("Successfully added pet!");
             navigate('/pets');
         } catch (error) {
@@ -110,15 +129,13 @@ const AddPet: React.FC = () => {
         if (!files) return;
     
         const file = files[0];
-    
-        // use the file
-        setPetImage(file.name);
-        console.log(file.name);
+        setPetImageFile(file);
+        setPetImageUrl(file.name);
       }
     
     function handleImageUploadClick(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
-        setPetImage('');
+        setPetImageUrl('');
         if (inputRef.current) inputRef.current.click();
       }
 
@@ -173,7 +190,7 @@ const AddPet: React.FC = () => {
                         <br/>
                         <Button type="button" onClick={handleImageUploadClick}>Upload File</Button>
                         <input ref={inputRef} type='file' hidden onChange={handleImageUpload} />
-                        <div>{petImage}</div>
+                        <div>{petImageUrl}</div>
                     </div>
                     <div className='formsubwrap' id="formsubwrap3">
                         <Button variant="contained" type="submit" >Add Pet</Button>
