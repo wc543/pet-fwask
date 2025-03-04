@@ -10,6 +10,7 @@ import messageRouter from './routes/messageRoutes.js';
 import conversationRoutes from './routes/conversationRoutes.js';
 import path from "path";
 import { fileURLToPath } from "url";
+import multer from 'multer';
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -50,6 +51,24 @@ io.on('connection', (socket) => {
     });
     socket.on('disconnect', () => console.log('user disconnected'));
 });
+// File handling for uploading pet pictures -----
+// Set up storage destination and file naming
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, '../../front/public/'); // Save files to frontend public folder
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname)); // Rename file with timestamp to avoid conflicts
+    }
+});
+const upload = multer({ storage });
+app.post('/api/upload', upload.single('image'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+    }
+    res.json({ filePath: `${req.file.filename}` });
+});
+// -----
 app.get("*", (req, res) => {
     return res.sendFile("index.html", { root: reactAssetsPath });
 });
