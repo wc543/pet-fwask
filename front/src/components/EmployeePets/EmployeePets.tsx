@@ -52,7 +52,7 @@ const EmployeePets: React.FC = () => {
 
             <div>
                 <div id='top'>
-                <FormControl fullWidth className="filterForm">
+                <FormControl className="filterForm">
                     <InputLabel>Type</InputLabel>
                     <Select label='Type' value={filterType} onChange={e => setFilterType(e.target.value)}>
                         <MenuItem value='Any'>Any</MenuItem>
@@ -65,10 +65,10 @@ const EmployeePets: React.FC = () => {
                         <MenuItem value="Other">Other</MenuItem>
                     </Select>
                 </FormControl>
-                <FormControl fullWidth className="filterForm">
+                <FormControl className="filterForm">
                     <TextField label='Breed' value={filterBreed} onChange={e => setFilterBreed(e.target.value)}/>
                 </FormControl>
-                <FormControl fullWidth className="filterForm">
+                <FormControl className="filterForm">
                     <InputLabel>Size</InputLabel>
                     <Select label='Size' value={filterSize} onChange={e => setFilterSize(e.target.value)}>
                         <MenuItem value={'Any'}>Any</MenuItem>
@@ -78,7 +78,7 @@ const EmployeePets: React.FC = () => {
                         <MenuItem value={3}>Extra-Large</MenuItem>
                     </Select>
                 </FormControl>
-                <FormControl fullWidth className='filterForm'>
+                <FormControl className='filterForm'>
                     <InputLabel>Fosterable</InputLabel>
                     <Select label='Fosterable' value={filterFosterable} onChange={e => setfilterFosterable(e.target.value)}>
                         <MenuItem value={'Any'}>Any</MenuItem>

@@ -6,6 +6,11 @@
 #top {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+.filterForm {
+    width: 20%;
 }
 
 #petsTable {
