@@ -4,8 +4,6 @@ import { Pet } from './types.ts'
 import './EmployeePets.css';
 import { Button, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 const EmployeePets: React.FC = () => {
     const [pets, setPets] = useState<Pet[]>([]);
@@ -75,8 +73,6 @@ const EmployeePets: React.FC = () => {
                                         <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>
                                             <div className='action_buttons_wrapper'>
                                                 <Button onClick={() => handleViewPet(pet)}><LaunchIcon htmlColor='black'/></Button>
-                                                <Button><EditIcon htmlColor='black'/></Button>
-                                                <Button><DeleteOutlineIcon htmlColor='black'/></Button>
                                             </div>
                                         </TableCell>
                                     </TableRow>
