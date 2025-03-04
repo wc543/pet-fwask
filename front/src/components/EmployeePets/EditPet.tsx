@@ -1,7 +1,7 @@
 import './EditPet.css';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, FormControl, TextField, Paper, MenuItem, ToggleButton, Checkbox } from '@mui/material';
+import { Box, Button, FormControl, TextField, Paper, MenuItem, ToggleButton, Checkbox, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import { Pet } from './types.ts'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -68,6 +68,7 @@ const EditPet: React.FC = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     let [loading, setLoading] = useState(false);
     let [error, setError] = useState('');
+    let [openDeleteConfirmation, setOpenDeleteConfirmation] = React.useState(false);
     let {id} = useParams();
     const navigate = useNavigate();
 
@@ -169,6 +170,24 @@ const EditPet: React.FC = () => {
         }
     };
 
+    const handleClickOpen = () => {
+        setOpenDeleteConfirmation(true);
+    };
+
+    const handleClose = () => {
+        setOpenDeleteConfirmation(false);
+    };
+
+    const handleDeletePet = async () => {
+        try {
+            let response = await axios.delete(`/api/pets/${id}`);
+            console.log(response.data);
+            navigate('/pets');
+        } catch (error) {
+            alert(getAxiosErrorMessages(error));
+        }
+    };
+
     return (
         <>
         {loading ? (
@@ -232,12 +251,31 @@ const EditPet: React.FC = () => {
                                 <input ref={inputRef} type='file' hidden onChange={handleImageUpload} />
                             </div>
                             <div className='formcol' id='formcol3'>
-                                <Button sx={{ color: 'black' }}><DeleteOutlineIcon htmlColor='black'/>Delete Pet</Button>
-                                <Button variant='contained' type='submit'>Save Changes</Button>
+                                <Button sx={{ color: 'black' }} onClick={handleClickOpen}><DeleteOutlineIcon htmlColor='black'/>Delete Pet</Button>
+                                <Button variant='contained' type='submit' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Save Changes</Button>
                             </div>
                         </div>
                     </FormControl>
                 </Box>
+                <Dialog
+                    open={openDeleteConfirmation}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                    {"Delete Pet?"}
+                    </DialogTitle>
+                    <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        This action cannot be undone.
+                    </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleDeletePet} autoFocus sx={{ color: 'red' }}>Delete</Button>
+                    </DialogActions>
+                </Dialog>
                 </>
             ) : (
                 <div>Error fetching pet</div>
