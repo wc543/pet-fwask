@@ -3,7 +3,7 @@ import './NavBar.css'
 import { useContext } from 'react';
 import { AuthContext } from '../AuthContext';
 
-function Header() {
+/*function Header() {
     const auth = useContext(AuthContext); // Access AuthContext
     console.log("NavBar auth context:", auth); // Debugging log
 
@@ -26,6 +26,53 @@ function Header() {
                 </>
             )}
         </div>
+    );
+}*/
+function Header() {
+    const auth = useContext(AuthContext);
+  
+    let navLinks;
+    if (auth?.user) {
+      const role = auth.user.role;
+      if (role === 'STAFF') {
+        navLinks = (
+          <>
+            <Link to="/dashboard" className="nav-link">Dashboard</Link>
+            <Link to="/pets" className="nav-link">View Pets</Link>
+            <Link to="/conversation-history" className="nav-link">View Messages</Link>
+            <Link to="/forms" className="nav-link">View Forms</Link>
+            <Link to="/logout" className="nav-link">Logout</Link>
+          </>
+        );
+      } else if (role === 'ADOPTER' || role === 'FOSTER') {
+        navLinks = (
+          <>
+            <Link to="/pets" className="nav-link">View Pets</Link>
+            <Link to="/conversation-history" className="nav-link">View Messages</Link>
+            <Link to="/application-forms" className="nav-link">Application Forms</Link>
+            <Link to="/logout" className="nav-link">Logout</Link>
+          </>
+        );
+      }
+    } else {
+      navLinks = (
+        <>
+          <Link to="/pets" className="nav-link">View Pets</Link>
+          <Link to="/login" className="nav-link">Login</Link>
+          <Link to="/signup" className="nav-link">Sign Up</Link>
+          {/* For now, "Apply to be a Foster" simply redirects to the login page */}
+          <Link to="/login" className="nav-link">Apply to be a Foster</Link>
+        </>
+      );
+    }
+  
+    return (
+      <div className="navbar">
+        {navLinks}
+        {auth?.user && (
+          <span className="nav-user">Welcome, {auth.user.username}!</span>
+        )}
+      </div>
     );
 }
 
