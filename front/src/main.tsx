@@ -63,11 +63,13 @@ let router = createBrowserRouter([
       },
       {
         path: "/conversation-history",
-        element: <UserProvider><ConversationHistory></ConversationHistory></UserProvider>
+        element: <ProtectedRoute />,
+        children: [{ path: "", element:  <ConversationHistory></ConversationHistory>}],
       },
       {
         path: "/conversation-history/conversation/:conversation_id",
-        element: <UserProvider><ConversationPage></ConversationPage></UserProvider>
+        element: <ProtectedRoute />,
+        children: [{ path: "", element:  <ConversationPage></ConversationPage>}],
       },
       {
         path: "/profile",
@@ -101,7 +103,9 @@ let router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AuthProvider>
-      <RouterProvider router={router} />
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
     </AuthProvider>
   </React.StrictMode>,
 )

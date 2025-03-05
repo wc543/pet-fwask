@@ -29,7 +29,6 @@ router.get("/:user_id/user",  async (req : Request, res : Response) => {
          WHERE owner_id = ? OR user_id = ?`,
         [user_id, user_id]
       );
-      console.log("conversations: " + conversation);
       res.json(conversation);
     } catch (err) {
       console.error("Database error:", err);
