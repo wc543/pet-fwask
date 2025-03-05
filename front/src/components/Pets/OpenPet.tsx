@@ -64,7 +64,7 @@ const OpenPet: React.FC = () => {
                             <div id="col2">
                                 <p>Color: {selectedPet.color}</p>
                                 <p>Arrival date: {selectedPet.shelter_time.toString()}</p>
-                                <p>Note: {selectedPet.note}</p>
+                                <p>Note: {selectedPet.notes}</p>
                             </div>
                             <div id="col3">
                                 <Button style={{marginLeft: 'auto'}}><ModeCommentIcon htmlColor='black'/></Button>

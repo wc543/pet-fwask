@@ -13,5 +13,5 @@ export interface Pet {
     shelter_time: Date;
     current_foster: number;
     current_adopter: number;
-    note: string;
+    notes: string;
 }

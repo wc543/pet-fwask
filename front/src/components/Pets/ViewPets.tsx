@@ -7,7 +7,7 @@ import LaunchIcon from '@mui/icons-material/Launch';
 import { AuthContext } from '../AuthContext.tsx';
 import { useUser } from '../Users/UserContext.tsx';
 
-const EmployeePets: React.FC = () => {
+const ViewPets: React.FC = () => {
     const [pets, setPets] = useState<Pet[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -114,7 +114,7 @@ const EmployeePets: React.FC = () => {
                                         </TableCell>
                                         <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.name}</TableCell>
                                         <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.type}</TableCell>
-                                        <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.breed}</TableCell>
+                                        <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.breed === '' ? '--' : `${pet.breed}`}</TableCell>
                                         <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>Age: {pet.age}</TableCell>
                                         <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.gender}</TableCell>
                                         <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>Size: {pet.size}</TableCell>
@@ -142,4 +142,4 @@ const EmployeePets: React.FC = () => {
     );
 };
 
-export default EmployeePets;
+export default ViewPets;

@@ -31,7 +31,7 @@ let petBodySchema = z.object({
   }),
   current_foster: z.number().nullable(),
   current_adopter: z.number().nullable(),
-  notes: z.string().nullable().optional(),
+  notes: z.string().optional(),
 });
 
 let userBodySchema = z.object({
