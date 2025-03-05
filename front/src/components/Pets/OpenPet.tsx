@@ -76,9 +76,13 @@ const OpenPet: React.FC = () => {
                                 <p>Note: {selectedPet.notes}</p>
                             </div>
                             <div id="col3">
-                                <Button style={{marginLeft: 'auto'}}><ModeCommentIcon htmlColor='black'/></Button>
-                                <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Foster</Button>
-                                <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Adopt</Button>
+                                {role === 'STAFF' ? (<></>) : (
+                                    <>
+                                    <Button style={{marginLeft: 'auto'}}><ModeCommentIcon htmlColor='black'/></Button>
+                                    <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Foster</Button>
+                                    <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Adopt</Button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
