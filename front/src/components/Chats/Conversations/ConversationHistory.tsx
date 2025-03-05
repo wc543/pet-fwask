@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from '@mui/material';
-import {socket} from '../../../main.tsx';
 import { useUser } from "../../Users/UserContext.tsx";
+import { AuthContext } from "../../AuthContext.tsx";
 
 interface Conversation {
     user_id: number;
@@ -17,9 +17,10 @@ export const ConversationHistory: React.FC = () => {
     const [conversations, setConversation] = useState<Conversation[]>([]);
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const user_id = 7; //TODO Change- this is hank
+    const auth = useContext(AuthContext);
+    const user_id = auth?.user.user_id; 
     const{ getUsername } = useUser();
-
+  
     const getAllConversations = async () => {
       try {
         setError('');
@@ -34,19 +35,11 @@ export const ConversationHistory: React.FC = () => {
     }
   
     const handleJoinConversation = async (conversationId : number) => {
-      socket.emit('join conversation', conversationId);
       navigate(`conversation/${conversationId}`);
     }
 
     useEffect(() => {
-      socket.on('connect', () => {
-        console.log('WebSocket connected');
-      });
       getAllConversations();
-
-      return () => {
-        socket.disconnect();
-      };
     }, []);
   
   

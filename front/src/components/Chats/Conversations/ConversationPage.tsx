@@ -35,28 +35,56 @@ export const ConversationPage = () => {
       } catch (err) {
         console.error(err);
       }
-};
+  };
 
-useEffect( () => {
-  console.log(conversation_id);
-  if(conversation_id) getConversation();
+  const joinConversation = () =>{
+    if (conversation_id){
+      socket.emit('join conversation', conversation_id, (response: any) => (console.log(response.status)));
+      console.log(`Joining conversation: ${conversation_id}`);
+    }
+  }
+
+  const leaveConversation = () =>{
+    if (conversation_id){
+      socket.emit('leave conversation', conversation_id, (response: any) => (console.log(response.status)));
+      console.log(`Leaving conversation: ${conversation_id}`);
+    }
+  }
+
+  const handleBackClick = () =>{
+    leaveConversation();
+    navigate('/conversation-history');
+  }
+  
+  const handleNewMessage = (newMessage : Message) => {
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
+
+  useEffect( () => {
+    socket.on('connect', () => console.log('Connected to server'));
+    socket.on('disconnect', () => console.log('Disconnected from server'));
+
+    if(conversation_id) {
+      getConversation();
+      joinConversation();
+    }
     getAllMessages();
-    const handleNewMessage = () => {
-      getAllMessages();
-    };
 
     socket.on('chat message', handleNewMessage);
 
-    return () => {
+    return () =>{
+      socket.off('connect', () => console.log('Connected to server'));
+      socket.off('disconnect', () => console.log('Disconnected from server'));
       socket.off('chat message', handleNewMessage);
     };
-  }
-, []);
+    }
+  , []);
   
   return(
     <>      
-    <button onClick={() => {navigate('/conversation-history');}}>Back</button>
-    <div className='ChatContainer'>
+    <button onClick={() => {handleBackClick();}}>Back</button>
+    <div className='chatFrame'>
+    <div className='chatMessagesContainer'>
       <ul>
         {messages.map((msg) => (
           <li key={msg.message_id}>{msg.message} - {getUsername(msg.sender_id)}</li>
@@ -64,7 +92,8 @@ useEffect( () => {
         ))}
       </ul>
     </div>
-  <MessageForm></MessageForm>
+    <MessageForm></MessageForm>
+    </div>
   </>
   
   )

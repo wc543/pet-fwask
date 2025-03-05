@@ -23,10 +23,7 @@ import ViewAdoptionForm from './components/forms/ViewAdoptionForm.tsx';
 import OpenPet from './components/EmployeePets/OpenPet.tsx';
 import EditPet from './components/EmployeePets/EditPet.tsx';
 
-export const socket = io('ws://localhost:3001', {
-  ackTimeout: 10000,
-  retries: 3,
-});
+export const socket = io('ws://localhost:3001');
 
 let router = createBrowserRouter([
   {
