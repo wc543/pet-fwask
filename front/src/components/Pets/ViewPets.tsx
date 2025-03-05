@@ -126,9 +126,9 @@ const ViewPets: React.FC = () => {
                                     </TableRow>
                                 ))
                             ) : (
-                                <tr>
-                                    <td colSpan={8}>No pets found</td>
-                                </tr>
+                                <TableRow>
+                                    <TableCell sx={{ border: 'hidden' }}>No pets found</TableCell>
+                                </TableRow>
                             )}
                         </TableBody>
                     </Table>
