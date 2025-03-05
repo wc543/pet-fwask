@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState , useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
-import './EmployeeForm.css';
+import './FormList.css';
+import {AuthContext} from '../AuthContext'
 
 interface Form {
   form_id?: number;
@@ -12,26 +13,36 @@ interface Form {
   form_type: string;
 }
 
-const EmployeeForm: React.FC = () => {
+const FormList: React.FC = () => {
   const [forms, setForms] = useState<Form[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const auth = useContext(AuthContext);
 
   const fetchForms = async () => {
     try {
       setLoading(true);
       setError('');
+      var userId=auth?.user.user_id
       
-      const response = await fetch("/api/forms");
-      if (!response.ok) {
+      const adoptionResponse = await fetch(`/api/forms/adoptionList/${userId}`);
+      const fosterPetResponse = await fetch(`/api/forms/fosterPetList/${userId}`);
+      const fosterParentResponse = await fetch(`/api/forms/fosterParentList/${userId}`);
+      if (!adoptionResponse.ok || !fosterPetResponse.ok || !fosterParentResponse.ok) {
         throw new Error("Failed to fetch forms");
       }
 
-      const data = await response.json();
-      console.log(data);
+      const adoptionData = await adoptionResponse.json();
+      const fosterPetData = await fosterPetResponse.json();
+      const fosterParentData = await fosterParentResponse.json();
 
-      setForms(data);
+      const allFormData = adoptionData.result.concat(fosterPetData.result, fosterParentData.result)
+
+      console.log("data");
+      console.log(allFormData);
+
+      setForms(allFormData);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to fetch forms");
     } finally {
@@ -91,4 +102,4 @@ const EmployeeForm: React.FC = () => {
   );
 };
 
-export default EmployeeForm;
+export default FormList;

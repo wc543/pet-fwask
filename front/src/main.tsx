@@ -8,7 +8,7 @@ import SignupForm from './components/LoginSignUp/SignUpForm.tsx';
 import LoginForm from './components/LoginSignUp/LoginForm.tsx';
 import EmployeePets from './components/EmployeePets/EmployeePets.tsx'
 import AddPet from './components/EmployeePets/AddPet.tsx';
-import EmployeeForm from './components/EmployeeForm/EmployeeForm';
+import FormList from './components/forms/FormList.tsx';
 import {io} from 'socket.io-client'
 import { ConversationHistory } from './components/Chats/Conversations/ConversationHistory.tsx';
 import { ConversationPage } from './components/Chats/Conversations/ConversationPage.tsx';
@@ -19,7 +19,7 @@ import { PetProvider } from './components/Pets/PetContext.tsx'
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Users/Profile.tsx';
 import { AuthProvider } from './components/AuthContext.tsx';
-import ViewAdoptionForm from './components/EmployeeForm/ViewAdoptionForm.tsx';
+import ViewAdoptionForm from './components/forms/ViewAdoptionForm.tsx';
 import OpenPet from './components/EmployeePets/OpenPet.tsx';
 import EditPet from './components/EmployeePets/EditPet.tsx';
 
@@ -34,7 +34,7 @@ let router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: null
+        element: <PetProvider><EmployeePets></EmployeePets></PetProvider>
       },
       {
         path: "/dashboard",
@@ -58,7 +58,8 @@ let router = createBrowserRouter([
       },
       {
         path: "/forms",
-        element: <EmployeeForm />
+        element:  <ProtectedRoute />,
+        children: [{path: "", element: <FormList /> }],
       },
       {
         path: "/conversation-history",

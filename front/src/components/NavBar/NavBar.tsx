@@ -49,7 +49,7 @@ function Header() {
           <>
             <Link to="/pets" className="nav-link">View Pets</Link>
             <Link to="/conversation-history" className="nav-link">View Messages</Link>
-            <Link to="/application-forms" className="nav-link">Application Forms</Link>
+            <Link to="/forms" className="nav-link">View Forms</Link>
             <Link to="/logout" className="nav-link">Logout</Link>
           </>
         );
