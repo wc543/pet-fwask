@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Pet } from './types.ts'
-import './EmployeePets.css';
+import './ViewPets.css';
 import { Button, FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableRow, TextField } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../AuthContext.tsx';
 import { useUser } from '../Users/UserContext.tsx';
 
 const EmployeePets: React.FC = () => {

@@ -67,7 +67,7 @@ const AddPet: React.FC = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const auth = useContext(AuthContext);
-    console.log("user id: ", auth?.user.user_id);
+    console.log("user id: ", auth?.user?.user_id);
 
     const handleAddPet = async (e: React.FormEvent) => {
         e.preventDefault();
