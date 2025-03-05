@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Pet } from './types.ts'
 import './EmployeePets.css';
 import { Button, FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableRow, TextField } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
+import { AuthContext } from '../AuthContext';
+import { useUser } from '../Users/UserContext.tsx';
 
 const EmployeePets: React.FC = () => {
     const [pets, setPets] = useState<Pet[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const{ getRole } = useUser();
 
     const [filterType, setFilterType] = useState('Any');
     const [filterBreed, setFilterBreed] = useState('');
     const [filterSize, setFilterSize] = useState('Any');
     const [filterFosterable, setfilterFosterable] = useState('Any');
+    const auth = useContext(AuthContext);
+    const role = getRole(auth?.user?.user_id);
+    console.log('role =', role);
 
     const fetchPets = async () => {
         try {
@@ -29,6 +35,7 @@ const EmployeePets: React.FC = () => {
             const data = await response.json();
             console.log(data);
             setPets(data.pets);
+
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to fetch pets");
         } finally {
@@ -86,7 +93,7 @@ const EmployeePets: React.FC = () => {
                         <MenuItem value={1}>Not Fosterable</MenuItem>
                     </Select>
                 </FormControl>
-                <Button sx={{ backgroundColor: "black"}} variant="contained" onClick={() => navigate(`/pets/create`)}>Add Pet</Button>
+                {role === 'STAFF' ? (<Button sx={{ backgroundColor: "black"}} variant="contained" onClick={() => navigate(`/pets/create`)}>Add Pet</Button>) : (<></>)}
                 </div>
                 <br/>
                 <br/>

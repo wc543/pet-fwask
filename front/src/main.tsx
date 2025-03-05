@@ -34,7 +34,7 @@ let router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <PetProvider><EmployeePets></EmployeePets></PetProvider>
+        element: <UserProvider><EmployeePets></EmployeePets></UserProvider>
       },
       {
         path: "/dashboard",
@@ -42,7 +42,7 @@ let router = createBrowserRouter([
       },
       {
         path: "/pets",
-        element: <PetProvider><EmployeePets></EmployeePets></PetProvider>
+        element: <UserProvider><EmployeePets></EmployeePets></UserProvider>
       },
       {
         path: "/pets/id/:id",
