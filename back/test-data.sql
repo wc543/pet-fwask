@@ -1,12 +1,12 @@
 -- Users Table
 INSERT INTO Users (first_name, last_name, username, hashed_password, role, address, state, city, zip_code, phone_number, email, date_of_birth) VALUES
-('Alice', 'Smith', 'alice', 'hashed_password_1', 'FOSTER', '123 Elm St', 'NY', 'New York', '10001', '123-456-7890', 'alice@example.com', '1985-04-12'),
-('Bob', 'Jones', 'bob', 'hashed_password_2', 'STAFF', '456 Oak St', 'NY', 'Brooklyn', '11201', '987-654-3210', 'bob@example.com', '1980-05-20'),
-('Charlie', 'Davis', 'charlie', 'hashed_password_3', 'FOSTER', '789 Pine St', 'CA', 'Los Angeles', '90001', '555-123-4567', 'charlie@example.com', '1990-07-15'),
-('David', 'Williams', 'david', 'hashed_password_4', 'STAFF', '101 Maple St', 'CA', 'San Francisco', '94101', '555-234-5678', 'david@example.com', '1982-08-10'),
-('Eve', 'Brown', 'eve', 'hashed_password_5', 'FOSTER', '202 Birch St', 'TX', 'Austin', '73301', '555-345-6789', 'eve@example.com', '1987-01-30'),
-('Grace', 'Taylor', 'grace', 'hashed_password_6', 'ADOPTER', '303 Cedar St', 'FL', 'Miami', '33101', '555-456-7890', 'grace@example.com', '1995-02-25'),
-('Hank', 'Wilson', 'hank123', 'hashed_password_7', 'ADOPTER', '404 Spruce St', 'TX', 'Houston', '77001', '555-567-8901', 'hank@example.com', '1988-09-11');
+('Alice', 'Smith', 'alice', '$2b$10$Bi1nX8vWWbSeQHPXpCEoD.U8.C6J7e83FgvaZ2bfm5w5vUDbOtN7i', 'FOSTER', '123 Elm St', 'NY', 'New York', '10001', '123-456-7890', 'alice@example.com', '1985-04-12'), -- password: password_1
+('Bob', 'Jones', 'bob', '$2b$10$c5xjQyA..mBUZvt1HLB1pOE5q5E5FzrOoyj6JJ7ySIVyjkNTZgA02', 'STAFF', '456 Oak St', 'NY', 'Brooklyn', '11201', '987-654-3210', 'bob@example.com', '1980-05-20'), -- password: password_2
+('Charlie', 'Davis', 'charlie', '$2b$10$1garp/Yz9RFv6X7wPin3yOoBTZWSxHv5C4h9efC2FzpvY4YGYUKzW', 'FOSTER', '789 Pine St', 'CA', 'Los Angeles', '90001', '555-123-4567', 'charlie@example.com', '1990-07-15'), -- password: password_3
+('David', 'Williams', 'david', '$2b$10$.hI6pqnZ4ZXp91InWzEQEehQqq2D99wQcQBTPhn9.MHneipotwiJK', 'STAFF', '101 Maple St', 'CA', 'San Francisco', '94101', '555-234-5678', 'david@example.com', '1982-08-10'), -- password: password_4
+('Eve', 'Brown', 'eve', '$2b$10$wWnlLgruq3eFGjb3JCpGwuwcpg2vtRxp3uy3kwJiPO1gOUJq1GBtO', 'FOSTER', '202 Birch St', 'TX', 'Austin', '73301', '555-345-6789', 'eve@example.com', '1987-01-30'), -- password: password_5
+('Grace', 'Taylor', 'grace', '$2b$10$0vKh/AOJyPJI8GvmQLkkoeWcBAeisbXE3G5QXzmum2t/MHMzRxeLm', 'ADOPTER', '303 Cedar St', 'FL', 'Miami', '33101', '555-456-7890', 'grace@example.com', '1995-02-25'), -- password: password_6
+('Hank', 'Wilson', 'hank123', '$2b$10$MMDiR.QqvxbtolRFj5ywvONFv7GFWXYJ87J3BzaoeXPCDR0FVAO46', 'ADOPTER', '404 Spruce St', 'TX', 'Houston', '77001', '555-567-8901', 'hank@example.com', '1988-09-11'); -- password: password_7
 
 -- UserHousehold Table
 INSERT INTO UserHousehold (user_id, household_size, household_allergies, current_pets) VALUES
