@@ -45,15 +45,15 @@ let router = createBrowserRouter([
       },
       {
         path: "/pets/id/:id",
-        element: <OpenPet />
+        element: <UserProvider><OpenPet/></UserProvider>
       },
       {
         path: "/pets/create",
-        element: <AddPet />
+        element: <UserProvider><AddPet/></UserProvider>
       },
       {
         path: "pets/edit/:id",
-        element: <EditPet />
+        element: <UserProvider><EditPet/></UserProvider>
       },
       {
         path: "/forms",

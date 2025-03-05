@@ -1,10 +1,12 @@
 import './OpenPet.css';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import { Pet } from './types.ts'
+import { AuthContext } from '../AuthContext.tsx';
+import { useUser } from '../Users/UserContext.tsx';
 
 const OpenPet: React.FC = () => {
     let [selectedPet, setSelectedPet] = useState<Pet|null>(null);
@@ -12,6 +14,11 @@ const OpenPet: React.FC = () => {
     let [error, setError] = useState('');
     let {id} = useParams();
     const navigate = useNavigate();
+    const{ getRole } = useUser();
+    const auth = useContext(AuthContext);
+    const user_id = auth?.user?.user_id;
+    const role = getRole(user_id);
+    console.log('role =', role);
 
     const fetchPet = async () => {
         try {
@@ -50,7 +57,9 @@ const OpenPet: React.FC = () => {
                                 <h2>{selectedPet.name}</h2>
                             </div>
                             <div id="employee_buttons">
-                                <Button onClick={() => navigate(`/pets/edit/${selectedPet.pet_id}`)}><EditIcon htmlColor='black'/></Button>
+                                {(role === 'STAFF' && user_id === selectedPet.created_by_id) ? (
+                                    <Button onClick={() => navigate(`/pets/edit/${selectedPet.pet_id}`)}><EditIcon htmlColor='black'/></Button>
+                                ): (<></>)}
                             </div>
                         </div>
                         <div id="bottom_wrapper">
