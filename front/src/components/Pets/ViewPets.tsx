@@ -1,20 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Pet } from './types.ts'
-import './EmployeePets.css';
+import './ViewPets.css';
 import { Button, FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableRow, TextField } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
+import { AuthContext } from '../AuthContext.tsx';
+import { useUser } from '../Users/UserContext.tsx';
 
-const EmployeePets: React.FC = () => {
+const ViewPets: React.FC = () => {
     const [pets, setPets] = useState<Pet[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const{ getRole } = useUser();
 
     const [filterType, setFilterType] = useState('Any');
     const [filterBreed, setFilterBreed] = useState('');
     const [filterSize, setFilterSize] = useState('Any');
     const [filterFosterable, setfilterFosterable] = useState('Any');
+    const auth = useContext(AuthContext);
+    const role = getRole(auth?.user?.user_id);
+    console.log('role =', role);
 
     const fetchPets = async () => {
         try {
@@ -29,6 +35,7 @@ const EmployeePets: React.FC = () => {
             const data = await response.json();
             console.log(data);
             setPets(data.pets);
+
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to fetch pets");
         } finally {
@@ -86,7 +93,7 @@ const EmployeePets: React.FC = () => {
                         <MenuItem value={1}>Not Fosterable</MenuItem>
                     </Select>
                 </FormControl>
-                <Button sx={{ backgroundColor: "black"}} variant="contained" onClick={() => navigate(`/pets/create`)}>Add Pet</Button>
+                {role === 'STAFF' ? (<Button sx={{ backgroundColor: "black"}} variant="contained" onClick={() => navigate(`/pets/create`)}>Add Pet</Button>) : (<></>)}
                 </div>
                 <br/>
                 <br/>
@@ -107,7 +114,7 @@ const EmployeePets: React.FC = () => {
                                         </TableCell>
                                         <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.name}</TableCell>
                                         <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.type}</TableCell>
-                                        <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.breed}</TableCell>
+                                        <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.breed === '' ? '--' : `${pet.breed}`}</TableCell>
                                         <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>Age: {pet.age}</TableCell>
                                         <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.gender}</TableCell>
                                         <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>Size: {pet.size}</TableCell>
@@ -119,9 +126,9 @@ const EmployeePets: React.FC = () => {
                                     </TableRow>
                                 ))
                             ) : (
-                                <tr>
-                                    <td colSpan={8}>No pets found</td>
-                                </tr>
+                                <TableRow>
+                                    <TableCell sx={{ border: 'hidden' }}>No pets found</TableCell>
+                                </TableRow>
                             )}
                         </TableBody>
                     </Table>
@@ -135,4 +142,4 @@ const EmployeePets: React.FC = () => {
     );
 };
 
-export default EmployeePets;
+export default ViewPets;

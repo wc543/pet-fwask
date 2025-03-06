@@ -61,17 +61,18 @@ const AddPet: React.FC = () => {
     let [petNote, setPetNote] = useState('');
     let [eligibleFoster, setEligibleFoster] = useState(false);
     let [arrivalDate, setArrivalDate] = useState<Dayjs | null>(dayjs());
-    let [petImageUrl, setPetImageUrl] = useState('');
+    let [petImageUrl, setPetImageUrl] = useState('no_image.png');
     let [petImageFile, setPetImageFile] = useState<File | null>(null);
     const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement | null>(null);
-
     const auth = useContext(AuthContext);
-    console.log("user id: ", auth?.user.user_id);
 
     const handleAddPet = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            var user_id = auth?.user.user_id;
+            console.log("user id:", user_id);
+
             // upload pet image
             let generatedPetImageUrl = "";
             if (petImageFile) {
@@ -93,13 +94,13 @@ const AddPet: React.FC = () => {
                     gender: petGender,
                     age: petAge,
                     color: petColor,
-                    created_by_id: auth?.user.user_id,
+                    created_by_id: user_id,
                     fosterable: eligibleFoster,
                     pet_image_url: generatedPetImageUrl,
                     shelter_time: arrivalDate ? arrivalDate.format('YYYY-MM-DD') : null,
                     current_foster: null,
                     current_adopter: null,
-                    note: petNote,
+                    notes: petNote,
                 };
                 console.log(newPet);
             let response = await axios.post('/api/pets/', newPet);
@@ -114,7 +115,7 @@ const AddPet: React.FC = () => {
             setPetColor('');
             setPetNote('');
             setEligibleFoster(false);
-            setArrivalDate(null);
+            setArrivalDate(dayjs());
             setPetImageUrl('');
             setPetImageFile(null);
             alert("Successfully added pet!");
@@ -135,7 +136,7 @@ const AddPet: React.FC = () => {
     
     function handleImageUploadClick(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
-        setPetImageUrl('');
+        setPetImageUrl('no_image.png');
         if (inputRef.current) inputRef.current.click();
       }
 
@@ -178,8 +179,8 @@ const AddPet: React.FC = () => {
                         <br/>
                         <TextField className='formInput' label="Note" value={petNote} onChange={e => setPetNote(e.target.value)} component={Paper}/>
                         <br/>
-                        <ToggleButton id="toggle" value={eligibleFoster} selected={eligibleFoster} onChange={() => setEligibleFoster((prev) => !prev)}>
-                            <Checkbox/>
+                        <ToggleButton id="toggle" value="fosterable" selected={eligibleFoster} onChange={() => setEligibleFoster(!eligibleFoster)}>
+                            <Checkbox checked={!!eligibleFoster}/>
                             <label>Eligible for foster</label>
                         </ToggleButton>
                     </div>
@@ -188,9 +189,10 @@ const AddPet: React.FC = () => {
                             <DatePicker label="Date arrived at shelter" value={arrivalDate} onChange={(ndate) => setArrivalDate(ndate)} format='YYYY-MM-DD'/>
                         </LocalizationProvider>
                         <br/>
-                        <Button type="button" onClick={handleImageUploadClick}>Upload File</Button>
+                        <p style={{ 'textAlign': 'center' }}>{petImageUrl === 'no_image.png' ? '' : `${petImageUrl}`}</p>
+                        <Button type="button" onClick={handleImageUploadClick}>{petImageUrl === 'no_image.png' ? 'Upload Image' : 'Replace Image'}</Button>
                         <input ref={inputRef} type='file' hidden onChange={handleImageUpload} />
-                        <div>{petImageUrl}</div>
+                        {petImageUrl === 'no_image.png' ? (<></>) : (<Button type='button' onClick={() => setPetImageUrl('no_image.png')}>Remove Image</Button>)}
                     </div>
                     <div className='formsubwrap' id="formsubwrap3">
                         <Button variant="contained" type="submit" >Add Pet</Button>

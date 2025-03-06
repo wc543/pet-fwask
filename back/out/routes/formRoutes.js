@@ -188,8 +188,6 @@ router.put("/adoption/:id", async (req, res) => {
     return res.json({ result });
 });
 //put foster pet form status
-//to do: put status text
-//to do: if status is approved
 router.put("/foster-pet/:id", async (req, res) => {
     let id = req.params.id;
     let result;
@@ -283,8 +281,21 @@ router.get('/foster-parent/:id', async (req, res) => {
     }
     return res.json({ result });
 });
-//to do
-//get user ID fields that are used in form fields
+//Get user and user household fields to autofill when filling out a form
+router.get('/autofillForm/:id', async (req, res) => {
+    let userId = req.params.id;
+    let userResult;
+    let householdResult;
+    try {
+        userResult = await db.all('SELECT first_name, last_name, address, state, city, zip_code, phone_number FROM Users WHERE user_id=$1;', [userId]);
+        householdResult = await db.all('SELECT household_size, household_allergies, current_pets FROM UserHousehold WHERE user_id=$1;', [userId]);
+    }
+    catch (err) {
+        let error = err;
+        return res.status(500).json({ error: error.toString() });
+    }
+    return res.json({ userResult, householdResult });
+});
 //get adoption form list
 //when passed user id, returns all forms submitted by that user
 //when passed employee id, returns all forms associated with employee
@@ -334,7 +345,7 @@ router.get('/fosterPetList/:id', async (req, res) => {
             let error = err;
             return res.status(500).json({ error: error.toString() });
         }
-        return res.json(result);
+        return res.json({ result });
     }
     else if (userRole.role === "STAFF") {
         let associatedPets;
@@ -345,7 +356,7 @@ router.get('/fosterPetList/:id', async (req, res) => {
                 result.push(form);
             }
         }
-        return res.json(result);
+        return res.json({ result });
     }
     else {
         return res.status(201).json({ error: "invalid user" });
@@ -367,11 +378,11 @@ router.get('/fosterParentList/:id', async (req, res) => {
             let error = err;
             return res.status(500).json({ error: error.toString() });
         }
-        return res.json(result);
+        return res.json({ result });
     }
     else if (userRole.role === "STAFF") {
         result = await db.all('SELECT * FROM FosterParentForms');
-        return res.json(result);
+        return res.json({ result });
     }
     else {
         return res.status(201).json({ error: "invalid user" });
@@ -391,7 +402,7 @@ router.get('/employeeDashboard/adoptionList/:id', async (req, res) => {
             let error = err;
             return res.status(500).json({ error: error.toString() });
         }
-        return res.json(result);
+        return res.json({ result });
     }
     else if (userRole.role === "STAFF") {
         let associatedPets;
@@ -402,7 +413,7 @@ router.get('/employeeDashboard/adoptionList/:id', async (req, res) => {
                 result.push(form);
             }
         }
-        return res.json(result);
+        return res.json({ result });
     }
     else {
         return res.status(201).json({ error: "invalid user" });
@@ -423,7 +434,7 @@ router.get('/employeeDashboard/fosterPetList/:id', async (req, res) => {
                 result.push(form);
             }
         }
-        return res.json(result);
+        return res.json({ result });
     }
     else {
         return res.status(201).json({ error: "invalid user" });
@@ -437,7 +448,7 @@ router.get('/employeeDashboard/fosterParentList/:id', async (req, res) => {
     let userRole = await db.get('SELECT role FROM Users WHERE user_id=$1;', [id]);
     if (userRole.role === "STAFF") {
         result = await db.all('SELECT * FROM FosterParentForms WHERE processed=$1', [false]);
-        return res.json(result);
+        return res.json({ result });
     }
     else {
         return res.status(201).json({ error: "invalid user" });

@@ -51,6 +51,7 @@ function getAxiosErrorMessages(err: unknown): string {
 
 const EditPet: React.FC = () => {
     let [pet, setPet] = useState<Pet|null>(null);
+    let [createdBy, setCreatedBy] = useState(0);
     let [nameEdit, setNameEdit] = useState('');
     let [typeEdit, setTypeEdit] = useState('');
     let [breedEdit, setBreedEdit] = useState('');
@@ -85,6 +86,7 @@ const EditPet: React.FC = () => {
             const data = await response.json();
             console.log(data.pets);
             setPet(data.pets);
+            setCreatedBy(data.pets.created_by_id);
             setNameEdit(data.pets.name);
             setTypeEdit(data.pets.type);
             setBreedEdit(data.pets.breed);
@@ -92,7 +94,7 @@ const EditPet: React.FC = () => {
             setGenderEdit(data.pets.gender);
             setAgeEdit(data.pets.age);
             setColorEdit(data.pets.color);
-            setNoteEdit(data.pets.note);
+            setNoteEdit(data.pets.notes);
             setFosterableEdit(data.pets.fosterable === 0 ? (false) : (true));
             setArrivalEdit(data.pets.shelter_time ? dayjs(data.pets.shelter_time) : dayjs());
             setImageEdit(data.pets.pet_image_url);
@@ -152,13 +154,13 @@ const EditPet: React.FC = () => {
                 gender: genderEdit,
                 age: ageEdit,
                 color: colorEdit,
-                created_by_id: 1, // TODO: change when auth is set up
+                created_by_id: createdBy,
                 fosterable: fosterableEdit,
                 pet_image_url: generatedPetImageUrl,
                 shelter_time: arrivalEdit ? arrivalEdit.format('YYYY-MM-DD') : null,
                 current_foster: currentFoster,
                 current_adopter: currentAdopter,
-                note: noteEdit,
+                notes: noteEdit,
             };
             console.log(edits);
             let response = await axios.put(`/api/pets/${id}`, edits);
