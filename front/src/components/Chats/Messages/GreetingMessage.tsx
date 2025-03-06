@@ -1,0 +1,1 @@
+//Hi there! 👋 Welcome to the adoption chat. We're so excited you're interested in giving a loving home to one of our amazing pets! 🐾 [Employee Name] is assigned to answer any questions you have about [Dog’s Name] or the adoption process. Feel free to share any questions in the meantime!

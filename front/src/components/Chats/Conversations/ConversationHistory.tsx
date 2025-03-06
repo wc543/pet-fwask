@@ -4,14 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from '@mui/material';
 import { useUser } from "../../Users/UserContext.tsx";
 import { AuthContext } from "../../AuthContext.tsx";
-
-interface Conversation {
-    user_id: number;
-    owner_id: number;
-    conversation_id: number;
-    pet_id: number | null;
-    created_at: string;
-  }
+import { Conversation } from "../types.ts";
 
 export const ConversationHistory: React.FC = () => {
     const [conversations, setConversation] = useState<Conversation[]>([]);
@@ -40,15 +33,18 @@ export const ConversationHistory: React.FC = () => {
 
     useEffect(() => {
       getAllConversations();
-    }, []);
-  
+    }, [getAllConversations]);
   
     return (
       <div>
         <h2>Your Conversations</h2>
         <ul>
-          {(conversations.length === 0)? <p>You have no conversations right now. Try starting one with a staff memeber</p>
-          :
+          {(conversations.length === 0)?     
+          <div>
+            <p><strong>No messages yet! 🐾</strong></p>
+            <p>It looks like you haven't started a conversation yet. If you're ready to learn more about one of our amazing pets or have any questions about the adoption process, just click on the pet you're interested in and start a conversation! We're here to help you find your new furry friend. 🐶🐱</p>
+          </div>  
+        :
           (conversations.map((conversation) => (
             <Card key={conversation.conversation_id} onClick = {() => handleJoinConversation(conversation.conversation_id)} >
               <CardContent>

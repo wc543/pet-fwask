@@ -6,10 +6,11 @@ export interface Message {
     time_sent: string;
 }
 
-export interface Conversation{
-    user_id : string,
-    owner_id : string,
-    pet_id : string,
-    conversation_id : string;
-}
+export interface Conversation {
+    user_id: number;
+    owner_id: number;
+    conversation_id: number;
+    pet_id: number | null;
+    created_at: string;
+  }
 

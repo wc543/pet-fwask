@@ -15,6 +15,4 @@ export const MessageBox = ( {message: message} : {message : Message}) => {
             </div>
         </>
     )
-
-
 }

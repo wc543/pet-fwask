@@ -8,6 +8,7 @@ import {socket} from '../../../main.tsx';
 import { useNavigate } from 'react-router-dom';
 import {MessageBox} from '../Messages/MessageBox.tsx';
 import './ConversationPage.css';
+import { MessageHeader } from '../Messages/MessageHeader.tsx';
 
 export const ConversationPage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -20,6 +21,7 @@ export const ConversationPage = () => {
         try {
           const res =  await axios.get<Conversation>(`/api/conversations/${conversation_id}`); 
           if (res.status !== 200) throw new Error(res.statusText);
+          console.log(res.data);
           setConversation(res.data);
         } catch (err) {
           console.error(err);
@@ -68,6 +70,7 @@ export const ConversationPage = () => {
       getConversation();
       joinConversation();
     }
+    getConversation();
     getAllMessages();
 
     socket.on('chat message', handleNewMessage);
@@ -80,21 +83,28 @@ export const ConversationPage = () => {
     }
   , []);
   
-  return(
-    <>      
-    <button onClick={() => {handleBackClick();}}>Back</button>
-    <div className='chatFrame'>
-    <div className='chatMessagesContainer'>
-      <ul>
-        {messages.map((msg) => (
-          <li key={msg.message_id}>{msg.message} - {getUsername(msg.sender_id)}</li>
-          //TODO <MessageBox key={msg.id} message={msg} />
-        ))}
-      </ul>
-    </div>
-    <MessageForm></MessageForm>
-    </div>
-  </>
-  
-  )
+  if(conversation=== null){
+    navigate("*");
+  }
+  else{
+    return(
+      <>      
+      <button onClick={() => {handleBackClick();}}>Back</button>
+      <MessageHeader conversation={conversation}></MessageHeader>
+      <div className='chatFrame'>
+      <div className='chatMessagesContainer'>
+        <ul>
+          {messages.map((msg) => (
+            <li key={msg.message_id}>{msg.message} - {getUsername(msg.sender_id)}</li>
+            //TODO <MessageBox key={msg.id} message={msg} />
+          ))}
+        </ul>
+      </div>
+      <MessageForm></MessageForm>
+      </div>
+    </>
+    
+    )
+  }
+
 }

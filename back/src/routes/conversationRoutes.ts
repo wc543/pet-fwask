@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 const router = express.Router();
-import {ConversationRow, conversationBodySchema} from "../types.js";
+import {ConversationRow, conversationBodySchema, parseError} from "../types.js";
 import db from '../db.js';
 import authMiddleware from '../authMiddleware.js';
 
@@ -36,14 +36,23 @@ router.get("/:user_id/user",  async (req : Request, res : Response) => {
     }
   });
 
-//Starts a conversation between two users
+//Starts a conversation between two users - checks if the conversation already exists
 router.post("/", async (req : Request, res : Response) => {
     const parseResults = conversationBodySchema.safeParse(req.body);
     if(!parseResults.success){
-      return res.status(400).json({ error: "Bad Request" });
+      return res.status(400).json({ error: parseError(parseResults.error) });
     }
     let { user_id, owner_id, pet_id} = parseResults.data;
     try {
+      const existingConversation = await db.get<ConversationRow>(
+        `SELECT conversation_id FROM Conversations WHERE user_id = ? AND owner_id = ?`,
+        [user_id, owner_id]
+      );
+  
+      if (existingConversation) {
+        return res.status(200).json({ conversation_id: existingConversation.conversation_id });
+      };
+
       const conversation = await db.get<ConversationRow>(
         `INSERT INTO Conversations (user_id, owner_id, pet_id) VALUES (?, ?, ?) RETURNING conversation_id`, [user_id, owner_id, pet_id || null]
       );

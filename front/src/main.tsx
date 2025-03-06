@@ -66,7 +66,7 @@ let router = createBrowserRouter([
       {
         path: "/conversation-history/conversation/:conversation_id",
         element: <ProtectedRoute />,
-        children: [{ path: "", element:  <ConversationPage></ConversationPage>}],
+        children: [{ path: "", element:  <PetProvider><ConversationPage></ConversationPage></PetProvider>}],
       },
       {
         path: "/profile",
