@@ -1,6 +1,6 @@
 import express from 'express';
 const router = express.Router();
-import { conversationBodySchema } from "../types.js";
+import { conversationBodySchema, parseError } from "../types.js";
 import db from '../db.js';
 import authMiddleware from '../authMiddleware.js';
 // Gets conversation based on it's id
@@ -29,14 +29,19 @@ router.get("/:user_id/user", async (req, res) => {
         return res.status(500).json({ error: "Internal server error" });
     }
 });
-//Starts a conversation between two users
+//Starts a conversation between two users - checks if the conversation already exists
 router.post("/", async (req, res) => {
     const parseResults = conversationBodySchema.safeParse(req.body);
     if (!parseResults.success) {
-        return res.status(400).json({ error: "Bad Request" });
+        return res.status(400).json({ error: parseError(parseResults.error) });
     }
     let { user_id, owner_id, pet_id } = parseResults.data;
     try {
+        const existingConversation = await db.get(`SELECT conversation_id FROM Conversations WHERE user_id = ? AND owner_id = ?`, [user_id, owner_id]);
+        if (existingConversation) {
+            return res.status(200).json({ conversation_id: existingConversation.conversation_id });
+        }
+        ;
         const conversation = await db.get(`INSERT INTO Conversations (user_id, owner_id, pet_id) VALUES (?, ?, ?) RETURNING conversation_id`, [user_id, owner_id, pet_id || null]);
         if (!conversation) {
             return res.status(500).json({ error: "Failed to create a new conversation" });

@@ -11,6 +11,7 @@ import conversationRoutes from './routes/conversationRoutes.js'
 import path from "path";
 import { fileURLToPath } from "url";
 import multer from 'multer';
+import { Message } from "./types.js";
 
 dotenv.config();
 
@@ -51,16 +52,20 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
   console.log('a user connected');
 
-  socket.on('join conversation', async (conversation_id: string, callback: ({ status }: any) => void) => { //TODO any type
+  socket.on('join conversation', async (conversation_id: string, callback: ({ status }: any) => void) => { 
     await socket.join(conversation_id);
-    callback({ status: 'conversation join acknowledged' });
+    callback({ status: `conversation ${conversation_id} join acknowledged` });
   });
 
-  socket.on('leave conversation', async (conversation_id: string, callback: ({ status }: any) => void) => { //TODO any type
+  socket.on('leave conversation', async (conversation_id: string, callback: ({ status }: any) => void) => { 
     await socket.leave(conversation_id);
     callback({ status: 'conversation left acknowledged' });
   });
 
+  socket.on('chat message', async (message: Message, callback: ({ status }: any) => void) => { 
+    io.to(message.conversation_id.toString()).emit('chat message', message);
+    callback({ status: 'message sent' });
+  });
   socket.on('disconnect', () => console.log('user disconnected'));
 });
 

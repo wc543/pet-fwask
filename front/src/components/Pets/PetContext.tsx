@@ -45,7 +45,7 @@ export const PetProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         const fetchPets = async () => {
             try {
                 const response = await axios.get('/api/pets');
-                setPets(response.data);
+                setPets(response.data.pets);
             } catch (error) {
                 console.log('Failed to fetch pets:', error);
             }

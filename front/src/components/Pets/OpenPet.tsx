@@ -3,8 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import { Pet } from './types.ts'
+import { StartConversationButton } from '../Chats/StartConversationButton.tsx';
 import { AuthContext } from '../AuthContext.tsx';
 import { useUser } from '../Users/UserContext.tsx';
 
@@ -78,7 +78,7 @@ const OpenPet: React.FC = () => {
                             <div id="col3">
                                 {role === 'STAFF' ? (<></>) : (
                                     <>
-                                    <Button style={{marginLeft: 'auto'}}><ModeCommentIcon htmlColor='black'/></Button>
+                                    <StartConversationButton pet_id={selectedPet.pet_id} employee_id={selectedPet.created_by_id}  />
                                     <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Foster</Button>
                                     <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Adopt</Button>
                                     </>

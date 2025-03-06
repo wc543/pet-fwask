@@ -22,10 +22,7 @@ import ViewAdoptionForm from './components/forms/ViewAdoptionForm.tsx';
 import OpenPet from './components/Pets/OpenPet.tsx';
 import EditPet from './components/Pets/EditPet.tsx';
 
-export const socket = io('ws://localhost:3001', {
-  ackTimeout: 10000,
-  retries: 3,
-});
+export const socket = io('ws://localhost:3001');
 
 let router = createBrowserRouter([
   {
@@ -68,7 +65,7 @@ let router = createBrowserRouter([
       {
         path: "/conversation-history/conversation/:conversation_id",
         element: <ProtectedRoute />,
-        children: [{ path: "", element:  <ConversationPage></ConversationPage>}],
+        children: [{ path: "", element:  <PetProvider><ConversationPage></ConversationPage></PetProvider>}],
       },
       {
         path: "/profile",

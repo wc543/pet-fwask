@@ -8,6 +8,7 @@ import {socket} from '../../../main.tsx';
 import { useNavigate } from 'react-router-dom';
 import {MessageBox} from '../Messages/MessageBox.tsx';
 import './ConversationPage.css';
+import { MessageHeader } from '../Messages/MessageHeader.tsx';
 
 export const ConversationPage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -20,6 +21,7 @@ export const ConversationPage = () => {
         try {
           const res =  await axios.get<Conversation>(`/api/conversations/${conversation_id}`); 
           if (res.status !== 200) throw new Error(res.statusText);
+          console.log(res.data);
           setConversation(res.data);
         } catch (err) {
           console.error(err);
@@ -35,37 +37,74 @@ export const ConversationPage = () => {
       } catch (err) {
         console.error(err);
       }
-};
+  };
 
-useEffect( () => {
-  console.log(conversation_id);
-  if(conversation_id) getConversation();
+  const joinConversation = () =>{
+    if (conversation_id){
+      socket.emit('join conversation', conversation_id, (response: any) => (console.log(response.status)));
+      console.log(`Joining conversation: ${conversation_id}`);
+    }
+  }
+
+  const leaveConversation = () =>{
+    if (conversation_id){
+      socket.emit('leave conversation', conversation_id, (response: any) => (console.log(response.status)));
+      console.log(`Leaving conversation: ${conversation_id}`);
+    }
+  }
+
+  const handleBackClick = () =>{
+    leaveConversation();
+    navigate('/conversation-history');
+  }
+  
+  const handleNewMessage = (newMessage : Message) => {
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
+
+  useEffect( () => {
+    socket.on('connect', () => console.log('Connected to server'));
+    socket.on('disconnect', () => console.log('Disconnected from server'));
+
+    if(conversation_id) {
+      getConversation();
+      joinConversation();
+    }
+    getConversation();
     getAllMessages();
-    const handleNewMessage = () => {
-      getAllMessages();
-    };
 
     socket.on('chat message', handleNewMessage);
 
-    return () => {
+    return () =>{
+      socket.off('connect', () => console.log('Connected to server'));
+      socket.off('disconnect', () => console.log('Disconnected from server'));
       socket.off('chat message', handleNewMessage);
     };
+    }
+  , []);
+  
+  if(conversation=== null){
+    navigate("*");
   }
-, []);
-  
-  return(
-    <>      
-    <button onClick={() => {navigate('/conversation-history');}}>Back</button>
-    <div className='ChatContainer'>
-      <ul>
-        {messages.map((msg) => (
-          <li key={msg.message_id}>{msg.message} - {getUsername(msg.sender_id)}</li>
-          //TODO <MessageBox key={msg.id} message={msg} />
-        ))}
-      </ul>
-    </div>
-  <MessageForm></MessageForm>
-  </>
-  
-  )
+  else{
+    return(
+      <>      
+      <button onClick={() => {handleBackClick();}}>Back</button>
+      <MessageHeader conversation={conversation}></MessageHeader>
+      <div className='chatFrame'>
+      <div className='chatMessagesContainer'>
+        <ul>
+          {messages.map((msg) => (
+            <li key={msg.message_id}>{msg.message} - {getUsername(msg.sender_id)}</li>
+            //TODO <MessageBox key={msg.id} message={msg} />
+          ))}
+        </ul>
+      </div>
+      <MessageForm></MessageForm>
+      </div>
+    </>
+    
+    )
+  }
+
 }

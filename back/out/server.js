@@ -43,11 +43,15 @@ io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('join conversation', async (conversation_id, callback) => {
         await socket.join(conversation_id);
-        callback({ status: 'conversation join acknowledged' });
+        callback({ status: `conversation ${conversation_id} join acknowledged` });
     });
     socket.on('leave conversation', async (conversation_id, callback) => {
         await socket.leave(conversation_id);
         callback({ status: 'conversation left acknowledged' });
+    });
+    socket.on('chat message', async (message, callback) => {
+        io.to(message.conversation_id.toString()).emit('chat message', message);
+        callback({ status: 'message sent' });
     });
     socket.on('disconnect', () => console.log('user disconnected'));
 });

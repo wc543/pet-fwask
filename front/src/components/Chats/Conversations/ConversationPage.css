@@ -1,6 +1,14 @@
-.ChatContainer {
+.chatMessagesContainer {
     overflow: scroll;
-    flex-grow: 1;
+    /* flex-grow: 1; */
+    /* display: flex; */
+    /* align-items: flex-end; */
+}
+
+.chatFrame{
     display: flex;
-    align-items: flex-end;
+    width: 656px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
 }
