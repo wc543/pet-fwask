@@ -1,10 +1,12 @@
 import './OpenPet.css';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Pet } from './types.ts'
 import { StartConversationButton } from '../Chats/StartConversationButton.tsx';
+import { AuthContext } from '../AuthContext.tsx';
+import { useUser } from '../Users/UserContext.tsx';
 
 const OpenPet: React.FC = () => {
     let [selectedPet, setSelectedPet] = useState<Pet|null>(null);
@@ -12,6 +14,11 @@ const OpenPet: React.FC = () => {
     let [error, setError] = useState('');
     let {id} = useParams();
     const navigate = useNavigate();
+    const{ getRole } = useUser();
+    const auth = useContext(AuthContext);
+    const user_id = auth?.user?.user_id;
+    const role = getRole(user_id);
+    console.log('role =', role);
 
     const fetchPet = async () => {
         try {
@@ -50,7 +57,9 @@ const OpenPet: React.FC = () => {
                                 <h2>{selectedPet.name}</h2>
                             </div>
                             <div id="employee_buttons">
-                                <Button onClick={() => navigate(`/pets/edit/${selectedPet.pet_id}`)}><EditIcon htmlColor='black'/></Button>
+                                {(role === 'STAFF' && user_id === selectedPet.created_by_id) ? (
+                                    <Button onClick={() => navigate(`/pets/edit/${selectedPet.pet_id}`)}><EditIcon htmlColor='black'/></Button>
+                                ): (<></>)}
                             </div>
                         </div>
                         <div id="bottom_wrapper">
@@ -64,12 +73,16 @@ const OpenPet: React.FC = () => {
                             <div id="col2">
                                 <p>Color: {selectedPet.color}</p>
                                 <p>Arrival date: {selectedPet.shelter_time.toString()}</p>
-                                <p>Note: {selectedPet.note}</p>
+                                <p>Note: {selectedPet.notes}</p>
                             </div>
                             <div id="col3">
-                                <StartConversationButton pet_id={selectedPet.pet_id} employee_id={selectedPet.created_by_id}  />
-                                <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Foster</Button>
-                                <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Adopt</Button>
+                                {role === 'STAFF' ? (<></>) : (
+                                    <>
+                                    <StartConversationButton pet_id={selectedPet.pet_id} employee_id={selectedPet.created_by_id}  />
+                                    <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Foster</Button>
+                                    <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Adopt</Button>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
