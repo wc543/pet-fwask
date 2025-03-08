@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
     }
     let { sender_id, message, conversation_id } = parseResults.data;
     try {
-        await db.run(`INSERT INTO Messages (sender_id, message, conversation_id) VALUES (?, ?, ?)`, [sender_id, message, conversation_id]);
+        await db.run(`INSERT INTO Messages (sender_id, message, conversation_id, read) VALUES (?, ?, ?, FALSE)`, [sender_id, message, conversation_id]);
         const row = await db.get(`SELECT time_sent FROM Messages WHERE conversation_id = ? ORDER BY time_sent DESC LIMIT 1`, [conversation_id]);
         if (!row || !row.time_sent) {
             console.error("Database error: No timestamp returned.");

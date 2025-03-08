@@ -51,7 +51,7 @@ router.post("/", async (req : Request, res : Response) => {
   
     try {
       await db.run(
-        `INSERT INTO Messages (sender_id, message, conversation_id) VALUES (?, ?, ?)`, [sender_id, message, conversation_id]
+        `INSERT INTO Messages (sender_id, message, conversation_id, read) VALUES (?, ?, ?, FALSE)`, [sender_id, message, conversation_id]
       );
       const row = await db.get<MessageTimeRow>(`SELECT time_sent FROM Messages WHERE conversation_id = ? ORDER BY time_sent DESC LIMIT 1`,[conversation_id]);
       if(!row || !row.time_sent){

@@ -1,8 +1,8 @@
 export interface Message {
-    sender_id : string,
+    sender_id : number,
     message : string,
-    conversation_id : string;
-    message_id: string;
+    conversation_id : number;
+    message_id: number;
     time_sent: string;
 }
 

@@ -19,9 +19,11 @@ export const MessageForm = () => {
     try {
       const body = { message: message, sender_id: sender_id, conversation_id: conversationIdAsNumber };
       const response = await axios.post('/api/messages/', body);
+      const responseMessage =  { ...body, time_sent: response.data.time_sent };
 
       if (response.status === 200) {
-        socket.emit('chat message', body, (response: any) => (console.log(response.status)));
+        console.log(response);
+        socket.emit('chat message', responseMessage, (response: any) => (console.log(response.status)));
       }
       setMessage('');
     } catch (err) {

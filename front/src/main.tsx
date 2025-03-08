@@ -21,6 +21,7 @@ import { AuthProvider } from './components/AuthContext.tsx';
 import ViewAdoptionForm from './components/forms/ViewAdoptionForm.tsx';
 import OpenPet from './components/Pets/OpenPet.tsx';
 import EditPet from './components/Pets/EditPet.tsx';
+import { PetProvider } from './components/Pets/PetContext.tsx'
 
 export const socket = io('ws://localhost:3001');
 
