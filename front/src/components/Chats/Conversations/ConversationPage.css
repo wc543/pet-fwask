@@ -1,8 +1,8 @@
 .allMessagesContainer {
     overflow-y: scroll;
-    flex-grow: 1; 
+    /* flex-grow: 1; 
     display: block;
-    align-items: flex-end;
+    align-items: flex-end; */
 }
 
 .chatFrame{
