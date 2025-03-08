@@ -20,6 +20,7 @@ const authMiddleware = (req, res, next) => {
         }
         // Attach the decoded token data to the request object
         req.user = decoded;
+        console.log(req.user);
         next();
     }
     catch (error) {

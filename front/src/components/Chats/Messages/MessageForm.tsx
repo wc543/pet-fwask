@@ -5,6 +5,7 @@ import {socket} from '../../../main.tsx';
 import { TextField, Button } from '@mui/material';
 import './MessageForm.css'
 import { AuthContext } from '../../AuthContext.tsx';
+import { Callback } from '../types.ts';
 
 export const MessageForm = () => {
   const { conversation_id } = useParams();
@@ -23,7 +24,7 @@ export const MessageForm = () => {
 
       if (response.status === 200) {
         console.log(response);
-        socket.emit('chat message', responseMessage, (response: any) => (console.log(response.status)));
+        socket.emit('chat message', responseMessage, (response: Callback) => (console.log(response.status)));
       }
       setMessage('');
     } catch (err) {

@@ -1,9 +1,8 @@
-import {Message, Conversation} from '../types.ts'
+import {Message, Conversation, Callback} from '../types.ts'
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import {MessageForm} from '../Messages/MessageForm.tsx';
-import { useUser } from '../../Users/UserContext.tsx';
 import {socket} from '../../../main.tsx';
 import { useNavigate } from 'react-router-dom';
 import {MessageBox} from '../Messages/MessageBox.tsx';
@@ -44,21 +43,9 @@ export const ConversationPage = () => {
 
   const joinConversation = () =>{
     if (conversation_id){
-      socket.emit('join conversation', conversation_id, (response: any) => (console.log(response.status)));
+      socket.emit('join conversation', conversation_id, (response: Callback) => (console.log(response.status)));
       console.log(`Joining conversation: ${conversation_id}`);
     }
-  }
-
-  const leaveConversation = () =>{
-    if (conversation_id){
-      socket.emit('leave conversation', conversation_id, (response: any) => (console.log(response.status)));
-      console.log(`Leaving conversation: ${conversation_id}`);
-    }
-  }
-
-  const handleBackClick = () =>{
-    leaveConversation();
-    navigate('/conversation-history');
   }
   
   const handleNewMessage = (newMessage : Message) => {
@@ -88,7 +75,7 @@ export const ConversationPage = () => {
   
     return(
       <>
-      { !loading ? 
+      { !loading && conversation ? 
         (
           <>      
           {/* <button onClick={() => {handleBackClick();}}>Back</button> */}
@@ -98,7 +85,7 @@ export const ConversationPage = () => {
           <div className='allMessagesContainer'>
               {messages.map((msg) => (
                 // <li key={msg.message_id}>{msg.message} - {getUsername(msg.sender_id)}</li>
-                <MessageBox message={msg}> </MessageBox>
+                <MessageBox message={msg}/>
               ))}
           </div>
           <MessageForm></MessageForm>

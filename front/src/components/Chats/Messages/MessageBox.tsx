@@ -5,7 +5,7 @@ import './MessageBox.css';
 import { AuthContext } from '../../AuthContext.tsx';
 import { useContext } from 'react';
 
-export const MessageBox = ( {message: message} : {message : Message}) => {
+export const MessageBox = ( {message} : {message : Message}) => {
     const {getFullname, getRole} = useUser();
     const auth = useContext(AuthContext);
     const user_id = auth?.user.user_id; 

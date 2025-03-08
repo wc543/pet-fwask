@@ -14,3 +14,6 @@ export interface Conversation {
     created_at: string;
   }
 
+export interface Callback {
+    status : string;
+}

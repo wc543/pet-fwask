@@ -52,4 +52,18 @@ router.post("/", async (req, res) => {
         return res.status(500).json({ error: "Internal server error" });
     }
 });
+//Updates message as read when joining a conversation
+router.put("/:conversation_id/read", async (req, res) => {
+    const { conversation_id } = req.params;
+    try {
+        await db.run(`UPDATE Messages SET read = TRUE
+       WHERE conversation_id = ? 
+       AND sender_id != ?`, [conversation_id, req.params.user]);
+        res.status(200);
+    }
+    catch (err) {
+        console.error("Database error:", err);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+});
 export default router;
