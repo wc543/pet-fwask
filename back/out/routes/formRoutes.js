@@ -35,6 +35,48 @@ router.get('/', async (req, res) => {
         res.status(500).json({ error: "Failed to fetch all forms" });
     }
 });
+router.get('/unprocessed/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const adoption_forms = await db.all(`
+      SELECT 
+        AdoptionForms.*,
+        Users.username AS user_name
+      FROM AdoptionForms
+      INNER JOIN Users ON AdoptionForms.user_id = Users.user_id
+      INNER JOIN Pets ON AdoptionForms.pet_id = Pets.pet_id
+      WHERE AdoptionForms.processed = FALSE
+      AND Pets.created_by_id = ?
+      `, [id]);
+        const foster_parent_forms = await db.all(`
+      SELECT 
+        FosterParentForms.*,
+        Users.username AS user_name
+      FROM FosterParentForms
+      INNER JOIN Users ON FosterParentForms.user_id = Users.user_id
+      WHERE FosterParentForms.processed = FALSE
+      `);
+        const foster_pet_forms = await db.all(`
+      SELECT 
+        FosterPetForms.*,
+        Users.username AS user_name
+      FROM FosterPetForms
+      INNER JOIN Users ON FosterPetForms.user_id = Users.user_id
+      INNER JOIN Pets on FosterPetForms.pet_id = Pets.pet_id
+      WHERE FosterPetForms.processed = FALSE
+      AND Pets.created_by_id = ?
+      `, [id]);
+        const forms = [
+            ...adoption_forms.map((form) => ({ ...form, form_type: 'adoption' })),
+            ...foster_parent_forms.map((form) => ({ ...form, form_type: 'foster-parent' })),
+            ...foster_pet_forms.map((form) => ({ ...form, form_type: 'foster-pets' })),
+        ];
+        res.json(forms);
+    }
+    catch (error) {
+        res.status(500).json({ error: "Failed to fetch all forms" });
+    }
+});
 router.get('/foster-expiration', async (req, res) => {
     try {
         const expiration = await db.all(`
@@ -57,7 +99,7 @@ router.get('/foster-expiration', async (req, res) => {
 router.post('/adoption', async (req, res) => {
     try {
         const { user_id, pet_id, previous_pet_experience, adoption_reason, ideal_pet_qualities, max_alone_time, care_plan_details, financial_responsibility, pet_care_agreement, adoption_agreement, submitted_at, processed, status, first_name, last_name, address, state, city, zip_code, phone_number, household_size, household_allergies, current_pets, email } = req.body;
-        let form_type = "Adoption";
+        let form_type = "adoption";
         const result = await db.run(`INSERT INTO AdoptionForms (
       user_id, 
       pet_id, 
@@ -95,7 +137,7 @@ router.post('/adoption', async (req, res) => {
 router.post('/foster-pet', async (req, res) => {
     try {
         const { user_id, pet_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, submitted_at, processed, first_name, last_name, address, state, city, zip_code, phone_number, household_size, household_allergies, current_pets, email, status } = req.body;
-        let form_type = "Foster Pet";
+        let form_type = "foster-pets";
         const result = await db.run(`INSERT INTO FosterPetForms (
       user_id, 
       pet_id,
@@ -130,7 +172,7 @@ router.post('/foster-pet', async (req, res) => {
 router.post('/foster-parent', async (req, res) => {
     try {
         const { user_id, foster_reason, pet_care_agreement, adoption_agreement, submitted_at, processed, status, first_name, last_name, address, state, city, zip_code, phone_number, household_size, household_allergies, current_pets, email } = req.body;
-        let form_type = "Foster Parent";
+        let form_type = "foster-parent";
         const result = await db.run(`INSERT INTO FosterParentForms (
         user_id,
         foster_reason,

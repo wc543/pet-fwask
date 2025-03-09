@@ -8,6 +8,7 @@ import petRouter from './routes/petRoutes.js';
 import formRouter from './routes/formRoutes.js';
 import messageRouter from './routes/messageRoutes.js';
 import conversationRoutes from './routes/conversationRoutes.js'
+import fosterHistoryRoutes from './routes/fosterHistoryRoutes.js'
 import path from "path";
 import { fileURLToPath } from "url";
 import multer from 'multer';
@@ -29,6 +30,7 @@ app.use('/api/pets', petRouter);
 app.use('/api/forms', formRouter);
 app.use('/api/messages', messageRouter);
 app.use('/api/conversations', conversationRoutes);
+app.use('/api/foster-history', fosterHistoryRoutes);
 
 app.use((req, res, next) => {
   console.log(`Incoming request: ${req.method} ${req.url}`);
