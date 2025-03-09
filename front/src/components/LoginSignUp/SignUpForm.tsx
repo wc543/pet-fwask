@@ -16,6 +16,10 @@ interface SignupFormData {
   email: string;
   date_of_birth: string;
   password: string;
+  // New household fields
+  household_size: number;        // or string if you prefer text input
+  household_allergies: string;
+  current_pets: string;
 }
 
 const SignupForm: React.FC = () => {
@@ -31,6 +35,9 @@ const SignupForm: React.FC = () => {
     email: '',
     date_of_birth: '',
     password: '',
+    household_size: 0,
+    household_allergies: '',
+    current_pets: '',
   });
   const [message, setMessage] = useState<string>('');
   const [error, setError] = useState<string>('');
@@ -76,6 +83,11 @@ const SignupForm: React.FC = () => {
       <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
       <input type="date" name="date_of_birth" placeholder="Date of Birth" value={formData.date_of_birth} onChange={handleChange} />
       <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+      {/* New fields for household info */}
+      <input type="number" name="household_size" placeholder="Household Size" value={formData.household_size} onChange={handleChange} />
+      <input type="text" name="household_allergies" placeholder="Household Allergies" value={formData.household_allergies} onChange={handleChange} />
+      <input type="text" name="current_pets" placeholder="Current Pets" value={formData.current_pets} onChange={handleChange} />
+
       <button type="submit">Sign Up</button>
       {message && <p style={{ color: 'green' }}>{message}</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}

@@ -57,7 +57,10 @@ router.post('/signup', async (req: Request, res: Response) => {
       zip_code,
       phone_number,
       date_of_birth,
-      role // optional: defaults to 'ADOPTER' if not provided
+      role, // optional: defaults to 'ADOPTER' if not provided
+      household_size,
+      household_allergies,
+      current_pets,
     } = req.body;
     
     // Hash the password before storing
@@ -72,6 +75,13 @@ router.post('/signup', async (req: Request, res: Response) => {
 
     // Retrieve newly created user
     const newUser = await db.get(`SELECT * FROM Users WHERE user_id = ?`, [result.lastID]);
+
+    // Insert into the UserHousehold table
+    await db.run(
+      `INSERT INTO UserHousehold (user_id, household_size, household_allergies, current_pets)
+       VALUES (?, ?, ?, ?)`,
+      [newUser.user_id, household_size, household_allergies, current_pets]
+    );
 
     // Generate a JWT token for the new user
     const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_here';

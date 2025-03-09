@@ -23,11 +23,24 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ error: "Failed to fetch users" });
     }
 });
+//Get user household fields to autofill when filling out a form
+router.get('/userHouseholds', async (req, res) => {
+    let userId = req.params.id;
+    let householdResult;
+    try {
+        householdResult = await db.all('SELECT * FROM UserHousehold;');
+        res.json(householdResult);
+    }
+    catch (err) {
+        return res.status(500).json({ error: "failed to fetch user households" });
+    }
+    return res.json({ householdResult });
+});
 router.post('/signup', async (req, res) => {
     try {
         const { first_name, last_name, username, email, password, // plaintext from the client
-        address, state, city, zip_code, phone_number, date_of_birth, role // optional: defaults to 'ADOPTER' if not provided
-         } = req.body;
+        address, state, city, zip_code, phone_number, date_of_birth, role, // optional: defaults to 'ADOPTER' if not provided
+        household_size, household_allergies, current_pets, } = req.body;
         // Hash the password before storing
         const hashed_password = await bcrypt.hash(password, 10);
         // Insert into the Users table. Note: Adjust the SQL as needed.
@@ -35,6 +48,9 @@ router.post('/signup', async (req, res) => {
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [first_name, last_name, username, address, state, city, zip_code, phone_number, email, date_of_birth, hashed_password, role || 'ADOPTER']);
         // Retrieve newly created user
         const newUser = await db.get(`SELECT * FROM Users WHERE user_id = ?`, [result.lastID]);
+        // Insert into the UserHousehold table
+        await db.run(`INSERT INTO UserHousehold (user_id, household_size, household_allergies, current_pets)
+       VALUES (?, ?, ?, ?)`, [newUser.user_id, household_size, household_allergies, current_pets]);
         // Generate a JWT token for the new user
         const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_here';
         const token = jwt.sign({ user_id: newUser.user_id, username: newUser.username, email: newUser.email, role: newUser.role }, JWT_SECRET, { expiresIn: '1h' });
