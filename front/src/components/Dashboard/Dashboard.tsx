@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {AuthContext} from '../AuthContext';
 import './Dashboard.css';
 
 interface Message {
@@ -10,10 +11,9 @@ interface Message {
 }
 
 interface FosterExpiration {
-    foster_pet_form_id: number;
     pet_id: number;
-    pet_name: string;
-    foster_end_date: string;
+    name: string;
+    end_date: string;
 }
 
 interface Forms {
@@ -28,6 +28,7 @@ const Dashboard: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [fosterExpiration, setFosterExpiration] = useState<FosterExpiration[]>([]);
     const [forms, setForms] = useState<Forms[]>([]);
+    const auth = useContext(AuthContext);
     const navigate = useNavigate();
 
     const fetchMessages = async () => {
@@ -46,8 +47,9 @@ const Dashboard: React.FC = () => {
     };
 
     const fetchPets = async () => {
+        const user_id = auth?.user.user_id;
         try {
-            const response = await fetch("/api/forms/foster-expiration");
+            const response = await fetch(`/api/foster-history/expiration/${user_id}`);
             
             if (!response.ok) {
                 throw new Error("Failed to fetch pets");
@@ -61,8 +63,9 @@ const Dashboard: React.FC = () => {
     };
 
     const fetchForms = async () => {
+        const user_id = auth?.user.user_id;
         try {
-            const response = await fetch("/api/forms");
+            const response = await fetch(`/api/forms/unprocessed/${user_id}`);
             
             if (!response.ok) {
                 throw new Error("Failed to fetch forms");
@@ -87,7 +90,7 @@ const Dashboard: React.FC = () => {
     };
 
     const handleViewExpiration = (foster: FosterExpiration) => {
-        navigate(`/pets/${foster.pet_id}`);
+        navigate(`/pets/id/${foster.pet_id}`);
     };
 
     return (
@@ -136,9 +139,9 @@ const Dashboard: React.FC = () => {
                     <tbody>
                         {fosterExpiration.length > 0 ? (
                             fosterExpiration.map((foster) => (
-                                <tr key={foster.foster_pet_form_id}>
-                                    <td>{foster.pet_name}</td>
-                                    <td>{foster.foster_end_date}</td>
+                                <tr key={foster.pet_id}>
+                                    <td>{foster.name}</td>
+                                    <td>{foster.end_date}</td>
                                     <td>
                                         <button onClick={() => handleViewExpiration(foster)}>View</button>
                                     </td>

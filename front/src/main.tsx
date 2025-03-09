@@ -22,6 +22,8 @@ import ViewAdoptionForm from './components/forms/ViewAdoptionForm.tsx';
 import OpenPet from './components/Pets/OpenPet.tsx';
 import EditPet from './components/Pets/EditPet.tsx';
 import { PetProvider } from './components/Pets/PetContext.tsx'
+import ViewFosterParentForm from './components/forms/ViewFosterParentForm.tsx'
+import ViewFosterPetForm from './components/forms/ViewFosterPetForm.tsx'
 
 export const socket = io('ws://localhost:3001');
 
@@ -88,6 +90,14 @@ let router = createBrowserRouter([
       {
         path: "forms/adoption/:adoptionFormId",
         element: <ViewAdoptionForm/>,
+      },
+      {
+        path: "forms/foster-parent/:fosterParentFormId",
+        element: <ViewFosterParentForm/>,
+      },
+      {
+        path: "forms/foster-pets/:fosterPetFormId",
+        element: <ViewFosterPetForm/>,
       },
       {
         path: "*",
