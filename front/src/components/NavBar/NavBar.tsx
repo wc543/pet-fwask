@@ -44,7 +44,17 @@ function Header() {
             <Link to="/logout" className="nav-link">Logout</Link>
           </>
         );
-      } else if (role === 'ADOPTER' || role === 'FOSTER') {
+      } else if (role === 'ADOPTER') {
+        navLinks = (
+          <>
+            <Link to="/pets" className="nav-link">View Pets</Link>
+            <Link to="/conversation-history" className="nav-link">View Messages</Link>
+            <Link to="/forms" className="nav-link">View Forms</Link>
+            <Link to={`/forms/SubmitFosterParentForm/${auth.user.user_id}`}className="nav-link">Apply to be a Foster Parent</Link>
+            <Link to="/logout" className="nav-link">Logout</Link>
+          </>
+        );
+      } else if (role === 'FOSTER') {
         navLinks = (
           <>
             <Link to="/pets" className="nav-link">View Pets</Link>
@@ -61,7 +71,7 @@ function Header() {
           <Link to="/login" className="nav-link">Login</Link>
           <Link to="/signup" className="nav-link">Sign Up</Link>
           {/* For now, "Apply to be a Foster" simply redirects to the login page */}
-          <Link to="/login" className="nav-link">Apply to be a Foster</Link>
+          <Link to="/login" className="nav-link">Apply to be a Foster Parent</Link>
         </>
       );
     }

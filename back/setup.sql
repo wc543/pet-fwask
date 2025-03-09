@@ -75,7 +75,7 @@ CREATE TABLE AdoptionForms (
 	adoption_agreement BOOLEAN,
 	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	processed BOOLEAN DEFAULT FALSE,
-	form_type TEXT DEFAULT 'Adoption',
+	form_type TEXT DEFAULT 'adoption',
 	status TEXT, 
 	first_name TEXT,
     last_name TEXT,
@@ -87,7 +87,7 @@ CREATE TABLE AdoptionForms (
  	household_size INTEGER,
     household_allergies TEXT,
     current_pets TEXT,
-	email TEXT UNIQUE,
+	email TEXT,
 	FOREIGN KEY(user_id) REFERENCES Users(user_id),
 	FOREIGN KEY(pet_id) REFERENCES Pets(pet_id)
 );	
@@ -100,7 +100,7 @@ CREATE TABLE FosterParentForms (
 	adoption_agreement BOOLEAN,
 	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	processed BOOLEAN DEFAULT FALSE,
-	form_type TEXT DEFAULT 'FosterParent',
+	form_type TEXT DEFAULT 'foster-parent',
 	status TEXT, 
 	first_name TEXT,
     last_name TEXT,
@@ -112,7 +112,7 @@ CREATE TABLE FosterParentForms (
  	household_size INTEGER,
     household_allergies TEXT,
     current_pets TEXT,
-	email TEXT UNIQUE,
+	email TEXT,
 	FOREIGN KEY(user_id) REFERENCES Users(user_id)
 );
 
@@ -127,8 +127,8 @@ CREATE TABLE FosterPetForms (
 	max_alone_time TEXT,
 	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	processed BOOLEAN DEFAULT FALSE,
-	form_type TEXT DEFAULT 'FosterPet',
-	status, TEXT
+	form_type TEXT DEFAULT 'foster-pet',
+	status, TEXT,
 	first_name TEXT,
     last_name TEXT,
 	address TEXT,
@@ -139,7 +139,7 @@ CREATE TABLE FosterPetForms (
  	household_size INTEGER,
     household_allergies TEXT,
     current_pets TEXT,
-	email TEXT UNIQUE,
+	email TEXT,
 	FOREIGN KEY(user_id) REFERENCES Users(user_id),
 	FOREIGN KEY(pet_id) REFERENCES Pets(pet_id)
 );

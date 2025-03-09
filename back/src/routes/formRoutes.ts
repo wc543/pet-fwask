@@ -40,7 +40,58 @@ router.get('/', async (req: Request, res: Response) => {
     const forms = [
       ...adoption_forms.map((form: any) => ({ ...form, form_type: 'adoption' })),
       ...foster_parent_forms.map((form: any) => ({ ...form, form_type: 'foster-parent' })),
-      ...foster_pet_forms.map((form: any) => ({ ...form, form_type: 'foster-pets' })),
+      ...foster_pet_forms.map((form: any) => ({ ...form, form_type: 'foster-pet' })),
+    ];
+
+    res.json(forms);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch all forms" });
+  }
+});
+
+router.get('/unprocessed/:id', async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const adoption_forms = await db.all(
+      `
+      SELECT 
+        AdoptionForms.*,
+        Users.username AS user_name
+      FROM AdoptionForms
+      INNER JOIN Users ON AdoptionForms.user_id = Users.user_id
+      INNER JOIN Pets ON AdoptionForms.pet_id = Pets.pet_id
+      WHERE AdoptionForms.processed = FALSE
+      AND Pets.created_by_id = ?
+      `, [id]
+    );
+    const foster_parent_forms = await db.all(
+      `
+      SELECT 
+        FosterParentForms.*,
+        Users.username AS user_name
+      FROM FosterParentForms
+      INNER JOIN Users ON FosterParentForms.user_id = Users.user_id
+      WHERE FosterParentForms.processed = FALSE
+      `
+    );
+    const foster_pet_forms = await db.all(
+      `
+      SELECT 
+        FosterPetForms.*,
+        Users.username AS user_name
+      FROM FosterPetForms
+      INNER JOIN Users ON FosterPetForms.user_id = Users.user_id
+      INNER JOIN Pets on FosterPetForms.pet_id = Pets.pet_id
+      WHERE FosterPetForms.processed = FALSE
+      AND Pets.created_by_id = ?
+      `, [id]
+    );
+    
+    const forms = [
+      ...adoption_forms.map((form: any) => ({ ...form, form_type: 'adoption' })),
+      ...foster_parent_forms.map((form: any) => ({ ...form, form_type: 'foster-parent' })),
+      ...foster_pet_forms.map((form: any) => ({ ...form, form_type: 'foster-pet' })),
     ];
 
     res.json(forms);
@@ -100,7 +151,7 @@ router.post('/adoption', async (req: Request, res: Response) => {
     	email
     } = req.body;
 
-    let form_type = "Adoption";
+    let form_type = "adoption";
 
     const result = await db.run(
       `INSERT INTO AdoptionForms (
@@ -111,13 +162,13 @@ router.post('/adoption', async (req: Request, res: Response) => {
       ideal_pet_qualities,
       max_alone_time, 
       care_plan_details, 
-      financial_resposibility, 
+      financial_responsibility, 
       pet_care_agreement, 
       adoption_agreement, 
       submitted_at, 
       processed, 
       status,
-      form_type
+      form_type,
       first_name,
     	last_name,
       address,
@@ -136,6 +187,7 @@ router.post('/adoption', async (req: Request, res: Response) => {
     res.status(201).json({ message: 'Adoption form submitted', userId: result.lastID });
 
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: 'Error submitting adoption form' });
   }
 
@@ -169,7 +221,7 @@ router.post('/foster-pet', async (req: Request, res: Response) => {
       status
     } = req.body;
 
-    let form_type = "Foster Pet";
+    let form_type = "foster-pet";
 
     const result = await db.run(
       `INSERT INTO FosterPetForms (
@@ -195,13 +247,14 @@ router.post('/foster-pet', async (req: Request, res: Response) => {
     	household_allergies,
     	current_pets,
     	email)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [user_id, pet_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, submitted_at, processed || false, status || "NEEDS PROCESSING", form_type, first_name, last_name, address, state, city, zip_code, phone_number, household_size, household_allergies, current_pets, email]
     );
     
     res.status(201).json({ message: 'Foster pet form submitted', userId: result.lastID });
 
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: 'Error submitting foster pet form' });
   }
 
@@ -231,7 +284,7 @@ router.post('/foster-parent', async (req: Request, res: Response) => {
     	email
     } = req.body;
 
-    let form_type = "Foster Parent";
+    let form_type = "foster-parent";
 
     const result = await db.run(
       `INSERT INTO FosterParentForms (
@@ -436,25 +489,6 @@ router.get('/foster-parent/:id', async (req: Request, res: Response) => {
 return res.json({result});
 
 });
-
-//Get user and user household fields to autofill when filling out a form
-router.get('/autofillForm/:id', async (req: Request, res: Response) => {
-  let userId = req.params.id; 
-  let userResult
-  let householdResult
-  try {
-   userResult = await db.all('SELECT first_name, last_name, address, state, city, zip_code, phone_number FROM Users WHERE user_id=$1;',[userId]);
-   householdResult = await db.all('SELECT household_size, household_allergies, current_pets FROM UserHousehold WHERE user_id=$1;',[userId]);
-} catch (err) {
-    let error = err as AxiosError;
-    return res.status(500).json({ error: error.toString()});
-}
-return res.json({userResult, householdResult});
-
-});
-
-
-
 
 
 //get adoption form list
@@ -666,6 +700,21 @@ router.get('/foster-pets', async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch foster pet forms" });
   }
+});
+
+router.get('/autofillForm/:id', async (req, res) => {
+  let userId = req.params.id;
+  let userResult;
+  let householdResult;
+  try {
+      userResult = await db.all('SELECT first_name, last_name, address, state, city, zip_code, phone_number, email FROM Users WHERE user_id=$1;', [userId]);
+      householdResult = await db.all('SELECT household_size, household_allergies, current_pets FROM UserHousehold WHERE user_id=$1;', [userId]);
+  }
+  catch (err) {
+      console.log(err);
+      return res.status(500).json({err });
+  }
+  return res.json({ userResult, householdResult });
 });
 
 

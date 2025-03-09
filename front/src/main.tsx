@@ -22,6 +22,11 @@ import ViewAdoptionForm from './components/forms/ViewAdoptionForm.tsx';
 import OpenPet from './components/Pets/OpenPet.tsx';
 import EditPet from './components/Pets/EditPet.tsx';
 import { PetProvider } from './components/Pets/PetContext.tsx'
+import ViewFosterParentForm from './components/forms/ViewFosterParentForm.tsx'
+import ViewFosterPetForm from './components/forms/ViewFosterPetForm.tsx'
+import SubmitAdoptionForm from './components/forms/SubmitAdoptionForm.tsx'
+import SubmitFosterPetForm from './components/forms/SubmitFosterPetForm.tsx'
+import SubmitFosterParentForm from './components/forms/SubmitFosterParentForm.tsx'
 
 export const socket = io('ws://localhost:3001');
 
@@ -56,7 +61,7 @@ let router = createBrowserRouter([
       {
         path: "/forms",
         element:  <ProtectedRoute />,
-        children: [{path: "", element: <FormList /> }],
+        children: [{path: "", element: <UserProvider><FormList /></UserProvider> }],
       },
       {
         path: "/conversation-history",
@@ -88,6 +93,29 @@ let router = createBrowserRouter([
       {
         path: "forms/adoption/:adoptionFormId",
         element: <ViewAdoptionForm/>,
+      },
+      {
+        path: "forms/foster-parent/:fosterParentFormId",
+        element: <ViewFosterParentForm/>,
+      },
+      {
+        path: "forms/foster-pet/:fosterPetFormId",
+        element: <ViewFosterPetForm/>,
+      },
+      {
+        path: "forms/submitAdoptionForm/:petId",
+        element: <ProtectedRoute />,
+        children: [{path:"", element: <PetProvider><UserProvider><SubmitAdoptionForm/></UserProvider></PetProvider>}],
+      },
+      {
+        path: "forms/submitFosterPetForm/:petId",
+        element: <ProtectedRoute />,
+        children: [{path:"", element: <PetProvider><UserProvider><SubmitFosterPetForm/></UserProvider></PetProvider>}],
+      },
+      {
+        path: "forms/submitFosterParentForm/:userId",
+        element: <ProtectedRoute />,
+        children: [{path:"", element: <PetProvider><UserProvider><SubmitFosterParentForm/></UserProvider></PetProvider>}],
       },
       {
         path: "*",

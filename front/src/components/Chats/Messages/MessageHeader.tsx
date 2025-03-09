@@ -44,8 +44,8 @@ export const MessageHeader = ( {conversation } : {conversation : Conversation}) 
                 <Typography  variant="h6" style={{ margin: '5px 0', fontSize: '1.5rem' }}>Getting to Know {getName(conversation.pet_id)}!</Typography>
               </div>
               <div style={{ display: 'block', alignItems: 'center', columnGap: '10px' }}>
-                <Button variant="contained" style={{ backgroundColor: '#f38c52', color: 'black', fontWeight: 'bold' }}>Adopt Me Today!</Button>
-                { getFosterable(conversation.pet_id)? <Button variant="contained" style={{ backgroundColor: '#f38c52', color: 'black', fontWeight: 'bold' }}>Foster Me Today!</Button> :<></>}
+                <Button onClick={() => navigate(`/forms/submitAdoptionForm/${conversation.pet_id}`)} variant="contained" style={{ backgroundColor: '#f38c52', color: 'black', fontWeight: 'bold' }}>Adopt Me Today!</Button>
+                { getFosterable(conversation.pet_id)? <Button onClick={() => navigate(`/forms/submitFosterPetForm/${conversation.pet_id}`)} variant="contained" style={{ backgroundColor: '#f38c52', color: 'black', fontWeight: 'bold' }}>Foster Me Today!</Button> :<></>}
               </div>
           </div>
         )

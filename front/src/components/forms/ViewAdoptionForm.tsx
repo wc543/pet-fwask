@@ -2,9 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import {AuthContext} from '../AuthContext'
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import {
-    useParams,
-} from "react-router-dom"
+import {useParams} from "react-router-dom"
 
 type Form ={
   form_id?: number;
@@ -35,17 +33,12 @@ function ViewAdoptionForm() {
           setpreviousPetExperience(result[0].previous_pet_experience);
           setStatus(result[0].status);
           setProcessed(result[0].processed);
-          Helperfunction()
         } catch (error) {
           console.log(error)
         }
     
       })();
     }, []);
-
-  function Helperfunction() {
-    console.log("user id: ", auth?.user.user_id );
-  }
 
   return (
     <div>
