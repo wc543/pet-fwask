@@ -8,7 +8,7 @@ export interface Pet {
     age: number;
     color: string;
     created_by_id: number;
-    fosterable: boolean;
+    fosterable: boolean | number;
     pet_image_url: string;
     shelter_time: Date;
     current_foster: number;
