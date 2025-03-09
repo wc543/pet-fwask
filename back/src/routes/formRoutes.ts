@@ -162,13 +162,13 @@ router.post('/adoption', async (req: Request, res: Response) => {
       ideal_pet_qualities,
       max_alone_time, 
       care_plan_details, 
-      financial_resposibility, 
+      financial_responsibility, 
       pet_care_agreement, 
       adoption_agreement, 
       submitted_at, 
       processed, 
       status,
-      form_type
+      form_type,
       first_name,
     	last_name,
       address,
@@ -187,6 +187,7 @@ router.post('/adoption', async (req: Request, res: Response) => {
     res.status(201).json({ message: 'Adoption form submitted', userId: result.lastID });
 
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: 'Error submitting adoption form' });
   }
 
@@ -246,13 +247,14 @@ router.post('/foster-pet', async (req: Request, res: Response) => {
     	household_allergies,
     	current_pets,
     	email)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [user_id, pet_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, submitted_at, processed || false, status || "NEEDS PROCESSING", form_type, first_name, last_name, address, state, city, zip_code, phone_number, household_size, household_allergies, current_pets, email]
     );
     
     res.status(201).json({ message: 'Foster pet form submitted', userId: result.lastID });
 
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: 'Error submitting foster pet form' });
   }
 
@@ -488,25 +490,6 @@ return res.json({result});
 
 });
 
-//Get user and user household fields to autofill when filling out a form
-router.get('/autofillForm/:id', async (req: Request, res: Response) => {
-  let userId = req.params.id; 
-  let userResult
-  let householdResult
-  try {
-   userResult = await db.all('SELECT first_name, last_name, address, state, city, zip_code, phone_number FROM Users WHERE user_id=$1;',[userId]);
-   householdResult = await db.all('SELECT household_size, household_allergies, current_pets FROM UserHousehold WHERE user_id=$1;',[userId]);
-} catch (err) {
-    let error = err as AxiosError;
-    return res.status(500).json({ error: error.toString()});
-}
-return res.json({userResult, householdResult});
-
-});
-
-
-
-
 
 //get adoption form list
 //when passed user id, returns all forms submitted by that user
@@ -717,6 +700,21 @@ router.get('/foster-pets', async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch foster pet forms" });
   }
+});
+
+router.get('/autofillForm/:id', async (req, res) => {
+  let userId = req.params.id;
+  let userResult;
+  let householdResult;
+  try {
+      userResult = await db.all('SELECT first_name, last_name, address, state, city, zip_code, phone_number, email FROM Users WHERE user_id=$1;', [userId]);
+      householdResult = await db.all('SELECT household_size, household_allergies, current_pets FROM UserHousehold WHERE user_id=$1;', [userId]);
+  }
+  catch (err) {
+      console.log(err);
+      return res.status(500).json({err });
+  }
+  return res.json({ userResult, householdResult });
 });
 
 

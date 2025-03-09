@@ -29,6 +29,20 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
+//Get user household fields to autofill when filling out a form
+router.get('/userHouseholds', async (req: Request, res: Response) => {
+  let userId = req.params.id; 
+  let householdResult
+  try {
+   householdResult = await db.all('SELECT * FROM UserHousehold;');
+   res.json(householdResult);
+} catch (err) {
+    return res.status(500).json({ error: "failed to fetch user households"});
+}
+return res.json({householdResult});
+
+});
+
 router.post('/signup', async (req: Request, res: Response) => {
   try {
     const {

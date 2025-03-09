@@ -79,8 +79,8 @@ const OpenPet: React.FC = () => {
                                 {role === 'STAFF' ? (<></>) : (
                                     <>
                                     <StartConversationButton pet_id={selectedPet.pet_id} employee_id={selectedPet.created_by_id}  />
-                                    <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Foster</Button>
-                                    <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Adopt</Button>
+                                    <Button onClick={() => navigate(`/forms/submitFosterPetForm/${selectedPet.pet_id}`)} variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Foster</Button>
+                                    <Button onClick={() => navigate(`/forms/submitAdoptionForm/${selectedPet.pet_id}`)} variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Adopt</Button>
                                     </>
                                 )}
                             </div>
