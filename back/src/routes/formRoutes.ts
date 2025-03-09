@@ -40,7 +40,7 @@ router.get('/', async (req: Request, res: Response) => {
     const forms = [
       ...adoption_forms.map((form: any) => ({ ...form, form_type: 'adoption' })),
       ...foster_parent_forms.map((form: any) => ({ ...form, form_type: 'foster-parent' })),
-      ...foster_pet_forms.map((form: any) => ({ ...form, form_type: 'foster-pets' })),
+      ...foster_pet_forms.map((form: any) => ({ ...form, form_type: 'foster-pet' })),
     ];
 
     res.json(forms);
@@ -91,7 +91,7 @@ router.get('/unprocessed/:id', async (req: Request, res: Response) => {
     const forms = [
       ...adoption_forms.map((form: any) => ({ ...form, form_type: 'adoption' })),
       ...foster_parent_forms.map((form: any) => ({ ...form, form_type: 'foster-parent' })),
-      ...foster_pet_forms.map((form: any) => ({ ...form, form_type: 'foster-pets' })),
+      ...foster_pet_forms.map((form: any) => ({ ...form, form_type: 'foster-pet' })),
     ];
 
     res.json(forms);
@@ -220,7 +220,7 @@ router.post('/foster-pet', async (req: Request, res: Response) => {
       status
     } = req.body;
 
-    let form_type = "foster-pets";
+    let form_type = "foster-pet";
 
     const result = await db.run(
       `INSERT INTO FosterPetForms (

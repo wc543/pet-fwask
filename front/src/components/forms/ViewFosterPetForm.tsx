@@ -1,66 +1,69 @@
 import { useState, useEffect, useContext } from "react";
-import {AuthContext} from '../AuthContext'
-import axios from "axios";
+import { AuthContext } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
-import {
-    useParams,
-} from "react-router-dom"
+import { useParams } from "react-router-dom";
 
-type Form ={
-  form_id?: number;
+type Form = {
+  foster_pet_form_id?: number;
+  user_id: number;
+  foster_reason: string;
+  pet_care_agreement: boolean;
+  adoption_agreement: boolean;
+  submitted_at: string;
+  processed: boolean;
   form_type: string;
-  previous_pet_experience: string,
-  status: string,
-  processed: Boolean
-}
+  status: string;
+  first_name: string;
+  last_name: string;
+  address: string;
+  state: string;
+  city: string;
+  zip_code: string;
+  phone_number: string;
+  household_size: number;
+  household_allergies: string;
+  current_pets: string;
+  email: string;
+};
 
 function ViewFosterPetForm() {
-  let [form_type, setFormType] = useState("");
-  let [previous_pet_experience, setpreviousPetExperience] = useState("");
-  let [processed, setProcessed] = useState<Boolean>(false);
-  let [status, setStatus] =  useState("");
-  let {fosterPetFormId} = useParams();
+  const [form, setForm] = useState<Form | null>(null);
+  const { fosterPetFormId } = useParams();
   const auth = useContext(AuthContext);
 
-
   useEffect(() => {
-    (async () => {
-        try {
-          let {
-            data: { result },
-          } = await axios.get<{ result: Form[]}>(`/api/forms/foster-pets/${fosterPetFormId}`);
-          console.log(result);
-
-          setFormType(result[0].form_type);
-          setpreviousPetExperience(result[0].previous_pet_experience);
-          setStatus(result[0].status);
-          setProcessed(result[0].processed);
-          Helperfunction()
-        } catch (error) {
-          console.log(error)
+    const fetchFormData = async () => {
+      try {
+        const response = await fetch(`/api/forms/foster-pet/${fosterPetFormId}`);
+        const data = await response.json();
+        
+        if (data.result && data.result.length > 0) {
+          setForm(data.result[0]);
         }
-    
-      })();
-    }, []);
+      } catch (error) {
+        console.log("Error fetching form data:", error);
+      }
+    };
 
-  function Helperfunction() {
-    console.log("user id: ", auth?.user.user_id );
-  }
+    fetchFormData();
+  }, [fosterPetFormId]);
 
   return (
     <div>
-      View form
-      <div>Form type: {form_type}</div>
-      <div>Previous pet experience: {previous_pet_experience}</div>
-      <div>Status: {status}</div>
-      <div>{processed ? (<div> processed </div>) : (<div> unprocessed </div>)}</div>
-      <div>logged in user: {auth?.user.user_id}</div>
-    
+      <h1>View Foster Pet Form</h1>
+      {form ? (
+        <>
+          <div><strong>Form Type:</strong> {form.form_type}</div>
+          <div><strong>Previous Pet Experience:</strong> {form.foster_reason}</div>
+          <div><strong>Status:</strong> {form.status}</div>
+          <div><strong>Processed:</strong> {form.processed ? "Processed" : "Unprocessed"}</div>
+          <div><strong>Submitted At:</strong> {form.submitted_at}</div>
+        </>
+      ) : (
+        <div>Loading form details...</div>
+      )}
     </div>
   );
-};
-
-
-
+}
 
 export default ViewFosterPetForm;

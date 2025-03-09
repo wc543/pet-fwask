@@ -127,7 +127,7 @@ CREATE TABLE FosterPetForms (
 	max_alone_time TEXT,
 	submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	processed BOOLEAN DEFAULT FALSE,
-	form_type TEXT DEFAULT 'foster-pets',
+	form_type TEXT DEFAULT 'foster-pet',
 	status, TEXT
 	first_name TEXT,
     last_name TEXT,

@@ -96,7 +96,7 @@ let router = createBrowserRouter([
         element: <ViewFosterParentForm/>,
       },
       {
-        path: "forms/foster-pets/:fosterPetFormId",
+        path: "forms/foster-pet/:fosterPetFormId",
         element: <ViewFosterPetForm/>,
       },
       {
