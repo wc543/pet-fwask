@@ -31,6 +31,7 @@ function ViewFosterParentForm() {
   const { fosterParentFormId } = useParams();
   const auth = useContext(AuthContext);
 
+
   useEffect(() => {
     const fetchFormData = async () => {
       try {
@@ -50,20 +51,46 @@ function ViewFosterParentForm() {
 
   return (
     <div>
-      <h1>View Foster Parent Form</h1>
       {form ? (
         <>
-          <div><strong>Form Type:</strong> {form.form_type}</div>
-          <div><strong>Previous Pet Experience:</strong> {form.foster_reason}</div>
-          <div><strong>Status:</strong> {form.status}</div>
-          <div><strong>Processed:</strong> {form.processed ? "Processed" : "Unprocessed"}</div>
-          <div><strong>Submitted At:</strong> {form.submitted_at}</div>
-        </>
-      ) : (
-        <div>Loading form details...</div>
-      )}
+      <h1>View Foster Parent Application</h1>
+      <div>
+                <div>
+                    <div className="formsubwrap" id="formsubwrap1">
+                        <div>First Name: {form.first_name}</div>
+                        <br/>
+                        <div>Last Name: {form.last_name}</div>
+                        <br/>
+                        <div>Email: {form.email}</div>
+                        <br/>
+                        <div>Phone Number: {form.phone_number}</div>
+                        <br/>
+                        <div>Address: {form.address}</div>
+                        <div>{form.city}</div>
+                        <div>{form.state}</div>
+                        <div>{form.zip_code}</div>
+                        <br/>
+                        <div>Household Size: {form.household_size}</div>
+                        <br/>
+                        <div>Household Allergies: {form.household_allergies}</div>
+                        <br/>
+                        <div>Current Pets: {form.current_pets}</div>
+                        <br/>
+                        <div>Agreed to humane treatment: {form.pet_care_agreement ? "Agreed" : "Did not agree"}</div>
+                        <div>Agreed to truthfulness of answers: {form.adoption_agreement ? "Agreed" : "Did not agree"}</div>
+                        <br/>
+                    </div>
+                    <div className='formsubwrap' id="formsubwrap3">
+                    </div>
+                </div>
+            </div>
+            </>
+     ) : (
+      <div>Loading form details...</div>
+    )}
     </div>
   );
-}
+};
+
 
 export default ViewFosterParentForm;

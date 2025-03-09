@@ -20,7 +20,7 @@ const FormList: React.FC = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
-  const { getFirstName} = useUser();
+  const { getFullname} = useUser();
   const fetchForms = async () => {
     try {
       setLoading(true);
@@ -81,7 +81,7 @@ const FormList: React.FC = () => {
               forms.map((form, index) => (
                 <tr key={`${form.form_type}-${form.adoption_form_id || form.foster_parent_form_id || form.foster_pet_form_id || index}`}>
                   <td>{form.form_type}</td>
-                  <td>{getFirstName(form.user_id)}</td>
+                  <td>{getFullname(form.user_id)}</td>
                   <td>{form.processed ? "Processed" : "Pending"}</td>
                   <td>
                     <button onClick={() => handleViewForm(form)}>View</button>

@@ -92,15 +92,15 @@ let router = createBrowserRouter([
       },
       {
         path: "forms/adoption/:adoptionFormId",
-        element: <ViewAdoptionForm/>,
+        element: <UserProvider><PetProvider><ViewAdoptionForm/></PetProvider></UserProvider>,
       },
       {
         path: "forms/foster-parent/:fosterParentFormId",
-        element: <ViewFosterParentForm/>,
+        element: <UserProvider><PetProvider><ViewFosterParentForm/></PetProvider></UserProvider>,
       },
       {
         path: "forms/foster-pet/:fosterPetFormId",
-        element: <ViewFosterPetForm/>,
+        element: <UserProvider><PetProvider><ViewFosterPetForm/></PetProvider></UserProvider>,
       },
       {
         path: "forms/submitAdoptionForm/:petId",

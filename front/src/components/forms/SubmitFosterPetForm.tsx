@@ -246,8 +246,6 @@ const SubmitFosterPetForm: React.FC = () => {
                         <TextField className='formInput'  label="Why do you want to adopt?" value={fosterReason} onChange={e => setFosterReason(e.target.value)} component={Paper}/>
                         <br/>
                         <TextField className='formInput'  label="What is the maximum amount of time you would leave the pet alone?" value={maxAloneTime} onChange={e => setMaxAloneTime(e.target.value)} component={Paper}/>
-                        <br/>
-                        <TextField className='formInput' label="What is your previous experience caring for pets?" value={previousPetExperience} onChange={e => setPreviousPetExperience(e.target.value)} component={Paper}/>
                     </div>
                     <div className='formsubwrap' id="formsubwrap3">
                         <Button variant="contained" type="submit" >Submit Form</Button>

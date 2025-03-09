@@ -248,8 +248,6 @@ const SubmitAdoptionForm: React.FC = () => {
                         <br/>
                         <TextField className='formInput'  label="Outline your care plan for this pet" value={carePlanDetails} onChange={e => setCarePlanDetails(e.target.value)} component={Paper}/>
                         <br/>
-                        <TextField className='formInput' label="What is your previous experience caring for pets?" value={previousPetExperience} onChange={e => setPreviousPetExperience(e.target.value)} component={Paper}/>
-                        <br/>
                         <ToggleButton id="toggle" value="financialResponsibility" selected={financialResponsibility} onChange={() => setFinancialResponsibility(!financialResponsibility)}>
                             <Checkbox checked={!!financialResponsibility}/>
                             <label>I acknowledge that I am able to financially support this pet. This includes providing annual vaccinations, exams, and routine medical care for the pet,  which is an annual commitment of $200 to $400</label>

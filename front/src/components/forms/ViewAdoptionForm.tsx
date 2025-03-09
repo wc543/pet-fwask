@@ -1,54 +1,116 @@
 import { useState, useEffect, useContext } from "react";
 import {AuthContext} from '../AuthContext'
+import {usePet} from '../Pets/PetContext';
+import {useUser} from '../Users/UserContext'
+import { useParams } from "react-router-dom";
+import FormControl from '@mui/material/FormControl';
+import { TextField, MenuItem, ToggleButton, Checkbox, Button, Paper } from '@mui/material';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
-import {useParams} from "react-router-dom"
+
 
 type Form ={
-  form_id?: number;
+  form_id?: Number;
   form_type: string;
   previous_pet_experience: string,
   status: string,
-  processed: Boolean
+  processed: Boolean,
+  pet_id: number,
+  user_id: number,
+  adoption_reason: string,
+  ideal_pet_qualities: string,
+  max_alone_time: string,
+  care_plan_details: string,
+  financial_responsibility: Boolean,
+  pet_care_agreement: Boolean,
+  adoption_agreement: Boolean,
+  submitted_at: string,
+  first_name: string
+  last_name: string,
+  email: string,
+  phone_number: string,
+  address: string,
+  city: string,
+  state: string,
+  zip_code: string,
+  household_size: number,
+  household_allergies: string,
+  current_pets: string
 }
 
 function ViewAdoptionForm() {
-  let [form_type, setFormType] = useState("");
-  let [previous_pet_experience, setpreviousPetExperience] = useState("");
-  let [processed, setProcessed] = useState<Boolean>(false);
-  let [status, setStatus] =  useState("");
-  let {adoptionFormId} = useParams();
+   const [form, setForm] = useState<Form | null>(null);
+   const { adoptionFormId } = useParams();
   const auth = useContext(AuthContext);
+  const{  getName } = usePet();
 
 
   useEffect(() => {
-    (async () => {
-        try {
-          let {
-            data: { result },
-          } = await axios.get<{ result: Form[]}>(`/api/forms/adoption/${adoptionFormId}`);
-          console.log(result);
-
-          setFormType(result[0].form_type);
-          setpreviousPetExperience(result[0].previous_pet_experience);
-          setStatus(result[0].status);
-          setProcessed(result[0].processed);
-        } catch (error) {
-          console.log(error)
+    const fetchFormData = async () => {
+      try {
+        const response = await fetch(`/api/forms/adoption/${adoptionFormId}`);
+        const data = await response.json();
+        
+        if (data.result && data.result.length > 0) {
+          setForm(data.result[0]);
         }
-    
-      })();
-    }, []);
+      } catch (error) {
+        console.log("Error fetching form data:", error);
+      }
+    };
+
+    fetchFormData();
+  }, [adoptionFormId]);
 
   return (
     <div>
-      View form
-      <div>Form type: {form_type}</div>
-      <div>Previous pet experience: {previous_pet_experience}</div>
-      <div>Status: {status}</div>
-      <div>{processed ? (<div> processed </div>) : (<div> unprocessed </div>)}</div>
-      <div>logged in user: {auth?.user.user_id}</div>
-    
+      {form ? (
+        <>
+      <h1>View Adoption Form for {getName(form.pet_id)}</h1>
+      <div>
+                <div id="formwrapper">
+                    <div className="formsubwrap" id="formsubwrap1">
+                        <div>First Name: {form.first_name}</div>
+                        <br/>
+                        <div>Last Name: {form.last_name}</div>
+                        <br/>
+                        <div>Email: {form.email}</div>
+                        <br/>
+                        <div>Phone Number: {form.phone_number}</div>
+                        <br/>
+                        <div>Address: {form.address}</div>
+                        <div>{form.city}</div>
+                        <div>{form.state}</div>
+                        <div>{form.zip_code}</div>
+                        <br/>
+                        <div>Household Size: {form.household_size}</div>
+                        <br/>
+                        <div>Household Allergies: {form.household_allergies}</div>
+                        <br/>
+                        <div>Current Pets: {form.current_pets}</div>
+                        <br/>
+                        <div>Previous Pet Experience: {form.previous_pet_experience}</div>
+                        <br/>
+                        <div>Adoption Reason: {form.adoption_reason}</div>
+                        <br/>
+                        <div>Ideal qualities in a pet: {form.ideal_pet_qualities}</div>
+                        <br/>
+                        <div>Maximum alone time: {form.max_alone_time}</div>
+                        <br/>
+                        <div>Pet care plans: {form.care_plan_details}</div>
+                        <br/>
+                        <div>Agreed to financial Responsability: {form.financial_responsibility ? "Agreed" : "Did not agree"}</div>
+                        <div>Agreed to humane treatment: {form.pet_care_agreement ? "Agreed" : "Did not agree"}</div>
+                        <div>Agreed to truthfulness of answers: {form.adoption_agreement ? "Agreed" : "Did not agree"}</div>
+                        <br/>
+                    </div>
+                    <div className='formsubwrap' id="formsubwrap3">
+                    </div>
+                </div>
+            </div>
+            </>
+     ) : (
+      <div>Loading form details...</div>
+    )}
     </div>
   );
 };
