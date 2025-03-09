@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
     }
     let { user_id, owner_id, pet_id } = parseResults.data;
     try {
-        const existingConversation = await db.get(`SELECT conversation_id FROM Conversations WHERE user_id = ? AND owner_id = ?`, [user_id, owner_id]);
+        const existingConversation = await db.get(`SELECT conversation_id FROM Conversations WHERE user_id = ? AND owner_id = ? ${pet_id !== null ? 'AND pet_id = ?' : 'AND pet_id IS NULL'}`, pet_id !== null ? [user_id, owner_id, pet_id] : [user_id, owner_id]);
         if (existingConversation) {
             return res.status(200).json({ conversation_id: existingConversation.conversation_id });
         }

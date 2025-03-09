@@ -150,6 +150,7 @@ CREATE TABLE Messages (
 	conversation_id INTEGER NOT NULL,
 	message TEXT NOT NULL,
 	time_sent TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	read BOOLEAN,
 	FOREIGN KEY(sender_id) REFERENCES Users(user_id),
 	FOREIGN KEY(conversation_id) REFERENCES Conversations(conversation_id) ON DELETE CASCADE
 );

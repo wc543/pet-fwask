@@ -64,11 +64,11 @@ INSERT INTO Conversations (user_id, owner_id) VALUES
 (7, 4);
 
 -- Messages Table
-INSERT INTO Messages (sender_id, conversation_id, message) VALUES
-(7, 1,  'Hello, I am interested in adopting Max.'),
-(2, 1, 'Hey, Max has been adopted! Sorry!'),
-(7, 1, 'Thank you anyways!'),
-(7, 4,  'Hey, I have a question about vaccines'),
-(4, 4, 'Hey, what up? Have you adopted a dog here before'),
-(7, 4, 'Thank you anyways!'),
-(6, 2,  'Hello! I am interested in adopting Max.');
+INSERT INTO Messages (sender_id, conversation_id, message, read) VALUES
+(7, 1,  'Hello, I am interested in adopting Max.', TRUE),
+(2, 1, 'Hey, Max has been adopted! Sorry!', TRUE),
+(7, 1, 'Thank you anyways!', TRUE),
+(7, 4,  'Hey, I have a question about vaccines', TRUE),
+(4, 4, 'Hey, what up? Have you adopted a dog here before', TRUE),
+(7, 4, 'Thank you anyways!', FALSE),
+(6, 2,  'Hello! I am interested in adopting Max.', TRUE);
