@@ -11,7 +11,7 @@ import { useUser } from '../Users/UserContext.tsx';
 const OpenPet: React.FC = () => {
     let [selectedPet, setSelectedPet] = useState<Pet|null>(null);
     let [loading, setLoading] = useState(false);
-    let [error, setError] = useState('');
+    let [, setError] = useState('');
     let {id} = useParams();
     const navigate = useNavigate();
     const{ getRole } = useUser();
