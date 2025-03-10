@@ -61,6 +61,43 @@ function ViewAdoptionForm() {
     fetchFormData();
   }, [adoptionFormId]);
 
+  
+  const handleApprove = async () => {
+    try {
+      const response = await axios.put(`/api/forms/adoption/${adoptionFormId}`, {
+        status: 'APPROVED',
+        processed: true
+      });
+
+      setForm((prevForm) => {
+        if (prevForm) {
+          return { ...prevForm, status: 'APPROVED', processed: true };
+        }
+        return prevForm;
+      });
+    } catch (error) {
+      console.log("Error approving form: ", error);
+    }
+  }
+
+  const handleDeny = async () => {
+    try {
+      const response = await axios.put(`/api/forms/adoption/${adoptionFormId}`, {
+        status: 'DENIED',
+        processed: true
+      });
+
+      setForm((prevForm) => {
+        if (prevForm) {
+          return { ...prevForm, status: 'DENIED', processed: true };
+        }
+        return prevForm;
+      });
+    } catch (error) {
+      console.log("Error approving form: ", error);
+    }
+  }
+
   return (
     <div>
       {form ? (
@@ -69,6 +106,7 @@ function ViewAdoptionForm() {
       <div>
                 <div id="formwrapper">
                     <div className="formsubwrap" id="formsubwrap1">
+                        <div>Status: {form.status}</div>
                         <div>First Name: {form.first_name}</div>
                         <br/>
                         <div>Last Name: {form.last_name}</div>
@@ -104,6 +142,12 @@ function ViewAdoptionForm() {
                         <br/>
                     </div>
                     <div className='formsubwrap' id="formsubwrap3">
+                      {!form.processed && (
+                        <div>
+                          <button onClick={handleApprove}>Approve</button>
+                          <button onClick={handleDeny}>Deny</button>
+                        </div>
+                      )}
                     </div>
                 </div>
             </div>

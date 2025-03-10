@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import {usePet} from '../Pets/PetContext';
 import dayjs, { Dayjs } from 'dayjs';
+import axios from "axios";
 
 type Form = {
   foster_pet_form_id?: number;
@@ -56,6 +57,42 @@ function ViewFosterPetForm() {
     fetchFormData();
   }, [fosterPetFormId]);
 
+  const handleApprove = async () => {
+    try {
+      const response = await axios.put(`/api/forms/foster-pet/${fosterPetFormId}`, {
+        processed: true,
+        status: 'APPROVED'
+      });
+
+      setForm((prevForm) => {
+        if (prevForm) {
+          return { ...prevForm, status: 'APPROVED', processed: true };
+        }
+        return prevForm;
+      });
+    } catch (error) {
+      console.log("Error approving form: ", error);
+    }
+  }
+
+  const handleDeny = async () => {
+    try {
+      const response = await axios.put(`/api/forms/foster-pet/${fosterPetFormId}`, {
+        processed: true,
+        status: 'DENIED'
+      });
+
+      setForm((prevForm) => {
+        if (prevForm) {
+          return { ...prevForm, status: 'DENIED', processed: true };
+        }
+        return prevForm;
+      });
+    } catch (error) {
+      console.log("Error approving form: ", error);
+    }
+  }
+
   return (
     <div>
       {form ? (
@@ -64,6 +101,7 @@ function ViewFosterPetForm() {
       <div>
                 <div id="formwrapper">
                     <div className="formsubwrap" id="formsubwrap1">
+                        <div>Status: {form.status}</div>
                         <div>First Name: {form.first_name}</div>
                         <br/>
                         <div>Last Name: {form.last_name}</div>
@@ -90,6 +128,12 @@ function ViewFosterPetForm() {
                         <div>Maximum alone time: {form.max_alone_time}</div>
                     </div>
                     <div className='formsubwrap' id="formsubwrap3">
+                      {!form.processed && (
+                        <div>
+                          <button onClick={handleApprove}>Approve</button>
+                          <button onClick={handleDeny}>Deny</button>
+                        </div>
+                      )}
                     </div>
                 </div>
             </div>
