@@ -74,7 +74,13 @@ const OpenPet: React.FC = () => {
                             <div id="col2">
                                 <p>Color: {selectedPet.color}</p>
                                 <p>Arrival date: {selectedPet.shelter_time.toString()}</p>
-                                <p>Note: {selectedPet.notes}</p>
+                                {role === 'STAFF' ? (
+                                    <>
+                                    <p>Current Adopter: {selectedPet.current_adopter === null ? ('--') : (selectedPet.current_adopter)}</p>
+                                    {selectedPet.fosterable === 1 ? (<p>Current Foster: {selectedPet.current_foster === null ? ('--') : (selectedPet.current_foster)}</p>) : (<></>)}
+                                    <p>Note: {selectedPet.notes}</p>
+                                    </>
+                                ) : (<></>)}
                             </div>
                             <div id="col3">
                                 {role === 'STAFF' ? (<></>) : (
