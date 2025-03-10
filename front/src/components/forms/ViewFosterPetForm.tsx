@@ -116,7 +116,7 @@ function ViewFosterPetForm() {
                         <div>Maximum alone time: {form.max_alone_time}</div>
                     </div>
                     <div className='formsubwrap' id="formsubwrap3">
-                      {!form.processed && (
+                      {!form.processed && (auth?.user.role === 'STAFF') && (
                         <div>
                           <button onClick={handleApprove}>Approve</button>
                           <button onClick={handleDeny}>Deny</button>
