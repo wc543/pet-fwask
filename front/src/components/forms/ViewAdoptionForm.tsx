@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {usePet} from '../Pets/PetContext';
 import { useParams } from "react-router-dom";
+import { AuthContext } from '../AuthContext';
 
 
 type Form ={
@@ -36,6 +37,7 @@ function ViewAdoptionForm() {
    const [form, setForm] = useState<Form | null>(null);
    const { adoptionFormId } = useParams();
   const{  getName } = usePet();
+  const auth = useContext(AuthContext);
 
 
   useEffect(() => {

@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { AuthContext } from '../AuthContext';
 
 type Form = {
   foster_parent_form_id?: number;
@@ -26,6 +27,7 @@ type Form = {
 
 function ViewFosterParentForm() {
   const [form, setForm] = useState<Form | null>(null);
+  const auth = useContext(AuthContext);
   const { fosterParentFormId } = useParams();
 
   console.log(auth?.user);

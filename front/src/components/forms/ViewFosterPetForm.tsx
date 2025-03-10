@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import {usePet} from '../Pets/PetContext';
 import { Dayjs } from 'dayjs';
+import { AuthContext } from '../AuthContext';
 
 type Form = {
   foster_pet_form_id?: number;
@@ -33,6 +34,7 @@ function ViewFosterPetForm() {
   const [form, setForm] = useState<Form | null>(null);
   const { fosterPetFormId } = useParams();
   const{  getName } = usePet();
+  const auth = useContext(AuthContext);
 
   useEffect(() => {
     const fetchFormData = async () => {
