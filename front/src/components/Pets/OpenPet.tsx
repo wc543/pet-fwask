@@ -35,6 +35,7 @@ const OpenPet: React.FC = () => {
             setSelectedPet(data.pets);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to fetch pet");
+            console.log(error)
         } finally {
             setLoading(false);
         }
@@ -73,14 +74,34 @@ const OpenPet: React.FC = () => {
                             <div id="col2">
                                 <p>Color: {selectedPet.color}</p>
                                 <p>Arrival date: {selectedPet.shelter_time.toString()}</p>
-                                <p>Note: {selectedPet.notes}</p>
+                                {role === 'STAFF' ? (
+                                    <>
+                                    <p>Current Adopter: {selectedPet.current_adopter === null ? ('--') : (selectedPet.current_adopter)}</p>
+                                    {selectedPet.fosterable === 1 ? (<p>Current Foster: {selectedPet.current_foster === null ? ('--') : (selectedPet.current_foster)}</p>) : (<></>)}
+                                    <p>Notes: {selectedPet.notes}</p>
+                                    </>
+                                ) : (<></>)}
                             </div>
                             <div id="col3">
                                 {role === 'STAFF' ? (<></>) : (
                                     <>
                                     <StartConversationButton pet_id={selectedPet.pet_id} employee_id={selectedPet.created_by_id}  />
-                                    <Button onClick={() => navigate(`/forms/submitFosterPetForm/${selectedPet.pet_id}`)} variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Foster</Button>
-                                    <Button onClick={() => navigate(`/forms/submitAdoptionForm/${selectedPet.pet_id}`)} variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Apply to Adopt</Button>
+                                    {role === 'FOSTER' && selectedPet.fosterable === 1 ? (
+                                        <Button 
+                                        variant='contained' 
+                                        className='actionButton' 
+                                        style={{ marginLeft: '5%', backgroundColor: 'black' }}
+                                        onClick={() => navigate(`/forms/submitFosterPetForm/${selectedPet.pet_id}`)}>
+                                            Apply to Foster
+                                        </Button>
+                                        ) : (<></>)}
+                                    <Button 
+                                    variant='contained' 
+                                    className='actionButton' 
+                                    style={{ marginLeft: '5%', backgroundColor: 'black' }}
+                                    onClick={() => navigate(`/forms/submitAdoptionForm/${selectedPet.pet_id}`)}>
+                                        Apply to Adopt
+                                    </Button>
                                     </>
                                 )}
                             </div>

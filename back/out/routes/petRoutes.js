@@ -13,15 +13,10 @@ async function getPets(req, res) {
     }
 }
 ;
-// Get pets by user -- username is sent in params, user_id is selected and used to find pet
+// Get pets by user_id
 async function getPetsByUser(req, res) {
-    const { username } = req.params;
+    const { user_id } = req.params;
     try {
-        const user = await db.get(`SELECT * FROM Users WHERE username = ?`, [username]);
-        if (!user) {
-            return res.status(400).json({ error: "Username does not exist" });
-        }
-        const user_id = user.user_id;
         const result = await db.all(`SELECT * FROM Pets WHERE created_by_id = ?`, [user_id]);
         if (!result) {
             return res.status(404).json({ message: "No pets created by this user" });
@@ -109,7 +104,7 @@ async function editPet(req, res) {
 }
 ;
 router.get('/', getPets);
-router.get('/user/:username', getPetsByUser);
+router.get('/user/:user_id', getPetsByUser);
 router.get('/id/:id', getPetById);
 router.delete('/:id', deletePet);
 router.post('/', postPet);

@@ -38,6 +38,7 @@ const ViewPets: React.FC = () => {
 
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to fetch pets");
+            console.log(error);
         } finally {
             setLoading(false);
         }
