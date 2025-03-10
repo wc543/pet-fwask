@@ -32,6 +32,8 @@ function ViewFosterParentForm() {
   const { fosterParentFormId } = useParams();
   const auth = useContext(AuthContext);
 
+  console.log(auth?.user);
+
 
   useEffect(() => {
     const fetchFormData = async () => {
@@ -119,7 +121,7 @@ function ViewFosterParentForm() {
                         <br/>
                     </div>
                     <div className='formsubwrap' id="formsubwrap3">
-                      {!form.processed && (
+                      {!form.processed && (auth?.user.role === 'STAFF') && (
                         <div>
                           <button onClick={handleApprove}>Approve</button>
                           <button onClick={handleDeny}>Deny</button>

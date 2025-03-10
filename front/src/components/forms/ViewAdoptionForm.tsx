@@ -142,7 +142,7 @@ function ViewAdoptionForm() {
                         <br/>
                     </div>
                     <div className='formsubwrap' id="formsubwrap3">
-                      {!form.processed && (
+                      {!form.processed && (auth?.user.role === 'STAFF') && (
                         <div>
                           <button onClick={handleApprove}>Approve</button>
                           <button onClick={handleDeny}>Deny</button>
