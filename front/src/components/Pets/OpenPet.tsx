@@ -35,7 +35,6 @@ const OpenPet: React.FC = () => {
             setSelectedPet(data.pets);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to fetch pet");
-            console.log(error)
         } finally {
             setLoading(false);
         }

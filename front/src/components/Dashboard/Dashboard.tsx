@@ -45,7 +45,6 @@ const Dashboard: React.FC = () => {
 
             const data = await response.json();
             setMessages(data);
-            console.log(messages);
         } catch (err) {
             console.error("Error fetching messages: ", err);
         }
