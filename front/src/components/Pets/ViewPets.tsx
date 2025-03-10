@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Pet } from './types.ts'
 import './ViewPets.css';
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Table, TableBody, TableCell, TableContainer, TableRow, TextField } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableRow, TextField } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { AuthContext } from '../AuthContext.tsx';
 import { useUser } from '../Users/UserContext.tsx';
@@ -38,6 +38,7 @@ const ViewPets: React.FC = () => {
 
         } catch (err) {
             setError(err instanceof Error ? err.message : "Failed to fetch pets");
+            console.log(error);
         } finally {
             setLoading(false);
         }

@@ -1,6 +1,4 @@
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from '../AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 type Form = {
@@ -29,7 +27,6 @@ type Form = {
 function ViewFosterParentForm() {
   const [form, setForm] = useState<Form | null>(null);
   const { fosterParentFormId } = useParams();
-  const auth = useContext(AuthContext);
 
   useEffect(() => {
     const fetchFormData = async () => {
