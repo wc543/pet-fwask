@@ -1,8 +1,5 @@
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from '../AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 type Form = {
   foster_parent_form_id?: number;
@@ -30,7 +27,6 @@ type Form = {
 function ViewFosterParentForm() {
   const [form, setForm] = useState<Form | null>(null);
   const { fosterParentFormId } = useParams();
-  const auth = useContext(AuthContext);
 
 
   useEffect(() => {
@@ -52,10 +48,6 @@ function ViewFosterParentForm() {
 
   const handleApprove = async () => {
     try {
-      const response = await axios.put(`/api/forms/foster-parent/${form?.foster_parent_form_id}`, {
-        status: 'APPROVED',
-        processed: true
-      });
 
       setForm((prevForm) => {
         if (prevForm) {
@@ -70,10 +62,6 @@ function ViewFosterParentForm() {
 
   const handleDeny = async () => {
     try {
-      const response = await axios.put(`/api/forms/foster-parent/${form?.foster_parent_form_id}`, {
-        status: 'DENIED',
-        processed: true
-      });
 
       setForm((prevForm) => {
         if (prevForm) {

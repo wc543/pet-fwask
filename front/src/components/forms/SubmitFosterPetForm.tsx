@@ -1,11 +1,11 @@
 import './SubmitForm.css';
 import axios from 'axios';
-import React, { useContext, useRef, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {useParams} from "react-router-dom"
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
-import { TextField, MenuItem, ToggleButton, Checkbox, Button, Paper } from '@mui/material';
+import { TextField, Button, Paper } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -76,7 +76,6 @@ const SubmitFosterPetForm: React.FC = () => {
     let [email, setEmail] = useState('');
     
     const navigate = useNavigate();
-    const inputRef = useRef<HTMLInputElement | null>(null);
     const auth = useContext(AuthContext);
     const{  getName } = usePet();
     const getAutoFilledUserInfo = async () => {

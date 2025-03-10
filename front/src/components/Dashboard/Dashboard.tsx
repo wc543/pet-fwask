@@ -25,7 +25,7 @@ interface Forms {
 }
 
 const Dashboard: React.FC = () => {
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [, setMessages] = useState<Message[]>([]);
     const [fosterExpiration, setFosterExpiration] = useState<FosterExpiration[]>([]);
     const [forms, setForms] = useState<Forms[]>([]);
     const auth = useContext(AuthContext);

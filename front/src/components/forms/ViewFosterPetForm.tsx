@@ -1,10 +1,7 @@
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from '../AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {usePet} from '../Pets/PetContext';
-import dayjs, { Dayjs } from 'dayjs';
-import axios from "axios";
+import { Dayjs } from 'dayjs';
 
 type Form = {
   foster_pet_form_id?: number;
@@ -35,7 +32,6 @@ type Form = {
 function ViewFosterPetForm() {
   const [form, setForm] = useState<Form | null>(null);
   const { fosterPetFormId } = useParams();
-  const auth = useContext(AuthContext);
   const{  getName } = usePet();
 
   useEffect(() => {
@@ -59,10 +55,6 @@ function ViewFosterPetForm() {
 
   const handleApprove = async () => {
     try {
-      const response = await axios.put(`/api/forms/foster-pet/${fosterPetFormId}`, {
-        processed: true,
-        status: 'APPROVED'
-      });
 
       setForm((prevForm) => {
         if (prevForm) {
@@ -77,10 +69,6 @@ function ViewFosterPetForm() {
 
   const handleDeny = async () => {
     try {
-      const response = await axios.put(`/api/forms/foster-pet/${fosterPetFormId}`, {
-        processed: true,
-        status: 'DENIED'
-      });
 
       setForm((prevForm) => {
         if (prevForm) {

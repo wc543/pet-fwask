@@ -1,11 +1,6 @@
-import { useState, useEffect, useContext } from "react";
-import {AuthContext} from '../AuthContext'
+import { useState, useEffect } from "react";
 import {usePet} from '../Pets/PetContext';
-import {useUser} from '../Users/UserContext'
 import { useParams } from "react-router-dom";
-import FormControl from '@mui/material/FormControl';
-import { TextField, MenuItem, ToggleButton, Checkbox, Button, Paper } from '@mui/material';
-import axios from "axios";
 
 
 type Form ={
@@ -40,7 +35,6 @@ type Form ={
 function ViewAdoptionForm() {
    const [form, setForm] = useState<Form | null>(null);
    const { adoptionFormId } = useParams();
-  const auth = useContext(AuthContext);
   const{  getName } = usePet();
 
 
@@ -64,10 +58,6 @@ function ViewAdoptionForm() {
   
   const handleApprove = async () => {
     try {
-      const response = await axios.put(`/api/forms/adoption/${adoptionFormId}`, {
-        status: 'APPROVED',
-        processed: true
-      });
 
       setForm((prevForm) => {
         if (prevForm) {
@@ -82,10 +72,6 @@ function ViewAdoptionForm() {
 
   const handleDeny = async () => {
     try {
-      const response = await axios.put(`/api/forms/adoption/${adoptionFormId}`, {
-        status: 'DENIED',
-        processed: true
-      });
 
       setForm((prevForm) => {
         if (prevForm) {
