@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import {usePet} from '../Pets/PetContext';
 import { Dayjs } from 'dayjs';
 import { AuthContext } from '../AuthContext';
+import axios from "axios";
 
 type Form = {
   foster_pet_form_id?: number;
@@ -57,6 +58,10 @@ function ViewFosterPetForm() {
 
   const handleApprove = async () => {
     try {
+      const response = await axios.put(`/api/forms/foster-pet/${fosterPetFormId}`, {
+        processed: true,
+        status: 'APPROVED'
+      });
 
       setForm((prevForm) => {
         if (prevForm) {
@@ -71,6 +76,10 @@ function ViewFosterPetForm() {
 
   const handleDeny = async () => {
     try {
+      const response = await axios.put(`/api/forms/foster-pet/${fosterPetFormId}`, {
+        processed: true,
+        status: 'DENIED'
+      });
 
       setForm((prevForm) => {
         if (prevForm) {

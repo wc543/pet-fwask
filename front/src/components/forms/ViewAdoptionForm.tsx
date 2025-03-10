@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import {usePet} from '../Pets/PetContext';
 import { useParams } from "react-router-dom";
 import { AuthContext } from '../AuthContext';
+import axios from "axios";
 
 type Form ={
   form_id?: Number;
@@ -59,6 +60,10 @@ function ViewAdoptionForm() {
   
   const handleApprove = async () => {
     try {
+      const response = await axios.put(`/api/forms/adoption/${adoptionFormId}`, {
+        status: 'APPROVED',
+        processed: true
+      });
 
       setForm((prevForm) => {
         if (prevForm) {
@@ -73,6 +78,10 @@ function ViewAdoptionForm() {
 
   const handleDeny = async () => {
     try {
+      const response = await axios.put(`/api/forms/adoption/${adoptionFormId}`, {
+        status: 'APPROVED',
+        processed: true
+      });
 
       setForm((prevForm) => {
         if (prevForm) {
