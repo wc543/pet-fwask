@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {AuthContext} from '../AuthContext';
+import { Pet } from '../Pets/types.ts'
 import './Dashboard.css';
+import { TableContainer, Table, TableBody, TableCell, TableRow, Button } from '@mui/material';
+import LaunchIcon from '@mui/icons-material/Launch';
 
 interface Message {
     message_id: number;
@@ -28,6 +31,7 @@ const Dashboard: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [fosterExpiration, setFosterExpiration] = useState<FosterExpiration[]>([]);
     const [forms, setForms] = useState<Forms[]>([]);
+    const [pets, setPets] = useState<Pet[]>([]);
     const auth = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -79,10 +83,26 @@ const Dashboard: React.FC = () => {
         }
     };
 
+    const fetchPetsByUser = async () => {
+        const user_id = auth?.user.user_id;
+        try {
+            console.log("Got here");
+            const response = await fetch(`/api/pets/user/${user_id}`);
+            if (!response.ok) {
+                throw new Error("Failed to fetch pets by user");
+            }
+            const data = await response.json();
+            setPets(data.pets);
+        } catch (err) {
+            console.error("Error fetching pets by user:", err);
+        }
+    }
+
     useEffect(() => {
         fetchMessages();
         fetchPets();
         fetchForms();
+        fetchPetsByUser();
     }, []);
 
     const handleViewForm = (form: Forms) => {
@@ -155,6 +175,40 @@ const Dashboard: React.FC = () => {
                         )}
                     </tbody>
                 </table>
+            </div>
+
+            <div id="pets_table_wrapper">
+                <h2>My Listed Pets</h2>
+                <TableContainer id="pets_table_container">
+                    <Table id="pets_table" sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableBody>
+                            <>
+                            {pets.length > 0 ? (
+                                pets.map((pet, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell className='pets_table_cell pet_image_cell'>
+                                            <div className='pet_image_wrapper'>
+                                                <img className='pet_image' src={pet.pet_image_url ? (`/${pet.pet_image_url}`) : ('/no_image.png')}/>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className='pets_table_cell'>{pet.name}</TableCell>
+                                        <TableCell className='pets_table_cell'>Notes: {pet.notes === null || '' ? ('--') : (pet.notes)}</TableCell>
+                                        <TableCell className='pets_table_cell'>
+                                            <div className='open_button_wrapper'>
+                                                <Button onClick={() => navigate(`/pets/id/${pet.pet_id}`)}><LaunchIcon htmlColor='black'/></Button>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))
+                            ) : (
+                                <TableRow>
+                                    <TableCell>No pets listed</TableCell>
+                                </TableRow>
+                            )}
+                            </>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </div>
 
         </div>

@@ -218,11 +218,11 @@ test("GET /pets/ returns all pets", async () => {
     let { data } = await axios.get("/pets");
     expect(data).toEqual({ pets });
 });
-test("GET /pets/user/:username returns pets made by user", async () => {
+test("GET /pets/user/:user_id returns pets made by user", async () => {
     let petsByAlice = [];
     petsByAlice.push(pets[0]);
     petsByAlice.push(pets[1]);
-    let { data } = await axios.get("/pets/user/alice");
+    let { data } = await axios.get("/pets/user/1");
     expect(data).toEqual({ "pets": petsByAlice });
 });
 test("GET /pets/id/:id returns pet with id", async () => {

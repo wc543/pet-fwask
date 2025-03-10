@@ -78,7 +78,7 @@ const OpenPet: React.FC = () => {
                                     <>
                                     <p>Current Adopter: {selectedPet.current_adopter === null ? ('--') : (selectedPet.current_adopter)}</p>
                                     {selectedPet.fosterable === 1 ? (<p>Current Foster: {selectedPet.current_foster === null ? ('--') : (selectedPet.current_foster)}</p>) : (<></>)}
-                                    <p>Note: {selectedPet.notes}</p>
+                                    <p>Notes: {selectedPet.notes}</p>
                                     </>
                                 ) : (<></>)}
                             </div>
