@@ -341,7 +341,7 @@ router.put("/adoption/:id", async (req: Request, res: Response) => {
 
         //set current_adopter in pet table
         await db.all(
-          "UPDATE Pets SET current_adopter=$1, WHERE pet_id = $2;",
+          "UPDATE Pets SET current_adopter=$1 WHERE pet_id = $2;",
           [adoption_info.user_id, adoption_info.pet_id]
         );
 
@@ -349,7 +349,7 @@ router.put("/adoption/:id", async (req: Request, res: Response) => {
         await db.run(
           `INSERT INTO AdoptionHistory (
             user_id,
-            pet_id
+            pet_id)
            VALUES (?, ?)`,
           [adoption_info.user_id, adoption_info.pet_id]
         );
@@ -386,7 +386,7 @@ router.put("/foster-pet/:id", async (req: Request, res: Response) => {
           
           //set current_foster in pet table
           await db.all(
-            "UPDATE Pets SET current_foster=$1, WHERE pet_id = $2;",
+            "UPDATE Pets SET current_foster=$1 WHERE pet_id = $2;",
             [foster_info.user_id, foster_info.pet_id]
           );
           //add row to FosterHistory table: user_id, pet_id, start_date, & end_date
@@ -395,7 +395,7 @@ router.put("/foster-pet/:id", async (req: Request, res: Response) => {
               user_id,
               pet_id,
               start_date,
-              end_date
+              end_date)
              VALUES (?, ?, ?, ?)`,
             [foster_info.user_id, foster_info.pet_id, foster_info.foster_start_date, foster_info.foster_end_date]
           );
@@ -422,6 +422,7 @@ router.put("/foster-parent/:id", async (req: Request, res: Response) => {
 	    processed,
       status
     } = req.body;
+    console.log("Received approval request with data:", req.body);
     try {
       result = await db.all(
           "UPDATE FosterParentForms SET processed=$1, status=$2 WHERE foster_parent_form_id=$3 RETURNING *;",
@@ -429,10 +430,10 @@ router.put("/foster-parent/:id", async (req: Request, res: Response) => {
       );
       if (status == "APPROVED")
         {
-          let foster_parent_info = await db.get('SELECT user_id, FROM FosterParentForms WHERE foster_parent_form_id=$1;',[id]);
+          let foster_parent_info = await db.get('SELECT user_id FROM FosterParentForms WHERE foster_parent_form_id=$1;',[id]);
           //set role in Users table to "FOSTER"
           await db.all(
-            "UPDATE Users SET role=$1, WHERE user_id = $2;",
+            "UPDATE Users SET role=$1 WHERE user_id = $2;",
             ["FOSTER", foster_parent_info.user_id]
           );
         }
