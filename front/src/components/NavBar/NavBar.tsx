@@ -40,7 +40,7 @@ function Header() {
             <Link to="/dashboard" className="nav-link">Dashboard</Link>
             <Link to="/pets" className="nav-link">View Pets</Link>
             <Link to="/conversation-history" className="nav-link">View Messages</Link>
-            <Link to="/forms" className="nav-link">View Forms</Link>
+            <Link to={`/forms/${auth.user.user_id}`}className="nav-link">View Forms</Link>
             <Link to="/logout" className="nav-link">Logout</Link>
           </>
         );
@@ -49,7 +49,7 @@ function Header() {
           <>
             <Link to="/pets" className="nav-link">View Pets</Link>
             <Link to="/conversation-history" className="nav-link">View Messages</Link>
-            <Link to="/forms" className="nav-link">View Forms</Link>
+            <Link to={`/forms/${auth.user.user_id}`} className="nav-link">View Forms</Link>
             <Link to={`/forms/SubmitFosterParentForm/${auth.user.user_id}`}className="nav-link">Apply to be a Foster Parent</Link>
             <Link to="/logout" className="nav-link">Logout</Link>
           </>
@@ -59,7 +59,7 @@ function Header() {
           <>
             <Link to="/pets" className="nav-link">View Pets</Link>
             <Link to="/conversation-history" className="nav-link">View Messages</Link>
-            <Link to="/forms" className="nav-link">View Forms</Link>
+            <Link to={`/forms/${auth.user.user_id}`} className="nav-link">View Forms</Link>
             <Link to="/logout" className="nav-link">Logout</Link>
           </>
         );

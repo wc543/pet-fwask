@@ -1,8 +1,9 @@
 import React, { useEffect, useState , useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './FormList.css';
-import {AuthContext} from '../AuthContext'
 import { useUser } from '../Users/UserContext';
+import {usePet} from '../Pets/PetContext';
+import { useParams } from "react-router-dom";
 
 interface Form {
   form_id?: number;
@@ -12,6 +13,7 @@ interface Form {
   user_id: number;
   processed: boolean;
   form_type: string;
+  pet_id: number;
 }
 
 const FormList: React.FC = () => {
@@ -19,13 +21,17 @@ const FormList: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const auth = useContext(AuthContext);
   const { getFullname} = useUser();
+  const {getName} = usePet();
+  const {userId} = useParams();
   const fetchForms = async () => {
     try {
       setLoading(true);
       setError('');
-      var userId=auth?.user.user_id
+
+      if (!userId) {
+        throw new Error("Failed to fetch forms, userID is null");
+      }
       
       const adoptionResponse = await fetch(`/api/forms/adoptionList/${userId}`);
       const fosterPetResponse = await fetch(`/api/forms/fosterPetList/${userId}`);
@@ -72,6 +78,7 @@ const FormList: React.FC = () => {
             <tr>
               <th>Form Type</th>
               <th>Submitted By</th>
+              <th>Pet</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -82,6 +89,7 @@ const FormList: React.FC = () => {
                 <tr key={`${form.form_type}-${form.adoption_form_id || form.foster_parent_form_id || form.foster_pet_form_id || index}`}>
                   <td>{form.form_type}</td>
                   <td>{getFullname(form.user_id)}</td>
+                  <td>{form.pet_id ? getName(form.pet_id):"--"}</td>
                   <td>{form.processed ? "Processed" : "Pending"}</td>
                   <td>
                     <button onClick={() => handleViewForm(form)}>View</button>

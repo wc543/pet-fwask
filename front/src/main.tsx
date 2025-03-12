@@ -59,9 +59,9 @@ let router = createBrowserRouter([
         element: <UserProvider><EditPet/></UserProvider>
       },
       {
-        path: "/forms",
+        path: "/forms/:userId",
         element:  <ProtectedRoute />,
-        children: [{path: "", element: <UserProvider><FormList /></UserProvider> }],
+        children: [{path: "", element: <PetProvider><UserProvider><FormList /></UserProvider></PetProvider> }],
       },
       {
         path: "/conversation-history",

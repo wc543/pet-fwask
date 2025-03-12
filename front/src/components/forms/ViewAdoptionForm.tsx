@@ -79,7 +79,7 @@ function ViewAdoptionForm() {
   const handleDeny = async () => {
     try {
       const response = await axios.put(`/api/forms/adoption/${adoptionFormId}`, {
-        status: 'APPROVED',
+        status: 'DENIED',
         processed: true
       });
 
