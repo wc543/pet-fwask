@@ -153,8 +153,8 @@ const SubmitFosterPetForm: React.FC = () => {
             let newFosterPetForm = {
                 user_id: user_id,
                 pet_id: petIdInt,
-                foster_start_date: fosterStartDate,
-                foster_end_date: fosterEndDate,
+                foster_start_date: fosterStartDate ? fosterStartDate.format('YYYY-MM-DD'): null,
+                foster_end_date: fosterEndDate ? fosterEndDate.format('YYYY-MM-DD'): null,
                 previous_pet_experience: previousPetExperience,
                 foster_reason: fosterReason,
                 max_alone_time: maxAloneTime,

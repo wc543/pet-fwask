@@ -96,7 +96,7 @@ function ViewFosterPetForm() {
     <div>
       {form ? (
         <>
-      <h1>View Adoption Form for {getName(form.pet_id)}</h1>
+      <h1>View Foster Pet Form for {getName(form.pet_id)}</h1>
       <div>
                 <div id="formwrapper">
                     <div className="formsubwrap" id="formsubwrap1">
@@ -125,6 +125,8 @@ function ViewFosterPetForm() {
                         <div>Foster Reason: {form.foster_reason}</div>
                         <br/>
                         <div>Maximum alone time: {form.max_alone_time}</div>
+                        <div>Foster start date: {form.foster_start_date?.toString()}</div>
+                        <div>Foster end date: {form.foster_end_date?.toString()}</div>
                     </div>
                     <div className='formsubwrap' id="formsubwrap3">
                       {!form.processed && (auth?.user.role === 'STAFF') && (

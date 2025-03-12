@@ -14,7 +14,7 @@ const OpenPet: React.FC = () => {
     let [, setError] = useState('');
     let {id} = useParams();
     const navigate = useNavigate();
-    const{ getRole } = useUser();
+    const{ getRole, getFullname } = useUser();
     const auth = useContext(AuthContext);
     const user_id = auth?.user?.user_id;
     const role = getRole(user_id);
@@ -75,8 +75,8 @@ const OpenPet: React.FC = () => {
                                 <p>Arrival date: {selectedPet.shelter_time.toString()}</p>
                                 {role === 'STAFF' ? (
                                     <>
-                                    <p>Current Adopter: {selectedPet.current_adopter === null ? ('--') : (selectedPet.current_adopter)}</p>
-                                    {selectedPet.fosterable === 1 ? (<p>Current Foster: {selectedPet.current_foster === null ? ('--') : (selectedPet.current_foster)}</p>) : (<></>)}
+                                    <p>Current Adopter: {selectedPet.current_adopter === null ? ('--') : (getFullname(selectedPet.current_adopter))}</p>
+                                    {selectedPet.fosterable === 1 ? (<p>Current Foster: {selectedPet.current_foster === null ? ('--') : (getFullname(selectedPet.current_foster))}</p>) : (<></>)}
                                     <p>Notes: {selectedPet.notes}</p>
                                     </>
                                 ) : (<></>)}

@@ -10,7 +10,7 @@ import { socket } from "../../../main";
 import CloseIcon from '@mui/icons-material/Close';
 
 export const MessageHeader = ( {conversation } : {conversation : Conversation}) => {
-    const {getFullname} = useUser();
+    const {getFullname, getRole} = useUser();
     const {getImageUrl, getFosterable, getName} = usePet();
     const auth = useContext(AuthContext);
     const current_user = auth?.user.user_id;
@@ -43,10 +43,12 @@ export const MessageHeader = ( {conversation } : {conversation : Conversation}) 
                 <img src={ (getImageUrl(conversation.pet_id)) ? (`/${getImageUrl(conversation.pet_id)}`) : ('/no_image.png')} alt={getName(conversation.pet_id)} style={{ width: '85px', height: '85px', borderRadius: '50%', objectFit: 'cover' }} />
                 <Typography  variant="h6" style={{ margin: '5px 0', fontSize: '1.5rem' }}>Getting to Know {getName(conversation.pet_id)}!</Typography>
               </div>
+              { (getRole(conversation.user_id) === "STAFF") ?
               <div style={{ display: 'block', alignItems: 'center', columnGap: '10px' }}>
                 <Button onClick={() => navigate(`/forms/submitAdoptionForm/${conversation.pet_id}`)} variant="contained" style={{ backgroundColor: '#f38c52', color: 'black', fontWeight: 'bold' }}>Adopt Me Today!</Button>
-                { getFosterable(conversation.pet_id)? <Button onClick={() => navigate(`/forms/submitFosterPetForm/${conversation.pet_id}`)} variant="contained" style={{ backgroundColor: '#f38c52', color: 'black', fontWeight: 'bold' }}>Foster Me Today!</Button> :<></>}
+                { getFosterable(conversation.pet_id) && (getRole(conversation.user_id) === "FOSTER")? <Button onClick={() => navigate(`/forms/submitFosterPetForm/${conversation.pet_id}`)} variant="contained" style={{ backgroundColor: '#f38c52', color: 'black', fontWeight: 'bold' }}>Foster Me Today!</Button> :<></>}
               </div>
+              :<></>}
           </div>
         )
     }
