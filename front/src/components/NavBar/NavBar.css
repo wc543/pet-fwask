@@ -12,3 +12,11 @@
     font-size: 16px;
     padding: 10px 15px;
 }
+
+.nav-logo {
+    display: flex;
+}
+
+.nav-logo-item {
+    color: white;
+}
