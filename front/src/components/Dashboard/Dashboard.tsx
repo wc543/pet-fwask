@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import {AuthContext} from '../AuthContext';
 import { Pet } from '../Pets/types.ts'
 import './Dashboard.css';
-import { TableContainer, Table, TableBody, TableCell, TableRow, Button } from '@mui/material';
+import { TableContainer, Table, TableBody, TableCell, TableRow, Button, TableHead } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import LaunchIcon from '@mui/icons-material/Launch';
 
 interface Message {
@@ -114,103 +115,95 @@ const Dashboard: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1>Dashboard</h1>
-            <div>
-                <h2>Forms</h2>
-                <table>
-                    <thead>
-                        <tr>
-                        <th>Form Type</th>
-                        <th>Submitted By</th>
-                        <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {forms.length > 0 ? (
-                        forms.map((form, index) => (
-                            <tr key={`${form.form_type}-${form.adoption_form_id || form.foster_parent_form_id || form.foster_pet_form_id || index}`}>
-                            <td>{form.form_type}</td>
-                            <td>{form.user_name}</td>
-                            <td>
-                                <button onClick={() => handleViewForm(form)}>View</button>
-                            </td>
-                            </tr>
-                        ))
-                        ) : (
-                        <tr>
-                            <td colSpan={5}>No forms found</td>
-                        </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
-
-            <div>
-                <h2>Foster Expiration</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Pet Name</th>
-                            <th>Expiration Date</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {fosterExpiration.length > 0 ? (
-                            fosterExpiration.map((foster) => (
-                                <tr key={foster.pet_id}>
-                                    <td>{foster.name}</td>
-                                    <td>{foster.end_date}</td>
-                                    <td>
-                                        <button onClick={() => handleViewExpiration(foster)}>View</button>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan={2}>No foster expiration data found</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="pets_table_wrapper">
-                <h2>My Listed Pets</h2>
-                <TableContainer id="pets_table_container">
-                    <Table id="pets_table" sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableBody>
-                            <>
-                            {pets.length > 0 ? (
-                                pets.map((pet, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell className='pets_table_cell pet_image_cell'>
-                                            <div className='pet_image_wrapper'>
-                                                <img className='pet_image' src={pet.pet_image_url ? (`/${pet.pet_image_url}`) : ('/no_image.png')}/>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell className='pets_table_cell'>{pet.name}</TableCell>
-                                        <TableCell className='pets_table_cell'>Notes: {pet.notes === null || '' ? ('--') : (pet.notes)}</TableCell>
-                                        <TableCell className='pets_table_cell'>
-                                            <div className='open_button_wrapper'>
-                                                <Button onClick={() => navigate(`/pets/id/${pet.pet_id}`)}><LaunchIcon htmlColor='black'/></Button>
-                                            </div>
-                                        </TableCell>
+        <>
+        <div id="content">
+            <div id="top">
+                <div id="forms_wrapper">
+                    <TableContainer id="forms_table_container" sx={{ borderRadius: '10px', border: 'hidden', backgroundColor: '#D9D9D9' }}>
+                        <h2>Forms</h2>
+                        <Table id="forms_table" sx={{ minWidth: 300, border: 'hidden' }} aria-label='simple table'>
+                            <TableBody className='table_body'>
+                                {forms.length > 0 ? (
+                                    forms.map((form, index) => (
+                                        <TableRow key={`${form.form_type}-${form.adoption_form_id || form.foster_parent_form_id || form.foster_pet_form_id || index}`}>
+                                            <TableCell className='forms_table_cell' id={index === 0 ? ('forms_firstrow') : ('')}>{form.form_type}</TableCell>
+                                            <TableCell className='forms_table_cell' id={index === 0 ? ('forms_firstrow') : ('')}>{form.user_name}</TableCell>
+                                            <TableCell className='forms_table_cell' id={index === 0 ? ('forms_firstrow') : ('')} sx={{ textAlign: 'right' }}>
+                                                <Button onClick={() => handleViewForm(form)}><VisibilityIcon htmlColor='black'/></Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                ) : (
+                                    <TableRow>
+                                        <TableCell sx={{ border: 'hidden' }}>No forms found</TableCell>
                                     </TableRow>
-                                ))
-                            ) : (
-                                <TableRow>
-                                    <TableCell>No pets listed</TableCell>
-                                </TableRow>
-                            )}
-                            </>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
+                <div id="pets_wrapper">
+                    <TableContainer id="pets_table_container" sx={{ borderRadius: '10px', border: 'hidden', backgroundColor: '#D9D9D9' }}>
+                        <h2>My Listed Pets</h2>
+                        <Table id="pets_table" sx={{ minWidth: 300, border: 'hidden' }} aria-label="simple table">
+                            <TableBody>
+                                <>
+                                {pets.length > 0 ? (
+                                    pets.map((pet, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell className='pets_table_cell pet_image_cell' id={index === 0 ? ('pets_firstrow') : ('')} align='left'>
+                                                <div className='pet_image_wrapper'>
+                                                    <img className='pet_image' src={pet.pet_image_url ? (`/${pet.pet_image_url}`) : ('/no_image.png')}/>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell className='pets_table_cell' id={index === 0 ? ('pets_firstrow') : ('')} align='center'>{pet.name}</TableCell>
+                                            <TableCell className='pets_table_cell' id={index === 0 ? ('pets_firstrow') : ('')} align='center'>Notes: {pet.notes === null || '' ? ('--') : (pet.notes)}</TableCell>
+                                            <TableCell className='pets_table_cell' id={index === 0 ? ('pets_firstrow') : ('')} align='right'>
+                                                <div className='open_button_wrapper'>
+                                                    <Button onClick={() => navigate(`/pets/id/${pet.pet_id}`)}><LaunchIcon htmlColor='black'/></Button>
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                ) : (
+                                    <TableRow>
+                                        <TableCell sx={{ border: 'hidden' }}>No pets listed</TableCell>
+                                    </TableRow>
+                                )}
+                                </>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
             </div>
-
+            <div id="bottom">
+                <div id="fosterexp_wrapper">
+                    <TableContainer id='fosterexp_table_container' sx={{ borderRadius: '10px', border: 'hidden', backgroundColor: '#D9D9D9' }}>
+                        <h2>Foster Expiration</h2>
+                        <Table id='fosterexp_table' sx={{ minWidth: 650, border: 'hidden' }} aria-label="simple table">
+                            <TableBody>
+                                {fosterExpiration.length > 0 ? (
+                                    fosterExpiration.map((foster, index) => (
+                                        <TableRow key={foster.pet_id}>
+                                            <TableCell className='fosterexp_table_cell' id={index === 0 ? ('fosterexp_firstrow') : ('')} align='left'>{foster.name}</TableCell>
+                                            <TableCell className='fosterexp_table_cell' id={index === 0 ? ('fosterexp_firstrow') : ('')} align='left'>{foster.end_date}</TableCell>
+                                            <TableCell className='fosterexp_table_cell' id={index === 0 ? ('fosterexp_firstrow') : ('')} align='right'>
+                                                <Button onClick={() => handleViewExpiration(foster)}><LaunchIcon htmlColor='black'/></Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
+                                ) : (
+                                    <TableRow>
+                                        <TableCell sx={{ border: 'hidden' }}>No foster expiration data found</TableCell>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
+            </div>
         </div>
+        </>
     );
 }
 
