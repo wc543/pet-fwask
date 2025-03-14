@@ -5,7 +5,7 @@ import {useParams} from "react-router-dom"
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
-import { TextField, ToggleButton, Checkbox, Button, Paper } from '@mui/material';
+import { TextField, ToggleButton, Checkbox, Button, Paper, Typography } from '@mui/material';
 import { AuthContext } from '../AuthContext';
 import {usePet} from '../Pets/PetContext';
 
@@ -195,12 +195,23 @@ const SubmitFosterParentForm: React.FC = () => {
     
     return (
         <>
-        <header>Apply to be a Foster Parent {getPetName()}</header>
         <Box className="Box" sx={{ minWidth: 120 }} component="form" onSubmit={handleSubmitAdoptionForm}>
             <br/>
+           <div style={{display:"flex" ,  alignItems: "center", gap: "20px"}}>
+                <Typography variant="h4" gutterBottom align="left">
+                Apply to be a Foster Parent
+                </Typography>
+            </div>
+            <br/>
+            <Typography variant="body1" paragraph align="left">
+                Thank you for your interest in becoming a foster parent! We truly appreciate your willingness to provide a safe and loving temporary home for pets in need. Please fill out the form below with accurate information. Our team will review your application as soon as possible.
+            </Typography>
             <FormControl fullWidth>
                 <div id="formwrapper">
                     <div className="formsubwrap" id="formsubwrap1">
+                        <Typography variant="h5" gutterBottom align="left">
+                        Personal Information
+                        </Typography>
                         <TextField className='formInput' required label="First Name" value={firstName} onChange={e => setFirstName(e.target.value)} component={Paper}/>
                         <br/>
                         <TextField className='formInput' required label="Last Name" value={lastName} onChange={e => setLastName(e.target.value)} component={Paper}/>
@@ -217,22 +228,31 @@ const SubmitFosterParentForm: React.FC = () => {
                         <br/>
                         <TextField className='formInput' required label="Zip Code" value={zipCode} onChange={e => setZipCode(e.target.value)} component={Paper}/>
                         <br/>
+                        <Typography variant="h5" gutterBottom align="left">
+                        Household Information
+                        </Typography>
                         <TextField className='formInput' type='number' label="Household Size" value={householdSize} onChange={e => setHouseHoldSize(parseInt(e.target.value))} component={Paper}/>
                         <br/>
                         <TextField className='formInput'  label="Are there any animal allergies in your household?" value={householdAllergies} onChange={e => setHouseholdAllergies(e.target.value)} component={Paper}/>
                         <br/>
                         <TextField className='formInput'  label="Please list any pets you currently have" value={currentPets} onChange={e => setCurrentPets(e.target.value)} component={Paper}/>
                         <br/>
-                        <TextField className='formInput'  label="Why do you want to foster?" value={fosterReason} onChange={e => setFosterReason(e.target.value)} component={Paper}/>
+                        <Typography variant="h5" gutterBottom align="left">
+                        Questionnarie
+                        </Typography>
+                        <TextField className='formInput'  multiline rows={3} label="Why do you want to foster?" value={fosterReason} onChange={e => setFosterReason(e.target.value)} component={Paper}/>
                         <br/>
+                        <Typography variant="h5" gutterBottom align="left">
+                        Acknowledgements
+                        </Typography>
                         <ToggleButton id="toggle" value="petCareAgreement" selected={petCareAgreement} onChange={() => setPetCareAgreement(!petCareAgreement)}>
                             <Checkbox checked={!!petCareAgreement}/>
-                            <label>I will abide by the laws pertaining to the humane treatment of animals</label>
+                            <label style={{textAlign:'left'}}>I will abide by the laws pertaining to the humane treatment of animals</label>
                         </ToggleButton>
                         <br/>
                         <ToggleButton id="toggle" value="adoptionAgreement" selected={adoptionAgreement} onChange={() => setAdoptionAgreement(!adoptionAgreement)}>
                             <Checkbox checked={!!adoptionAgreement}/>
-                            <label>I acknowledge that all information on this form is true and correct. I understand that any misrepresentation of the facts may result in the shelter refusing foster privileges to me </label>
+                            <label style={{textAlign:'left'}}>I acknowledge that all information on this form is true and correct. I understand that any misrepresentation of the facts may result in the shelter refusing foster privileges to me </label>
                         </ToggleButton>
                     </div>
                     <div className='formsubwrap' id="formsubwrap3">

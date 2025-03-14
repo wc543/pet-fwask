@@ -5,7 +5,7 @@ import {useParams} from "react-router-dom"
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
-import { TextField, Button, Paper } from '@mui/material';
+import { TextField, Button, Paper, Typography } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -77,7 +77,7 @@ const SubmitFosterPetForm: React.FC = () => {
     
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
-    const{  getName } = usePet();
+    const{  getName, getImageUrl } = usePet();
     const getAutoFilledUserInfo = async () => {
         try {
           var userId=auth?.user.user_id
@@ -121,6 +121,19 @@ const SubmitFosterPetForm: React.FC = () => {
             petIdInt = parseInt(petId);
             let petName=getName(petIdInt);
             return petName
+        }
+
+    }
+
+    function getPetImageUrl():string | undefined
+    {
+
+        let petIdInt: number;
+        if (petId !== undefined)
+        {
+            petIdInt = parseInt(petId);
+            const petImageUrl=getImageUrl(petIdInt);
+            return petImageUrl;
         }
 
     }
@@ -205,12 +218,28 @@ const SubmitFosterPetForm: React.FC = () => {
     
     return (
         <>
-        <header>Apply to Foster {getPetName()}</header>
         <Box className="Box" sx={{ minWidth: 120 }} component="form" onSubmit={handleSubmitFosterPetForm}>
+            <br/>
+            <div style={{display:"flex" ,  alignItems: "center", gap: "20px"}}>
+            {getPetImageUrl() ? <img onClick={() => navigate(`/pets/id/${petId}`)} src={ (`/${getPetImageUrl()}`) } alt={getPetName()} style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover' }} /> : <></> }
+                <Typography variant="h4" gutterBottom align="left">
+                Apply to Foster {getPetName()}
+                </Typography>
+            </div>
+            <br/>
+            <Typography variant="body1" paragraph align="left">
+                Thank you for your interest in becoming a foster parent for {getPetName()}! We truly appreciate your willingness to provide a safe and loving temporary home for {getPetName()} before finding a forever home. Please fill out the form below with accurate information. Our team will review your application as soon as possible.
+            </Typography>
             <br/>
             <FormControl fullWidth>
                 <div id="formwrapper">
                     <div className="formsubwrap" id="formsubwrap1">
+                        <Typography variant="h5" gutterBottom align="left">
+                        Personal Information
+                        </Typography>
+                        <Typography variant="body2" paragraph align="left">
+                        *The information has been populated based on the details from your account. Kindly review its accuracy and ensure that it is current.
+                        </Typography>
                         <TextField className='formInput' required label="First Name" value={firstName} onChange={e => setFirstName(e.target.value)} component={Paper}/>
                         <br/>
                         <TextField className='formInput' required label="Last Name" value={lastName} onChange={e => setLastName(e.target.value)} component={Paper}/>
@@ -227,6 +256,13 @@ const SubmitFosterPetForm: React.FC = () => {
                         <br/>
                         <TextField className='formInput' required label="Zip Code" value={zipCode} onChange={e => setZipCode(e.target.value)} component={Paper}/>
                         <br/>
+                        <Typography variant="h5" gutterBottom align="left">
+                        Fostering Period
+                        </Typography>
+                        <Typography variant="body2" paragraph align="left">
+                        Please specify the time frame during which you are available to foster
+                        </Typography>
+                        <br/>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker label="Start date for fostering" value={fosterStartDate} onChange={(ndate) => setFosterStartDate(ndate)} format='YYYY-MM-DD'/>
                         </LocalizationProvider>
@@ -234,17 +270,24 @@ const SubmitFosterPetForm: React.FC = () => {
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker label="End date for fostering" value={fosterEndDate} onChange={(ndate) => setFosterEndDate(ndate)} format='YYYY-MM-DD'/>
                         </LocalizationProvider>
+                        <br/>
+                        <Typography variant="h5" gutterBottom align="left">
+                        Household Information
+                        </Typography>
                         <TextField className='formInput' type='number' label="Household Size" value={householdSize} onChange={e => setHouseHoldSize(parseInt(e.target.value))} component={Paper}/>
                         <br/>
                         <TextField className='formInput'  label="Are there any animal allergies in your household?" value={householdAllergies} onChange={e => setHouseholdAllergies(e.target.value)} component={Paper}/>
                         <br/>
                         <TextField className='formInput'  label="Please list any pets you currently have" value={currentPets} onChange={e => setCurrentPets(e.target.value)} component={Paper}/>
                         <br/>
-                        <TextField className='formInput'  label="What is your previous experience caring for pets?" value={previousPetExperience} onChange={e => setPreviousPetExperience(e.target.value)} component={Paper}/>
+                        <Typography variant="h5" gutterBottom align="left">
+                        Questionnare
+                        </Typography>
+                        <TextField className='formInput' multiline rows={3} label="What is your previous experience caring for pets?" value={previousPetExperience} onChange={e => setPreviousPetExperience(e.target.value)} component={Paper}/>
                         <br/>
-                        <TextField className='formInput'  label="Why do you want to adopt?" value={fosterReason} onChange={e => setFosterReason(e.target.value)} component={Paper}/>
+                        <TextField className='formInput' multiline rows={3} label="Why do you want to foster?" value={fosterReason} onChange={e => setFosterReason(e.target.value)} component={Paper}/>
                         <br/>
-                        <TextField className='formInput'  label="What is the maximum amount of time you would leave the pet alone?" value={maxAloneTime} onChange={e => setMaxAloneTime(e.target.value)} component={Paper}/>
+                        <TextField className='formInput' multiline rows={3} label="What is the maximum amount of time you would leave the pet alone?" value={maxAloneTime} onChange={e => setMaxAloneTime(e.target.value)} component={Paper}/>
                     </div>
                     <div className='formsubwrap' id="formsubwrap3">
                         <Button variant="contained" type="submit" >Submit Form</Button>
