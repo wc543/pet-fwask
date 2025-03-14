@@ -196,7 +196,7 @@ const SubmitFosterPetForm: React.FC = () => {
             setCurrentPets('');
             setEmail('');
             alert("Successfully submitted form");
-            navigate('/forms');
+            navigate(`/forms/${user_id}`);
         } catch (error) {
             alert(getAxiosErrorMessages(error));
         }
