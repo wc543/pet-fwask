@@ -1,12 +1,13 @@
 import './OpenPet.css';
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import { Pet } from './types.ts'
 import { StartConversationButton } from '../Chats/StartConversationButton.tsx';
 import { AuthContext } from '../AuthContext.tsx';
 import { useUser } from '../Users/UserContext.tsx';
+import BackButton from '../BackButton.tsx';
 
 const OpenPet: React.FC = () => {
     let [selectedPet, setSelectedPet] = useState<Pet|null>(null);
@@ -49,12 +50,14 @@ const OpenPet: React.FC = () => {
         {!loading ? (
             <>
             {selectedPet ? (
+                <>
+                <BackButton></BackButton>
                 <Box className="Box" sx={{ minWidth: 120}}>
                     <div id="wrapper">
                         <div id="top_wrapper">
                             <div id="image_wrapper">
                                 <img id="image" src={selectedPet.pet_image_url ? (`/${selectedPet.pet_image_url}`) : ('/no_image.png')}/>
-                                <h2>{selectedPet.name}</h2>
+                                <Typography variant='h4'>Meet {selectedPet.name}!</Typography >
                             </div>
                             <div id="employee_buttons">
                                 {(role === 'STAFF' && user_id === selectedPet.created_by_id) ? (
@@ -64,20 +67,20 @@ const OpenPet: React.FC = () => {
                         </div>
                         <div id="bottom_wrapper">
                             <div id="col1">
-                                <p>Type: {selectedPet.type}</p>
-                                <p>Breed: {selectedPet.breed}</p>
-                                <p>Size: {selectedPet.size}</p>
-                                <p>Gender: {selectedPet.gender}</p>
-                                <p>Age: {selectedPet.age}</p>
+                                <Typography variant="body1" paragraph align="left">Type: {selectedPet.type}</Typography >
+                                <Typography variant="body1" paragraph align="left">Breed: {selectedPet.breed}</Typography >
+                                <Typography variant="body1" paragraph align="left">Size: {selectedPet.size}</Typography >
+                                <Typography variant="body1" paragraph align="left">Gender: {selectedPet.gender}</Typography >
+                                <Typography variant="body1" paragraph align="left">Age: {selectedPet.age}</Typography >
                             </div>
                             <div id="col2">
-                                <p>Color: {selectedPet.color}</p>
-                                <p>Arrival date: {selectedPet.shelter_time.toString()}</p>
+                                <Typography variant="body1" paragraph align="left">Color: {selectedPet.color}</Typography >
+                                <Typography variant="body1" paragraph align="left">Arrival date: {selectedPet.shelter_time.toString()}</Typography >
                                 {role === 'STAFF' ? (
                                     <>
-                                    <p>Current Adopter: {selectedPet.current_adopter === null ? ('--') : (getFullname(selectedPet.current_adopter))}</p>
-                                    {selectedPet.fosterable === 1 ? (<p>Current Foster: {selectedPet.current_foster === null ? ('--') : (getFullname(selectedPet.current_foster))}</p>) : (<></>)}
-                                    <p>Notes: {selectedPet.notes}</p>
+                                    <Typography variant="body1" paragraph align="left">Current Adopter: {selectedPet.current_adopter === null ? ('--') : (getFullname(selectedPet.current_adopter))}</Typography >
+                                    {selectedPet.fosterable === 1 ? (<Typography variant="body1" paragraph align="left">Current Foster: {selectedPet.current_foster === null ? ('--') : (getFullname(selectedPet.current_foster))}</Typography >) : (<></>)}
+                                    <Typography variant="body1" paragraph align="left">Notes: {selectedPet.notes}</Typography >
                                     </>
                                 ) : (<></>)}
                             </div>
@@ -107,6 +110,7 @@ const OpenPet: React.FC = () => {
                         </div>
                     </div>
                 </Box>
+                </>
                 ) : (
                 <div>Error fetching pet</div>
             )}

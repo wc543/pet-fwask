@@ -12,6 +12,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AuthContext } from '../AuthContext';
 import {usePet} from '../Pets/PetContext';
+import BackButton from '../BackButton';
 
 
 // error handling - referenced from activity 3b utils.ts
@@ -218,6 +219,7 @@ const SubmitFosterPetForm: React.FC = () => {
     
     return (
         <>
+        <BackButton></BackButton>
         <Box className="Box" sx={{ minWidth: 120 }} component="form" onSubmit={handleSubmitFosterPetForm}>
             <br/>
             <div style={{display:"flex" ,  alignItems: "center", gap: "20px"}}>

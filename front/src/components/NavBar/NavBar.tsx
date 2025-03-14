@@ -32,7 +32,7 @@ function Header() {
       } else if (role === 'FOSTER') {
         navLinks = (
           <>
-            <Link to="/pets" className="nav-link">Find A Pet 🐾</Link>
+            <Link to="/pets" className="nav-link" >Find A Pet 🐾</Link>
             <Link to="/conversation-history" className="nav-link">View Messages</Link>
             <Link to={`/forms/${auth.user.user_id}`} className="nav-link">Your Forms</Link>
             <Link to="/logout" className="nav-link">Logout</Link>

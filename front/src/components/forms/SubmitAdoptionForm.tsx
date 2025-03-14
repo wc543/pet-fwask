@@ -8,6 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import { TextField, ToggleButton, Checkbox, Button, Paper, Typography, Grid } from '@mui/material';
 import { AuthContext } from '../AuthContext';
 import {usePet} from '../Pets/PetContext';
+import BackButton from '../BackButton';
 
 
 // error handling - referenced from activity 3b utils.ts
@@ -221,6 +222,7 @@ const SubmitAdoptionForm: React.FC = () => {
     
     return (
         <>
+        <BackButton></BackButton>
         <Box className="Box" sx={{ minWidth: 120 }} component="form" onSubmit={handleSubmitAdoptionForm}>
             <br/>
             <div style={{display:"flex" ,  alignItems: "center", gap: "20px"}}>
