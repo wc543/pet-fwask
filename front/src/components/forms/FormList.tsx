@@ -4,6 +4,7 @@ import './FormList.css';
 import { useUser } from '../Users/UserContext';
 import {usePet} from '../Pets/PetContext';
 import { useParams } from "react-router-dom";
+import { Typography } from '@mui/material';
 
 interface Form {
   form_id?: number;
@@ -67,33 +68,33 @@ const FormList: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>Forms Submitted</h2>
-
+    <div id='content'>
+      <Typography variant='h4'>Forms Submitted</Typography>
+      <Typography variant='body1'>This page displays all the forms you’ve submitted for pet adoption. You can review your past submissions and track the status of your applications. Any pending forms are currently being processed, and our team will reach out to you soon with updates.</Typography>
       {loading ? (
         <div>Loading...</div>
       ) : (
         <table>
           <thead>
             <tr>
-              <th>Form Type</th>
-              <th>Submitted By</th>
-              <th>Pet</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th><Typography>Form Type</Typography></th>
+              <th><Typography>Submitted By</Typography></th>
+              <th><Typography>Pet</Typography></th>
+              <th><Typography>Status</Typography></th>
+              <th><Typography>Action</Typography></th>
             </tr>
           </thead>
           <tbody>
             {forms.length > 0 ? (
               forms.map((form, index) => (
                 <tr key={`${form.form_type}-${form.adoption_form_id || form.foster_parent_form_id || form.foster_pet_form_id || index}`}>
-                  <td>{form.form_type}</td>
-                  <td>{getFullname(form.user_id)}</td>
-                  <td>{form.pet_id ? getName(form.pet_id):"--"}</td>
-                  <td>{form.processed ? "Processed" : "Pending"}</td>
-                  <td>
+                  <td><Typography>{form.form_type}</Typography></td>
+                  <td><Typography>{getFullname(form.user_id)}</Typography></td>
+                  <td><Typography>{form.pet_id ? getName(form.pet_id):"--"}</Typography></td>
+                  <td><Typography>{form.processed ? "Processed" : "Needs To Be Process"}</Typography></td>
+                  <td><Typography>
                     <button onClick={() => handleViewForm(form)}>View</button>
-                  </td>
+                  </Typography></td>
                 </tr>
               ))
             ) : (

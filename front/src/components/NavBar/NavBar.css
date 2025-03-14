@@ -15,8 +15,5 @@
 
 .nav-logo {
     display: flex;
-}
-
-.nav-logo-item {
-    color: white;
+    gap: 3 px;
 }

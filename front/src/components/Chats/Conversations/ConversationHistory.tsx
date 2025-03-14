@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent } from '@mui/material';
+import { Card, CardContent, Icon, Typography } from '@mui/material';
 import { useUser } from "../../Users/UserContext.tsx";
 import { AuthContext } from "../../AuthContext.tsx";
 import { Conversation } from "../types.ts";
+import MessageIcon from '@mui/icons-material/Message';
+import { ConversationPage } from "./ConversationPage.tsx";
 
 export const ConversationHistory: React.FC = () => {
     const [conversations, setConversation] = useState<Conversation[]>([]);
@@ -42,24 +44,24 @@ export const ConversationHistory: React.FC = () => {
       <>
         { !loading? 
         (
-          <div>
-            <h2>Your Conversations</h2>
-            <ul>
+          <div id='content'>
+            <Typography variant="h4">Messages <MessageIcon></MessageIcon></Typography>
+
               {(conversations.length === 0)?     
               <div>
-                <p><strong>No messages yet! 🐾</strong></p>
-                <p>It looks like you haven't started a conversation yet. If you're ready to learn more about one of our amazing pets or have any questions about the adoption process, just click on the pet you're interested in and start a conversation! We're here to help you find your new furry friend. 🐶🐱</p>
+                <Typography variant="body2"><strong>No messages yet! 🐾</strong></Typography>
+                <Typography variant="subtitle1">It looks like you haven't started a conversation yet. If you're ready to learn more about one of our amazing pets or have any questions about the adoption process, just click on the pet you're interested in and start a conversation! We're here to help you find your new furry friend. 🐶🐱</Typography>
               </div>  
             :
               (conversations.map((conversation) => (
                 <Card key={conversation.conversation_id} onClick = {() => handleJoinConversation(conversation.conversation_id)} >
                   <CardContent>
-                    <h2>{(conversation.user_id === user_id)? getFullname(conversation.owner_id) : getFullname(conversation.user_id) }</h2> 
+                    <Typography variant="h6">{(conversation.user_id === user_id)? getFullname(conversation.owner_id) : getFullname(conversation.user_id) }</Typography> 
                   </CardContent>
                 </Card>
               )))
               }
-            </ul>
+
             {error && <div style={{ color: 'red' }}>{error}</div>}
           </div>
         )

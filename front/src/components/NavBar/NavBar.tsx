@@ -27,7 +27,7 @@ function Header() {
             <Link to="/pets" className="nav-link">Find a Pet 🐾</Link>
             <Link to="/conversation-history" className="nav-link"><Typography variant='body1'>Messages</Typography></Link>
             <Link to="/forms" className="nav-link"><Typography variant='body1'>Your Forms</Typography></Link>
-            <Link to={`/forms/SubmitFosterParentForm/${auth.user.user_id}`}className="nav-link"><Typography variant='body1'>Become a Foster Parent</Typography></Link>
+            <Link to={`/forms/SubmitFosterParentForm/${auth.user.user_id}`}className="nav-link"><Typography variant='body1'>Become A Foster Parent</Typography></Link>
             <Link to="/logout" className="nav-link"><Typography variant='body1'>Logout</Typography></Link>
           </>
         );
@@ -46,7 +46,7 @@ function Header() {
         <>
           <Link to="/pets" className="nav-link"><Typography variant='body1'>Find A Pet🐾</Typography></Link>
           {/* For now, "Apply to be a Foster" simply redirects to the login page */}
-          <Link to="/login" className="nav-link"><Typography variant='body1'>Become a Foster Parent</Typography></Link>
+          <Link to="/login" className="nav-link"><Typography variant='body1'>Become A Foster Parent</Typography></Link>
           <Link to="/login" className="nav-link"><Typography variant='body1'>Login</Typography></Link>
           <Link to="/signup" className="nav-link"><Typography variant='body1'>Sign up</Typography></Link>
         </>
@@ -57,8 +57,8 @@ function Header() {
       return(
         <>
           <div className="nav-logo">
-            <Typography variant='h5' color='success'>Petworking</Typography>
-            <PetsIcon fontSize={'large'}  className='.nav-logo-item'/>
+            <PetsIcon fontSize={'large'} sx={{ color: 'white' }} />
+            <Typography variant='h4' color='white'>PawFinder</Typography>     
           </div>
 
         </>
