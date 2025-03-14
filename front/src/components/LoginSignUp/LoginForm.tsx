@@ -3,6 +3,10 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import { TextField, Button, Typography, Paper } from '@mui/material';
+import './LoginForm.css';
 
 interface LoginFormData {
   username: string;
@@ -10,28 +14,24 @@ interface LoginFormData {
 }
 
 const LoginForm: React.FC = () => {
-  const { login } = useContext(AuthContext)!; // Access AuthContext
+  const { login } = useContext(AuthContext)!;
   const [formData, setFormData] = useState<LoginFormData>({ username: '', password: '' });
   const [message, setMessage] = useState<string>('');
   const [error, setError] = useState<string>('');
-  const navigate = useNavigate(); // React Router navigation hook
-  
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({...formData, [e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // Replace with your actual backend URL
       const response = await axios.post('/api/users/signin', formData);
       localStorage.setItem('jwt', response.data.token);
-      login(response.data.token); // Update AuthContext immediately
+      login(response.data.token);
       setMessage('Sign-in successful!');
       setError('');
-
-      // Redirect to home page
       navigate('/');
     } catch (err: any) {
       setError(err.response?.data?.error || 'Invalid credentials. Please try again.');
@@ -40,14 +40,52 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      <input type="username" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required />
-      <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
-      <button type="submit">Login</button>
-      {message && <p style={{ color: 'green' }}>{message}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-    </form>
+    <Box className="loginBox" component="form" onSubmit={handleSubmit}>
+      <FormControl fullWidth>
+        <Typography variant="h4" align="center" gutterBottom>
+          Login
+        </Typography>
+        <div id="loginFormWrapper">
+          <div className="loginFormSubwrap" id="loginFormSubwrap1">
+            <TextField
+              className="loginFormInput"
+              required
+              label="Username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              component={Paper}
+            />
+            <br />
+            <TextField
+              className="loginFormInput"
+              required
+              label="Password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              component={Paper}
+            />
+          </div>
+          <div className="loginFormSubwrap" id="loginFormSubwrap2">
+            <Button variant="contained" type="submit">
+              Login
+            </Button>
+          </div>
+        </div>
+        {message && (
+          <Typography variant="body1" style={{ color: 'green' }}>
+            {message}
+          </Typography>
+        )}
+        {error && (
+          <Typography variant="body1" style={{ color: 'red' }}>
+            {error}
+          </Typography>
+        )}
+      </FormControl>
+    </Box>
   );
 };
 
