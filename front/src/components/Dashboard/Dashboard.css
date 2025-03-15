@@ -32,10 +32,15 @@
     border-top: 1px solid black;
     border-left: hidden;
     border-right: hidden;
+    border-bottom: hidden;
 }
 
 #forms_firstrow, #pets_firstrow, #fosterexp_firstrow {
     border-top: hidden;
+}
+
+#open_form_button:hover, #open_pet_button:hover, #fosterexp_button:hover {
+    cursor: pointer;
 }
 
 #pets_wrapper {
@@ -44,15 +49,18 @@
 }
 
 .pet_image_cell {
-    width: 20%;
+    width: 10%;
 }
 
 .pet_image_wrapper {
+    width: auto;
+    height: auto;
+    background-color: transparent;
     align-content: left;
 }
 
 .pet_image {
-    width: 50%;
+    width: 100px;
     margin-right: auto;
     margin-left: 0;
 }

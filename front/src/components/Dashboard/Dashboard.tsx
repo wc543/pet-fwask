@@ -121,10 +121,9 @@ const Dashboard: React.FC = () => {
             <div id="top">
                 <div id="forms_wrapper">
                     <TableContainer id="forms_table_container" sx={{ borderRadius: '10px', border: 'hidden', backgroundColor: '#D9D9D9' }}>
-                    <Typography variant="h5">Pending Forms</Typography>
+                    <Typography variant="h5" sx={{ marginBottom: '1%' }} >Pending Forms</Typography>
                         <div style={{gap: '3px', alignItems: 'center', display: 'inline'}}>
-                            <InfoIcon sx={{ fontSize: 16 }}/>
-                            <Typography variant='subtitle2'> Pending adoption, foster, and foster parent forms require your approval. Please review and process them promptly.</Typography>
+                            <Typography variant='subtitle2'>Pending adoption, foster, and foster parent forms require your approval. Please review and process them promptly.<br/></Typography>
                         </div>
                         <Table id="forms_table" sx={{ minWidth: 300, border: 'hidden' }} aria-label='simple table'>
                             <TableBody className='table_body'>
@@ -134,7 +133,7 @@ const Dashboard: React.FC = () => {
                                             <TableCell className='forms_table_cell' id={index === 0 ? ('forms_firstrow') : ('')}>{form.form_type}</TableCell>
                                             <TableCell className='forms_table_cell' id={index === 0 ? ('forms_firstrow') : ('')}>{form.user_name}</TableCell>
                                             <TableCell className='forms_table_cell' id={index === 0 ? ('forms_firstrow') : ('')} sx={{ textAlign: 'right' }}>
-                                                <Button onClick={() => handleViewForm(form)}><VisibilityIcon htmlColor='black'/></Button>
+                                                <VisibilityIcon htmlColor='black' onClick={() => handleViewForm(form)} id='open_form_button'/>
                                             </TableCell>
                                         </TableRow>
                                     ))
@@ -156,7 +155,7 @@ const Dashboard: React.FC = () => {
                                 {pets.length > 0 ? (
                                     pets.map((pet, index) => (
                                         <TableRow key={index}>
-                                            <TableCell className='pets_table_cell pet_image_cell' id={index === 0 ? ('pets_firstrow') : ('')} align='left'>
+                                            <TableCell className='pets_table_cell pet_image_cell' id={index === 0 ? ('pets_firstrow') : ('')} align='left' >
                                                 <div className='pet_image_wrapper'>
                                                     <img className='pet_image' src={pet.pet_image_url ? (`/${pet.pet_image_url}`) : ('/no_image.png')}/>
                                                 </div>
@@ -165,7 +164,7 @@ const Dashboard: React.FC = () => {
                                             <TableCell className='pets_table_cell' id={index === 0 ? ('pets_firstrow') : ('')} align='center'>Notes: {pet.notes === null || '' ? ('--') : (pet.notes)}</TableCell>
                                             <TableCell className='pets_table_cell' id={index === 0 ? ('pets_firstrow') : ('')} align='right'>
                                                 <div className='open_button_wrapper'>
-                                                    <Button onClick={() => navigate(`/pets/id/${pet.pet_id}`)}><LaunchIcon htmlColor='black'/></Button>
+                                                    <LaunchIcon id='open_pet_button' htmlColor='black' onClick={() => navigate(`/pets/id/${pet.pet_id}`)}/>
                                                 </div>
                                             </TableCell>
                                         </TableRow>
@@ -193,7 +192,7 @@ const Dashboard: React.FC = () => {
                                             <TableCell className='fosterexp_table_cell' id={index === 0 ? ('fosterexp_firstrow') : ('')} align='left'>{foster.name}</TableCell>
                                             <TableCell className='fosterexp_table_cell' id={index === 0 ? ('fosterexp_firstrow') : ('')} align='left'>{foster.end_date}</TableCell>
                                             <TableCell className='fosterexp_table_cell' id={index === 0 ? ('fosterexp_firstrow') : ('')} align='right'>
-                                                <Button onClick={() => handleViewExpiration(foster)}><LaunchIcon htmlColor='black'/></Button>
+                                                <LaunchIcon id='fosterexp_button' htmlColor='black' onClick={() => handleViewExpiration(foster)}/>
                                             </TableCell>
                                         </TableRow>
                                     ))
