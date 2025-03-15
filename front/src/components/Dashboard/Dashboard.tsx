@@ -120,7 +120,7 @@ const Dashboard: React.FC = () => {
             <div id="top">
                 <div id="forms_wrapper">
                     <TableContainer id="forms_table_container" sx={{ borderRadius: '10px', border: 'hidden', backgroundColor: '#D9D9D9' }}>
-                    <Typography variant="h2">Forms</Typography>
+                    <Typography variant="h5">Forms</Typography>
                         <Table id="forms_table" sx={{ minWidth: 300, border: 'hidden' }} aria-label='simple table'>
                             <TableBody className='table_body'>
                                 {forms.length > 0 ? (
@@ -144,7 +144,7 @@ const Dashboard: React.FC = () => {
                 </div>
                 <div id="pets_wrapper">
                     <TableContainer id="pets_table_container" sx={{ borderRadius: '10px', border: 'hidden', backgroundColor: '#D9D9D9' }}>
-                    <Typography variant="h2">My Listed Pets</Typography>
+                    <Typography variant="h5">My Listed Pets</Typography>
                         <Table id="pets_table" sx={{ minWidth: 300, border: 'hidden' }} aria-label="simple table">
                             <TableBody>
                                 <>
@@ -179,7 +179,7 @@ const Dashboard: React.FC = () => {
             <div id="bottom">
                 <div id="fosterexp_wrapper">
                     <TableContainer id='fosterexp_table_container' sx={{ borderRadius: '10px', border: 'hidden', backgroundColor: '#D9D9D9' }}>
-                        <Typography variant="h2">Foster Expirations</Typography>
+                        <Typography variant="h5">Foster Expirations</Typography>
                         <Table id='fosterexp_table' sx={{ minWidth: 650, border: 'hidden' }} aria-label="simple table">
                             <TableBody>
                                 {fosterExpiration.length > 0 ? (

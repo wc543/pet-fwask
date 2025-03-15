@@ -9,6 +9,7 @@ import {MessageBox} from '../Messages/MessageBox.tsx';
 import './ConversationPage.css';
 import { MessageHeader } from '../Messages/MessageHeader.tsx';
 import { GreetingMessage } from '../Messages/GreetingMessage.tsx';
+import BackButton from '../../BackButton.tsx';
 
 export const ConversationPage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -78,18 +79,17 @@ export const ConversationPage = () => {
       { !loading && conversation ? 
         (
           <>      
-          {/* <button onClick={() => {handleBackClick();}}>Back</button> */}
-          <MessageHeader conversation={conversation}></MessageHeader>
-          <GreetingMessage conversation={conversation}></GreetingMessage>
-          {/* <div className='chatFrame'> */}
-          <div className='allMessagesContainer'>
-              {messages.map((msg) => (
-                // <li key={msg.message_id}>{msg.message} - {getUsername(msg.sender_id)}</li>
-                <MessageBox message={msg}/>
-              ))}
+          <div id='content'>
+            <BackButton/>
+            <MessageHeader conversation={conversation}></MessageHeader>
+            <GreetingMessage conversation={conversation}></GreetingMessage>
+            <div className='allMessagesContainer'>
+                {messages.map((msg) => (
+                  <MessageBox message={msg}/>
+                ))}
+            </div>
+            <MessageForm></MessageForm>
           </div>
-          <MessageForm></MessageForm>
-          {/* </div> */}
         </>
         )
         :

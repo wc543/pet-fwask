@@ -51,7 +51,7 @@ const OpenPet: React.FC = () => {
             <>
             {selectedPet ? (
                 <>
-                <BackButton></BackButton>
+                <BackButton pageName='All Pets'/>
                 <Box className="Box" sx={{ minWidth: 120}}>
                     <div id="wrapper">
                         <div id="top_wrapper">

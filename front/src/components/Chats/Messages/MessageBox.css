@@ -1,22 +1,29 @@
 .messageContainer{
-    display: block;
     align-items: center;
     padding: 0 8px;
+    margin-bottom: 10px;
 }
 
 .myMessage{
     justify-content: flex-end;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
     text-align: right;
 }
 
 .otherMessage{
     justify-content: flex-start;
-    text-align: left;
 }
 
 .styledMessage{
     padding: 0;
     margin: 0;
+    color: 'white';
+}
+
+.timeStamp{
+    color:'gray';
 }
 
 /* Source: https://codesandbox.io/p/sandbox/material-ui-chat-drh4l?file=%2Fsrc%2FMessage.js%3A15%2C1-49%2C7 */
@@ -24,10 +31,10 @@
     position: relative;
     margin-left: 20px;
     margin-bottom: 10px;
-    padding: 10px;
+    max-width: 40%;
+    width: fit-content;
+    padding: 10px 15px 10px 15px;
     background-color: #A8DDFD;
-    width: 60%;
-    /* height: 50px; */
     text-align: left;
     font: 400 .9em 'Open Sans', sans-serif;
     border: 1px solid #97C6E3;
@@ -62,10 +69,13 @@
     position: relative;
     margin-right: 20px;
     margin-bottom: 10px;
-    padding: 10px;
+    max-width: 40%;
+    padding: 10px 15px 10px 15px;
     background-color: #f8e896;
-    width: 60%;
-    /* height: 50px; */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    float: right;
+    width: fit-content;
     text-align: left;
     font: 400 .9em 'Open Sans', sans-serif;
     border: 1px solid #dfd087;

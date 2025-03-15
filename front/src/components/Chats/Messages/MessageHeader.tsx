@@ -17,19 +17,19 @@ export const MessageHeader = ( {conversation } : {conversation : Conversation}) 
     const isOwner = (current_user === conversation.owner_id)
     const navigate = useNavigate();
 
-      const leaveConversation = () =>{
-        socket.emit('leave conversation', conversation.conversation_id, (response: Callback) => (console.log(response.status)));
-        console.log(`Leaving conversation: ${conversation.conversation_id}`);
-      }
-    
-      const handleBackClick = () =>{
-        leaveConversation();
-        navigate('/conversation-history');
-      }
+    const leaveConversation = () =>{
+      socket.emit('leave conversation', conversation.conversation_id, (response: Callback) => (console.log(response.status)));
+      console.log(`Leaving conversation: ${conversation.conversation_id}`);
+    }
+  
+    const handleBackClick = () =>{
+      leaveConversation();
+      navigate('/conversation-history');
+    }
 
     if (conversation.pet_id){
         return (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#f3d58b', padding: '5px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#f3d58b', padding: '5px', }}>
               <IconButton
                 style={{
                   left: '2px',
@@ -41,9 +41,9 @@ export const MessageHeader = ( {conversation } : {conversation : Conversation}) 
               </IconButton>
               <div style={{ textAlign: 'center', width: '100%' }}>
                 <img src={ (getImageUrl(conversation.pet_id)) ? (`/${getImageUrl(conversation.pet_id)}`) : ('/no_image.png')} alt={getName(conversation.pet_id)} style={{ width: '85px', height: '85px', borderRadius: '50%', objectFit: 'cover' }} />
-                <Typography  variant="h6" style={{ margin: '5px 0', fontSize: '1.5rem' }}>Getting to Know {getName(conversation.pet_id)}!</Typography>
+                <Typography  variant="h6" style={{ margin: '5px 0', fontSize: '1.5rem' }}>Getting to Know <b>{getName(conversation.pet_id)}</b>!</Typography>
               </div>
-              { (getRole(conversation.user_id) === "STAFF") ?
+              { (getRole(current_user) !== "STAFF") ?
               <div style={{ display: 'block', alignItems: 'center', columnGap: '10px' }}>
                 <Button onClick={() => navigate(`/forms/submitAdoptionForm/${conversation.pet_id}`)} variant="contained" style={{ backgroundColor: '#f38c52', color: 'black', fontWeight: 'bold' }}>Adopt Me Today!</Button>
                 { getFosterable(conversation.pet_id) && (getRole(conversation.user_id) === "FOSTER")? <Button onClick={() => navigate(`/forms/submitFosterPetForm/${conversation.pet_id}`)} variant="contained" style={{ backgroundColor: '#f38c52', color: 'black', fontWeight: 'bold' }}>Foster Me Today!</Button> :<></>}

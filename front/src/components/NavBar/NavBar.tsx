@@ -24,7 +24,7 @@ function Header() {
       } else if (role === 'ADOPTER') {
         navLinks = (
           <>
-            <Link to="/pets" className="nav-link">Find a Pet 🐾</Link>
+            <Link to="/pets" className="nav-link"><Typography variant='body1'>Find A Pet🐾</Typography></Link>
             <Link to="/conversation-history" className="nav-link"><Typography variant='body1'>Messages</Typography></Link>
             <Link to="/forms" className="nav-link"><Typography variant='body1'>Your Forms</Typography></Link>
             <Link to={`/forms/SubmitFosterParentForm/${auth.user.user_id}`}className="nav-link"><Typography variant='body1'>Become A Foster Parent</Typography></Link>
