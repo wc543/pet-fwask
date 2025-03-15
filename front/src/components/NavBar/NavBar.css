@@ -17,3 +17,7 @@
     display: flex;
     gap: 3 px;
 }
+
+*{
+    margin:0;
+}
