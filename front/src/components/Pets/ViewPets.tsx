@@ -102,6 +102,7 @@ const ViewPets: React.FC = () => {
                                         <CardMedia
                                             component='img'
                                             height='200'
+                                            width='200'
                                             image={pet.pet_image_url ? (`/${pet.pet_image_url}`) : ('/no_image.png')}
                                             alt='Pet Image'
                                             sx={{ borderRadius: '10px', marginBottom: '8%' }}
