@@ -169,7 +169,7 @@ const ViewPets: React.FC = () => {
                         <MenuItem value={0}>Not Fosterable</MenuItem>
                     </Select>
                 </FormControl>
-                {role === 'STAFF' ? (<Button sx={{ backgroundColor: "black"}} variant="contained" onClick={() => navigate(`/pets/create`)}>Add Pet</Button>) : (<></>)}
+                {role === 'STAFF' ? (<Button variant="contained" onClick={() => navigate(`/pets/create`)}>Add Pet</Button>) : (<></>)}
                 </div>
             
             {loading ? (

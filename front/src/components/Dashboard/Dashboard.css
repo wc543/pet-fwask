@@ -20,6 +20,7 @@
 
 #forms_table_container, #pets_table_container, #fosterexp_table_container {
     padding: 30px;
+    background-color: #CFD6DC;
 }
 
 #forms_table, #pets_table, #fosterexp_table {

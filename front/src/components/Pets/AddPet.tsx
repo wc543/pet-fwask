@@ -10,6 +10,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AuthContext } from '../AuthContext';
+import BackButton from '../BackButton';
 
 // error handling - referenced from activity 3b utils.ts
 // https://medium.com/with-orus/the-5-commandments-of-clean-error-handling-in-typescript-93a9cbdf1af5
@@ -142,6 +143,7 @@ const AddPet: React.FC = () => {
 
     return (
         <>
+        <BackButton/>
         <Box className="Box" sx={{ minWidth: 120 }} component="form" onSubmit={handleAddPet}>
             <br/>
             <FormControl fullWidth>

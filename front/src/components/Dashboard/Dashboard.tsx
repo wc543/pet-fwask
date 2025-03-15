@@ -4,6 +4,7 @@ import {AuthContext} from '../AuthContext';
 import { Pet } from '../Pets/types.ts'
 import './Dashboard.css';
 import { TableContainer, Table, TableBody, TableCell, TableRow, Button, TableHead, Typography } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import LaunchIcon from '@mui/icons-material/Launch';
 
@@ -120,7 +121,11 @@ const Dashboard: React.FC = () => {
             <div id="top">
                 <div id="forms_wrapper">
                     <TableContainer id="forms_table_container" sx={{ borderRadius: '10px', border: 'hidden', backgroundColor: '#D9D9D9' }}>
-                    <Typography variant="h5">Forms</Typography>
+                    <Typography variant="h5">Pending Forms</Typography>
+                        <div style={{gap: '3px', alignItems: 'center', display: 'inline'}}>
+                            <InfoIcon sx={{ fontSize: 16 }}/>
+                            <Typography variant='subtitle2'> Pending adoption, foster, and foster parent forms require your approval. Please review and process them promptly.</Typography>
+                        </div>
                         <Table id="forms_table" sx={{ minWidth: 300, border: 'hidden' }} aria-label='simple table'>
                             <TableBody className='table_body'>
                                 {forms.length > 0 ? (

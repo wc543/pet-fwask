@@ -1,7 +1,7 @@
 .Box {
     margin: 3%;
     padding: 2%;
-    background-color: #D9D9D9;
+    background-color: #CFD6DC;
     border-radius: 5px;
 }
 
@@ -51,5 +51,5 @@
 }
 
 .actionButton {
-    width: 40%;
+    width: 50%;
 }

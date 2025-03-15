@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 // import './index.css'
@@ -17,7 +17,8 @@ import Dashboard from './components/Dashboard/Dashboard.tsx';
 import Logout from './components/LoginSignUp/Logout.tsx';
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Users/Profile.tsx';
-import { AuthProvider } from './components/AuthContext.tsx';
+import { ThemeProvider } from '@mui/material/styles';
+import { AuthContext, AuthProvider } from './components/AuthContext.tsx';
 import ViewAdoptionForm from './components/forms/ViewAdoptionForm.tsx';
 import OpenPet from './components/Pets/OpenPet.tsx';
 import EditPet from './components/Pets/EditPet.tsx';
@@ -27,6 +28,7 @@ import ViewFosterPetForm from './components/forms/ViewFosterPetForm.tsx'
 import SubmitAdoptionForm from './components/forms/SubmitAdoptionForm.tsx'
 import SubmitFosterPetForm from './components/forms/SubmitFosterPetForm.tsx'
 import SubmitFosterParentForm from './components/forms/SubmitFosterParentForm.tsx'
+import { getTheme } from './theme.tsx'
 
 export const socket = io('ws://localhost:3001');
 
@@ -125,11 +127,20 @@ let router = createBrowserRouter([
   },
 ]);
 
+function ThemedApp() {
+  const theme = getTheme();
+  return (
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  );
+}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AuthProvider>
       <UserProvider>
-        <RouterProvider router={router} />
+        <ThemedApp />
       </UserProvider>
     </AuthProvider>
   </React.StrictMode>,

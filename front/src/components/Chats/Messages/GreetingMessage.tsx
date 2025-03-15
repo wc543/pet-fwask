@@ -8,7 +8,7 @@ export const GreetingMessage = ({conversation} : {conversation : Conversation}) 
     const {getFullname} = useUser();
     
     return (
-        <div>
+        <div style={{margin: '10px', padding:'0px 5px 0px 5px', background:''} }>
         { (conversation.pet_id)? 
             <Typography>Hi there! 👋 Welcome to the adoption chat. We're so excited you're interested in giving a loving home to one of our amazing pets! 🐾 <b>{getFullname(conversation.owner_id)}</b> is assigned to answer any questions you have about <b>{getName(conversation.pet_id)}</b> or the adoption process. Feel free to share any questions in the meantime!</Typography>
             :

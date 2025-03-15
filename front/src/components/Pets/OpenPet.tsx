@@ -92,17 +92,17 @@ const OpenPet: React.FC = () => {
                                         <Button 
                                         variant='contained' 
                                         className='actionButton' 
-                                        style={{ marginLeft: '5%', backgroundColor: 'black' }}
+                                        style={{ marginLeft: '5%', color: 'black' }}
                                         onClick={() => navigate(`/forms/submitFosterPetForm/${selectedPet.pet_id}`)}>
-                                            Apply to Foster
+                                            <b>Apply to Foster</b>
                                         </Button>
                                         ) : (<></>)}
                                     <Button 
                                     variant='contained' 
                                     className='actionButton' 
-                                    style={{ marginLeft: '5%', backgroundColor: 'black' }}
+                                    style={{ marginLeft: '5%', color: 'black' }}
                                     onClick={() => navigate(`/forms/submitAdoptionForm/${selectedPet.pet_id}`)}>
-                                        Apply to Adopt
+                                        <b>Apply to Adopt</b>
                                     </Button>
                                     </>
                                 )}
