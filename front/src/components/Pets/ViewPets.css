@@ -13,42 +13,53 @@
     width: 20%;
 }
 
-#petsTable {
-    border-radius: 5px;
-    border-collapse: separate;
+#pets_wrapper {
+    width: 100%;
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
 
-.petImageCell {
-    width: 15%;
-    justify-content: center;
+.card_content {
+    display: flex;
+    flex-direction: column;
+}
+
+.card_bottom {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 5%;
+}
+
+.card_bottom_button {
+    margin-top: auto;
+    margin-left: auto;
+    text-align: left;
+    justify-content: left;
+}
+
+.info_button {
+    margin-top: auto;
+    margin-left: auto;
+}
+
+.info_button:hover {
+    cursor: pointer;
 }
 
 .pet_image_wrapper {
-    width: 100%;
+    flex: 0 0 50%;
+    width: 250px;
+    height: 250px;
+    padding: 0;
+    text-align: center;
+    background-color: red;
 }
 
 .pet_image {
-    display: block;
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.petsTableCell {
-    border-top: 1px solid black;
-    border-left: hidden;
-    border-right: hidden;
-}
-
-#firstRow {
-    border-top: hidden;
-}
-
-.action_buttons_wrapper {
-    text-align: center;
-}
-
-.action_buttons_wrapper > * {
-    width: 5%;
-    color: black;
+    display: flex;
+    border-radius: 10px;
+    width: 250px;
 }

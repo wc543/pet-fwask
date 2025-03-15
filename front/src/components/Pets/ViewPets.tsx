@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Pet } from './types.ts'
 import './ViewPets.css';
-import { Button, FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableRow, TextField } from '@mui/material';
-import LaunchIcon from '@mui/icons-material/Launch';
+import { Box, Button, Card, CardActionArea, CardContent, CardMedia, FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 import { AuthContext } from '../AuthContext.tsx';
 import { useUser } from '../Users/UserContext.tsx';
 
@@ -92,30 +92,40 @@ const ViewPets: React.FC = () => {
         return (
             <>
             {pets.length > 0 ? (
-                pets.map((pet, index) => (
-                    <TableRow key={index}>
-                        <TableCell className='petsTableCell petImageCell' id={index === 0 ? ('firstRow') : ('')}>
-                            <div className='pet_image_wrapper'>
-                                <img className="pet_image" src={pet.pet_image_url ? (`/${pet.pet_image_url}`) : ('/no_image.png')}/>
-                            </div>
-                        </TableCell>
-                        <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.name}</TableCell>
-                        <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.type}</TableCell>
-                        <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.breed === '' ? '--' : `${pet.breed}`}</TableCell>
-                        <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>Age: {pet.age}</TableCell>
-                        <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{pet.gender}</TableCell>
-                        <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>{GetSize(pet.size)}</TableCell>
-                        <TableCell className='petsTableCell' id={index === 0 ? ('firstRow') : ('')} align='center'>
-                            <div className='action_buttons_wrapper'>
-                                <Button onClick={() => handleViewPet(pet)}><LaunchIcon htmlColor='black'/></Button>
-                            </div>
-                        </TableCell>
-                    </TableRow>
-                ))
+                <div id="pets_wrapper">
+                    <>
+                    {pets.map((pet, index) => (
+                        <Card key={index} sx={{ borderRadius: '10px', boxShadow: 3, marginBottom: '30px', marginLeft: '30px' }} onClick={() => handleViewPet(pet)} >
+                            <CardActionArea>
+                                <CardContent>
+                                    <div className='card_content'>
+                                        <CardMedia
+                                            component='img'
+                                            height='200'
+                                            image={pet.pet_image_url ? (`/${pet.pet_image_url}`) : ('/no_image.png')}
+                                            alt='Pet Image'
+                                            sx={{ borderRadius: '10px', marginBottom: '8%' }}
+                                        />
+                                        <Typography variant='h5'><strong>{pet.name}</strong></Typography>
+                                        <>{pet.breed === '' ? (<></>) : <Typography variant='h6'>{pet.breed}</Typography>}</>
+                                        <div className='card_bottom'>
+                                            <div className='card_bottom_info'>
+                                                <Typography variant='body2'>{pet.gender}, {pet.age}</Typography>
+                                                <Typography variant='body2'>{GetSize(pet.size)} {pet.type}</Typography>
+                                            </div>
+                                            <div className='card_bottom_button'>
+                                                <InfoIcon className='info_button' htmlColor='black' onClick={() => handleViewPet(pet)}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+                    ))}
+                    </>
+                </div>
             ) : (
-                <TableRow>
-                    <TableCell sx={{ border: 'hidden' }}>No pets found</TableCell>
-                </TableRow>
+                <Typography variant='body2'>No pets found</Typography>
             )}
             </>
         )
@@ -124,8 +134,6 @@ const ViewPets: React.FC = () => {
     return (
         <>
         <div id="content">
-
-            <div>
                 <div id='top'>
                 <FormControl className="filterForm">
                     <InputLabel>Type</InputLabel>
@@ -163,24 +171,19 @@ const ViewPets: React.FC = () => {
                 </FormControl>
                 {role === 'STAFF' ? (<Button sx={{ backgroundColor: "black"}} variant="contained" onClick={() => navigate(`/pets/create`)}>Add Pet</Button>) : (<></>)}
                 </div>
-                <br/>
-                <br/>
-            </div>
+            
             {loading ? (
                 <div>Loading...</div>
             ) : (
-                <TableContainer id="tableContainer" sx={{ borderRadius: '10px', border: 'hidden', backgroundColor: '#D9D9D9' }}>
-                    <Table id="petsTable" sx={{ minWidth: 650, border: 'hidden' }} aria-label="simple table">
-                        <TableBody>
-                            <DisplayPets/>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <>
+                <Box sx={{ minWidth: 120, width: '100%' }}>
+                    <DisplayPets/>
+                </Box>
+                </>
             )}
 
             {error && <div style={{ color: 'red' }}>{error}</div>}
-
-        </div>
+            </div>
         </>
     );
 };
