@@ -147,6 +147,9 @@ const ViewAdoptionForm: React.FC = () => {
                 <CardHeader title="Pet Preferences & Details" />
                 <CardContent>
                   <Typography variant="body1">
+                    <strong>Status:</strong> {form.status}
+                  </Typography>
+                  <Typography variant="body1">
                     <strong>Previous Pet Experience:</strong> {form.previous_pet_experience}
                   </Typography>
                   <Typography variant="body1">
