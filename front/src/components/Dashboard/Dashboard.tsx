@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {AuthContext} from '../AuthContext';
 import { Pet } from '../Pets/types.ts'
 import './Dashboard.css';
-import { TableContainer, Table, TableBody, TableCell, TableRow, Button, TableHead } from '@mui/material';
+import { TableContainer, Table, TableBody, TableCell, TableRow, Button, TableHead, Typography } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import LaunchIcon from '@mui/icons-material/Launch';
 
@@ -120,7 +120,7 @@ const Dashboard: React.FC = () => {
             <div id="top">
                 <div id="forms_wrapper">
                     <TableContainer id="forms_table_container" sx={{ borderRadius: '10px', border: 'hidden', backgroundColor: '#D9D9D9' }}>
-                        <h2>Forms</h2>
+                    <Typography variant="h2">Forms</Typography>
                         <Table id="forms_table" sx={{ minWidth: 300, border: 'hidden' }} aria-label='simple table'>
                             <TableBody className='table_body'>
                                 {forms.length > 0 ? (
@@ -144,7 +144,7 @@ const Dashboard: React.FC = () => {
                 </div>
                 <div id="pets_wrapper">
                     <TableContainer id="pets_table_container" sx={{ borderRadius: '10px', border: 'hidden', backgroundColor: '#D9D9D9' }}>
-                        <h2>My Listed Pets</h2>
+                    <Typography variant="h2">My Listed Pets</Typography>
                         <Table id="pets_table" sx={{ minWidth: 300, border: 'hidden' }} aria-label="simple table">
                             <TableBody>
                                 <>
@@ -179,7 +179,7 @@ const Dashboard: React.FC = () => {
             <div id="bottom">
                 <div id="fosterexp_wrapper">
                     <TableContainer id='fosterexp_table_container' sx={{ borderRadius: '10px', border: 'hidden', backgroundColor: '#D9D9D9' }}>
-                        <h2>Foster Expiration</h2>
+                        <Typography variant="h2">Foster Expirations</Typography>
                         <Table id='fosterexp_table' sx={{ minWidth: 650, border: 'hidden' }} aria-label="simple table">
                             <TableBody>
                                 {fosterExpiration.length > 0 ? (
