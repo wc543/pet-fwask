@@ -1,0 +1,46 @@
+.viewBox {
+    margin: 3%;
+    padding: 2%;
+    background-color: #D9D9D9;
+    border-radius: 5px;
+  }
+  
+  #viewFormWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .viewFormSubwrap {
+    display: flex;
+    flex-direction: column;
+    margin: 2%;
+  }
+  
+  #viewFormSubwrap1 {
+    flex: 0 0 70%;
+  }
+  
+  #viewFormSubwrap3 {
+    flex: 0 0 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .viewFormPaper {
+    padding: 1rem;
+  }
+
+  .actionButtons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .equalHeightCard {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
