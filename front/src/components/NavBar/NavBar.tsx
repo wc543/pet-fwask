@@ -57,7 +57,7 @@ function Header() {
       return(
         <>
           <div className="nav-logo">
-            <PetsIcon fontSize={'large'} sx={{ color: 'white' }} />
+            <PetsIcon fontSize={'large'} sx={{ color: '#F2D492', border: '2px solid #ED8844',  borderRadius: '50%', padding: '4px'}} />
             <Typography variant='h4' color='white'>PawFinder</Typography>     
           </div>
 

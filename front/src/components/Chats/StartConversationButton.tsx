@@ -35,7 +35,7 @@ export const StartConversationButton = ({ pet_id, employee_id }: {pet_id : numbe
 
     return (
         <>
-            <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', backgroundColor: 'black' }} onClick={handleStartClick}><ModeCommentIcon htmlColor='white' style={{ padding: '5px' }}/> Ask About Me!</Button>
+            <Button variant='contained' className='actionButton' style={{ marginLeft: '5%' }} onClick={handleStartClick}><ModeCommentIcon htmlColor='white' style={{ padding: '5px' }}/> Ask About Me!</Button>
         </>
     )
 }

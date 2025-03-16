@@ -1,6 +1,6 @@
 import {Message, Conversation, Callback} from '../types.ts'
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from "axios";
 import {MessageForm} from '../Messages/MessageForm.tsx';
 import {socket} from '../../../main.tsx';
@@ -17,7 +17,8 @@ export const ConversationPage = () => {
   const { conversation_id } = useParams();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  const scrollAnchorRef = useRef<HTMLDivElement>(null);
+  
   const getConversation = async () => {
         try {
           setLoading(true);
@@ -49,9 +50,17 @@ export const ConversationPage = () => {
     }
   }
   
-  const handleNewMessage = (newMessage : Message) => {
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  const setChatRefToBottom = () => {
+    scrollAnchorRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const handleNewMessage = (newMessage : Message) => {
+    setMessages((prevMessages) => [...prevMessages, newMessage]);fdsf
+  };
+
+  useEffect(() => {
+    setChatRefToBottom();
+  }, [messages]);
 
   useEffect( () => {
     socket.on('connect', () => console.log('Connected to server'));
@@ -65,6 +74,7 @@ export const ConversationPage = () => {
     joinConversation();
     getAllMessages();
     socket.on('chat message', handleNewMessage);
+    setChatRefToBottom();
 
     return () =>{
       socket.off('connect', () => console.log('Connected to server'));
@@ -79,15 +89,17 @@ export const ConversationPage = () => {
       { !loading && conversation ? 
         (
           <>      
-          <div id='content'>
+          <div className='chatFrame' >
             <BackButton/>
             <MessageHeader conversation={conversation}></MessageHeader>
             <GreetingMessage conversation={conversation}></GreetingMessage>
-            <div className='allMessagesContainer'>
+            <div className='allMessagesContainer' >
                 {messages.map((msg) => (
                   <MessageBox message={msg}/>
                 ))}
+                <div ref={scrollAnchorRef}></div>
             </div>
+
             <MessageForm></MessageForm>
           </div>
         </>

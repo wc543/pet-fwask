@@ -10,7 +10,7 @@ export const MessageBox = ( {message} : {message : Message}) => {
     const {getFullname, getRole} = useUser();
     const auth = useContext(AuthContext);
     const user_id = auth?.user.user_id; 
-    const time = new Date(message.time_sent).toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit', hour12: true});;
+    const time = new Date(message.time_sent + 'Z').toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit', hour12: true});;
     const isMine = user_id === message.sender_id? true : false ;
     
     return (
@@ -24,7 +24,7 @@ export const MessageBox = ( {message} : {message : Message}) => {
                         <Typography  className='styledMessage'>{message.message}</Typography>
                     </div>
 
-                    <Typography variant='subtitle2' className='timeStamp'>{time}</Typography>
+                    <Typography variant='subtitle2' style={{color: 'gray'}} className='timeStamp'>{time}</Typography>
                 </div>
             </div>
         </>

@@ -36,6 +36,7 @@ export const MessageForm = () => {
     <div>
       <form onSubmit={handleSubmit} className="wrapForm">
         <TextField
+          size='small'
           id="message"
           name="message"
           label="Write a message..."

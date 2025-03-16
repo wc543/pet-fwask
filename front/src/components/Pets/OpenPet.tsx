@@ -52,7 +52,7 @@ const OpenPet: React.FC = () => {
             {selectedPet ? (
                 <>
                 <BackButton pageName='All Pets'/>
-                <Box className="Box" sx={{ minWidth: 120}}>
+                <Box className="Box" sx={{ minWidth: 120, backgroundColor: '#CFD6DC'}}>
                     <div id="wrapper">
                         <div id="top_wrapper">
                             <div id="image_wrapper">

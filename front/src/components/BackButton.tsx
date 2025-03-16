@@ -7,7 +7,7 @@ function BackButton({pageName} : {pageName?: string}) {
     return (
         <div style={{ margin: ''}}>
             <Link onClick={() => navigate(-1)} style={{ textDecoration: 'none', cursor: 'pointer' }}>
-                <Typography variant="subtitle1">{pageName? `Back to ${pageName}`: "Back" }</Typography>
+                <Typography variant="subtitle1"><b>{pageName? `Back to ${pageName}`: "Back" }</b></Typography>
             </Link>
         </div>
 

@@ -29,7 +29,7 @@ export const MessageHeader = ( {conversation } : {conversation : Conversation}) 
 
     if (conversation.pet_id){
         return (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#f3d58b', padding: '5px', }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#f3d58b', padding: '5px', boxShadow: "0px 5px 5px #cfd6dc;"}}>
               <IconButton
                 style={{
                   left: '2px',
@@ -40,7 +40,7 @@ export const MessageHeader = ( {conversation } : {conversation : Conversation}) 
                 <CloseIcon style={{ color: 'black' }} />
               </IconButton>
               <div style={{ textAlign: 'center', width: '100%' }}>
-                <img src={ (getImageUrl(conversation.pet_id)) ? (`/${getImageUrl(conversation.pet_id)}`) : ('/no_image.png')} alt={getName(conversation.pet_id)} style={{ width: '85px', height: '85px', borderRadius: '50%', objectFit: 'cover' }} />
+                <img src={ (getImageUrl(conversation.pet_id)) ? (`/${getImageUrl(conversation.pet_id)}`) : ('/no_image.png')} alt={getName(conversation.pet_id)} style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover' }} />
                 <Typography  variant="h6" style={{ margin: '5px 0', fontSize: '1.5rem' }}>Getting to Know <b>{getName(conversation.pet_id)}</b>!</Typography>
               </div>
               { (getRole(current_user) !== "STAFF") ?
