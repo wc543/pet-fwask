@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../AuthContext';
 import { Typography } from '@mui/material';
 import PetsIcon from '@mui/icons-material/Pets';
+import ProtectedLink from '../ProtectedLink';
 
 function Header() {
     const auth = useContext(AuthContext);
@@ -45,8 +46,11 @@ function Header() {
       navLinks = (
         <>
           <Link to="/pets" className="nav-link"><Typography variant='body1'>Find A Pet🐾</Typography></Link>
-          {/* For now, "Apply to be a Foster" simply redirects to the login page */}
-          <Link to="/login" className="nav-link"><Typography variant='body1'>Become A Foster Parent</Typography></Link>
+          <ProtectedLink 
+            to="/login" 
+            message="In order to apply to be a foster parent, you must login." 
+            className="nav-link"
+          ><Typography variant='body1'>Become A Foster Parent</Typography></ProtectedLink>
           <Link to="/login" className="nav-link"><Typography variant='body1'>Login</Typography></Link>
           <Link to="/signup" className="nav-link"><Typography variant='body1'>Sign up</Typography></Link>
         </>

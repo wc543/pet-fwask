@@ -8,6 +8,7 @@ import { StartConversationButton } from '../Chats/StartConversationButton.tsx';
 import { AuthContext } from '../AuthContext.tsx';
 import { useUser } from '../Users/UserContext.tsx';
 import BackButton from '../BackButton.tsx';
+import ProtectedLink from '../ProtectedLink';
 
 const OpenPet: React.FC = () => {
     let [selectedPet, setSelectedPet] = useState<Pet|null>(null);
@@ -96,12 +97,14 @@ const OpenPet: React.FC = () => {
                                         onClick={() => navigate(`/forms/submitFosterPetForm/${selectedPet.pet_id}`)}>
                                             <b>Apply to Foster</b>
                                         </Button>
-                                        ) : (<></>)}
+                                    ) : (<></>)}
                                     <Button 
-                                    variant='contained' 
-                                    className='actionButton' 
-                                    style={{ marginLeft: '5%', color: 'black' }}
-                                    onClick={() => navigate(`/forms/submitAdoptionForm/${selectedPet.pet_id}`)}>
+                                        component={ProtectedLink}
+                                        to={`/forms/submitAdoptionForm/${selectedPet.pet_id}`}
+                                        message="In order to apply to adopt, you must login."
+                                        variant="contained"
+                                        className='actionButton'
+                                        style={{ marginLeft: '5%', color: 'black' }}>
                                         <b>Apply to Adopt</b>
                                     </Button>
                                     </>

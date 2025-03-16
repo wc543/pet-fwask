@@ -4,6 +4,7 @@ import { AuthContext } from "../AuthContext";
 import { useContext } from "react";
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
 import Button from "@mui/material/Button";
+import ProtectedLink from '../ProtectedLink';
 
 export const StartConversationButton = ({ pet_id, employee_id }: {pet_id : number, employee_id : number}) => {
     const navigate = useNavigate();
@@ -33,9 +34,24 @@ export const StartConversationButton = ({ pet_id, employee_id }: {pet_id : numbe
         }
     }
 
-    return (
-        <>
-            <Button variant='contained' className='actionButton' style={{ marginLeft: '5%' }} onClick={handleStartClick}><ModeCommentIcon htmlColor='white' style={{ padding: '5px' }}/> Ask About Me!</Button>
-        </>
-    )
+    if (!current_user) {
+        // If the user isn't logged in, wrap the button in ProtectedLink.
+        return (
+            <Button
+                component={ProtectedLink}
+                to="/login"
+                message="In order to ask about this pet, you must login."
+                variant='contained'
+                className='actionButton'
+                style={{ marginLeft: '5%'}}>
+            <ModeCommentIcon htmlColor='white' style={{ padding: '5px' }}/> Ask About Me!
+            </Button>
+        );
+    } else {
+        return (
+            <>
+                <Button variant='contained' className='actionButton' style={{ marginLeft: '5%' }} onClick={handleStartClick}> <ModeCommentIcon htmlColor='white' style={{ padding: '5px' }}/> Ask About Me!</Button>
+            </>
+        )
+    }
 }
