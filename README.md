@@ -25,6 +25,8 @@ cd pet-adoption-site
 cd back
 npm install
 npm run setup  # Initializes database
+npm run test-data  # populate database with data for testing functionality
+npm run build    # Builds the backend
 npm run start    # Starts the backend
 ```
 The backend will run at `http://localhost:3001/`.
