@@ -42,7 +42,7 @@ INSERT INTO FosterHistory (user_id, pet_id, start_date, end_date) VALUES
 
 -- AdoptionHistory Table
 INSERT INTO AdoptionHistory (user_id, pet_id) VALUES
-(5, 5);
+(1, 5);
 
 -- AdoptionForms Table
 INSERT INTO AdoptionForms (user_id, pet_id, previous_pet_experience, adoption_reason, ideal_pet_qualities, max_alone_time, care_plan_details, financial_responsibility, pet_care_agreement, adoption_agreement, processed, status) VALUES
@@ -58,7 +58,7 @@ INSERT INTO FosterParentForms (user_id, foster_reason, pet_care_agreement, adopt
 -- FosterPetForms Table
 INSERT INTO FosterPetForms (user_id, pet_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, processed, status) VALUES
 (1, 2, '2024-12-01', '2026-01-01', 'Fostered 2 dogs before', 'Want to provide a temporary home', '8 hours', TRUE, 'DENIED'),
-(5, 3,'2024-10-01', NULL, 'No experience yet', 'Looking to help foster', '6 hours', FALSE, 'NEEDS PROCESSING'); 
+(3, 3,'2024-10-01', NULL, 'No experience yet', 'Looking to help foster', '6 hours', FALSE, 'NEEDS PROCESSING'); 
 
 -- Conversations Table
 INSERT INTO Conversations (user_id, owner_id, pet_id) VALUES
