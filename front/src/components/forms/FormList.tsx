@@ -4,7 +4,8 @@ import './FormList.css';
 import { useUser } from '../Users/UserContext';
 import {usePet} from '../Pets/PetContext';
 import { useParams } from "react-router-dom";
-import { Typography } from '@mui/material';
+import { Typography, Button } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 interface Form {
   form_id?: number;
@@ -63,6 +64,7 @@ const FormList: React.FC = () => {
   }, []);
 
   const handleViewForm = (form: Form) => {
+    console.log("in handle view form");
     const formId = form.adoption_form_id || form.foster_parent_form_id || form.foster_pet_form_id;
     navigate(`/forms/${form.form_type}/${formId}`);
   };
@@ -81,7 +83,7 @@ const FormList: React.FC = () => {
               <th><Typography>Submitted By</Typography></th>
               <th><Typography>Pet</Typography></th>
               <th><Typography>Status</Typography></th>
-              <th><Typography>Action</Typography></th>
+              <th><Typography>View</Typography></th>
             </tr>
           </thead>
           <tbody>
@@ -93,7 +95,7 @@ const FormList: React.FC = () => {
                   <td><Typography>{form.pet_id ? getName(form.pet_id):"--"}</Typography></td>
                   <td><Typography>{form.processed ? "Processed" : "Needs To Be Process"}</Typography></td>
                   <td><Typography>
-                    <button onClick={() => handleViewForm(form)}>View</button>
+                  <Button onClick={()=>handleViewForm(form)}><VisibilityIcon sx={{ color: 'black'}}></VisibilityIcon></Button>
                   </Typography></td>
                 </tr>
               ))

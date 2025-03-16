@@ -16,7 +16,7 @@ function Header() {
         navLinks = (
           <>
             <Link to="/dashboard" className="nav-link"><Typography variant='body1'>Dashboard</Typography></Link>
-            <Link to="/pets" className="nav-link"><Typography variant='body1'>Find A Pet🐾</Typography></Link>
+            <Link to="/pets" className="nav-link"><Typography className="nav-text" variant='body1'>View Pets <PetsIcon className="nav-icon" fontSize={'small'} sx={{ color: 'white'}} /></Typography></Link>
             <Link to="/conversation-history" className="nav-link"><Typography variant='body1'>Messages</Typography></Link>
             <Link to={`/forms/${auth.user.user_id}`}className="nav-link"><Typography variant='body1'>Your Forms</Typography></Link>
             <Link to="/logout" className="nav-link"><Typography variant='body1'>Logout</Typography></Link>
@@ -25,7 +25,7 @@ function Header() {
       } else if (role === 'ADOPTER') {
         navLinks = (
           <>
-            <Link to="/pets" className="nav-link"><Typography variant='body1'>Find A Pet🐾</Typography></Link>
+            <Link to="/pets" className="nav-link"><Typography className="nav-text" variant='body1'>Find A Pet <PetsIcon className="nav-icon" fontSize={'small'} sx={{ color: 'white'}} /></Typography></Link>
             <Link to="/conversation-history" className="nav-link"><Typography variant='body1'>Messages</Typography></Link>
             <Link to={`/forms/${auth.user.user_id}`} className="nav-link"><Typography variant='body1'>Your Forms</Typography></Link>
             <Link to={`/forms/SubmitFosterParentForm/${auth.user.user_id}`}className="nav-link"><Typography variant='body1'>Become A Foster Parent</Typography></Link>
@@ -35,7 +35,7 @@ function Header() {
       } else if (role === 'FOSTER') {
         navLinks = (
           <>
-            <Link to="/pets" className="nav-link" ><Typography variant='body1'>Find A Pet🐾</Typography></Link>
+            <Link to="/pets" className="nav-link"><Typography className="nav-text" variant='body1'>Find A Pet <PetsIcon className="nav-icon" fontSize={'small'} sx={{ color: 'white'}} /></Typography></Link>
             <Link to="/conversation-history" className="nav-link"><Typography variant='body1'>Messages</Typography></Link>
             <Link to={`/forms/${auth.user.user_id}`} className="nav-link"><Typography variant='body1'>Your Forms</Typography></Link>
             <Link to="/logout" className="nav-link"><Typography variant='body1'>Logout</Typography></Link>
@@ -45,7 +45,7 @@ function Header() {
     } else {
       navLinks = (
         <>
-          <Link to="/pets" className="nav-link"><Typography variant='body1'>Find A Pet🐾</Typography></Link>
+           <Link to="/pets" className="nav-link"><Typography className="nav-text" variant='body1'>Find A Pet <PetsIcon className="nav-icon" fontSize={'small'} sx={{ color: 'white'}} /></Typography></Link>
           <ProtectedLink 
             to="/login" 
             message="In order to apply to be a foster parent, you must login." 

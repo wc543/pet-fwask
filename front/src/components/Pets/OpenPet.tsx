@@ -22,6 +22,18 @@ const OpenPet: React.FC = () => {
     const role = getRole(user_id);
     console.log('role =', role);
 
+    function GetSize(size: number) {
+        if (size === 0) {
+            return "Small";
+        } else if (size === 1) {
+            return "Medium";
+        } else if (size === 2) {
+            return "Large";
+        } else {
+            return "Extra-Large";
+        }
+    };
+
     const fetchPet = async () => {
         try {
             setLoading(true);
@@ -70,7 +82,7 @@ const OpenPet: React.FC = () => {
                             <div id="col1">
                                 <Typography variant="body1" paragraph align="left">Type: {selectedPet.type}</Typography >
                                 <Typography variant="body1" paragraph align="left">Breed: {selectedPet.breed}</Typography >
-                                <Typography variant="body1" paragraph align="left">Size: {selectedPet.size}</Typography >
+                                <Typography variant="body1" paragraph align="left">Size: {GetSize(selectedPet.size)}</Typography >
                                 <Typography variant="body1" paragraph align="left">Gender: {selectedPet.gender}</Typography >
                                 <Typography variant="body1" paragraph align="left">Age: {selectedPet.age}</Typography >
                             </div>
