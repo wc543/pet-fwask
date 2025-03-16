@@ -28,7 +28,7 @@ INSERT INTO Pets (name, type, breed, size, gender, age, color, created_by_id, fo
 ('Eggshell', 'Cat', 'Tabby', 1, 'Female', 3, 'Brown', 4, TRUE, 'eggshell.jpeg', '2023-12-01', NULL, NULL, NULL),
 ('Gulliver', 'Horse', 'Draft', 3, 'Male', 9, 'Brown', 4, FALSE, 'gulliver.jpg', '2023-3-05', NULL, NULL, NULL),
 ('Kono', 'Bird', 'Cockatoo', 0, 'Female', 2, 'White', 4, FALSE, 'kono.jpg', '2025-1-01', NULL, NULL, NULL),
-('Minnie', 'Cat', 'American Shorthair', 1, 'Male', 1, 'Black', 4, TRUE, 'minnie.jpeg', '2025-2-03', NULL, NULL, NULL),
+('Minnie', 'Cat', 'American Shorthair', 1, 'Male', 1, 'Black', 4, TRUE, 'minnie.jpg', '2025-2-03', NULL, NULL, NULL),
 ('Mordred', 'Reptile', 'Ball Python', 1, 'Female', 1, 'Brown', 4, FALSE, 'mordred.jpg', '2024-2-05', NULL, NULL, NULL),
 ('Raquel', 'Rabbit', 'Angora', 0, 'Male', 1, 'Brown', 4, FALSE, 'raquel.jpg', '2025-3-10', NULL, NULL, NULL),
 ('Smudge', 'Rabbit', 'Rex', 0, 'Female', 1, 'White', 4, FALSE, 'smudge.jpg', '2025-2-03', NULL, NULL, NULL),
