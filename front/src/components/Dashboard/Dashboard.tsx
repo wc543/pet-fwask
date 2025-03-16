@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {AuthContext} from '../AuthContext';
 import { Pet } from '../Pets/types.ts'
 import './Dashboard.css';
-import { TableContainer, Table, TableBody, TableCell, TableRow, Button, TableHead, Typography } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import { TableContainer, Table, TableBody, TableCell, TableRow, Typography } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import LaunchIcon from '@mui/icons-material/Launch';
 

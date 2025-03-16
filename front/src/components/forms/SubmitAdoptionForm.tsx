@@ -5,7 +5,7 @@ import {useParams} from "react-router-dom"
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
-import { TextField, ToggleButton, Checkbox, Button, Paper, Typography, Grid } from '@mui/material';
+import { TextField, ToggleButton, Checkbox, Button, Paper, Typography } from '@mui/material';
 import { AuthContext } from '../AuthContext';
 import {usePet} from '../Pets/PetContext';
 import BackButton from '../BackButton';

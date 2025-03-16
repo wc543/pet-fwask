@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import { TextField, ToggleButton, Checkbox, Button, Paper, Typography } from '@mui/material';
 import { AuthContext } from '../AuthContext';
-import {usePet} from '../Pets/PetContext';
 import BackButton from '../BackButton';
 
 
@@ -72,7 +71,6 @@ const SubmitFosterParentForm: React.FC = () => {
     
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
-    const{  getName } = usePet();
     const [loading, setLoading] = useState(false);
     const getAutoFilledUserInfo = async () => {
         try {
@@ -110,20 +108,6 @@ const SubmitFosterParentForm: React.FC = () => {
             setLoading(false);
           }
       };
-    
-
-    function getPetName():string | undefined
-    {
-
-        let petIdInt: number;
-        if (petId !== undefined)
-        {
-            petIdInt = parseInt(petId);
-            let petName=getName(petIdInt);
-            return petName
-        }
-
-    }
 
      useEffect(() => {
         getAutoFilledUserInfo();

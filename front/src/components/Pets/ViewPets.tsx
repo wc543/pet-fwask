@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Pet } from './types.ts'
 import './ViewPets.css';
-import { Box, Button, Card, CardActionArea, CardContent, CardMedia, FormControl, InputLabel, MenuItem, Select, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from '@mui/material';
+import { Box, Button, Card, CardActionArea, CardContent, CardMedia, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import { AuthContext } from '../AuthContext.tsx';
 import { useUser } from '../Users/UserContext.tsx';
