@@ -79,8 +79,10 @@ const SubmitFosterPetForm: React.FC = () => {
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
     const{  getName, getImageUrl } = usePet();
+    const [loading, setLoading] = useState(false);
     const getAutoFilledUserInfo = async () => {
         try {
+            setLoading(true);
           var userId=auth?.user.user_id
           
           const response= await fetch(`/api/forms/autofillForm/${userId}`);
@@ -110,6 +112,9 @@ const SubmitFosterPetForm: React.FC = () => {
         } catch (err) {
             alert(getAxiosErrorMessages(err))
         }
+        finally {
+            setLoading(false);
+          }
       };
     
 
@@ -234,6 +239,9 @@ const SubmitFosterPetForm: React.FC = () => {
             </Typography>
             <br/>
             <FormControl fullWidth>
+            {loading ? (
+            <div>Loading...</div>
+            ) : (
                 <div id="formwrapper">
                     <div className="formsubwrap" id="formsubwrap1">
                         <Typography variant="h5" gutterBottom align="left">
@@ -295,6 +303,7 @@ const SubmitFosterPetForm: React.FC = () => {
                         <Button variant="contained" type="submit" >Submit Form</Button>
                     </div>
                 </div>
+            )}
             </FormControl>
         </Box>
         </>

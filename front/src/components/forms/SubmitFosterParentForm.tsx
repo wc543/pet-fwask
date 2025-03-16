@@ -73,8 +73,10 @@ const SubmitFosterParentForm: React.FC = () => {
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
     const{  getName } = usePet();
+    const [loading, setLoading] = useState(false);
     const getAutoFilledUserInfo = async () => {
         try {
+            setLoading(true);
           var userId=auth?.user.user_id
           
           const response= await fetch(`/api/forms/autofillForm/${userId}`);
@@ -104,6 +106,9 @@ const SubmitFosterParentForm: React.FC = () => {
         } catch (err) {
             alert(getAxiosErrorMessages(err))
         }
+        finally {
+            setLoading(false);
+          }
       };
     
 
@@ -209,6 +214,9 @@ const SubmitFosterParentForm: React.FC = () => {
                 Thank you for your interest in becoming a foster parent! We truly appreciate your willingness to provide a safe and loving temporary home for pets in need. Please fill out the form below with accurate information. Our team will review your application as soon as possible.
             </Typography>
             <FormControl fullWidth>
+            {loading ? (
+            <div>Loading...</div>
+            ) : (
                 <div id="formwrapper">
                     <div className="formsubwrap" id="formsubwrap1">
                         <Typography variant="h5" gutterBottom align="left">
@@ -261,6 +269,7 @@ const SubmitFosterParentForm: React.FC = () => {
                         <Button variant="contained" type="submit" >Submit Form</Button>
                     </div>
                 </div>
+            )}
             </FormControl>
         </Box>
         </>

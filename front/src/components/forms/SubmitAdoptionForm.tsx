@@ -78,8 +78,10 @@ const SubmitAdoptionForm: React.FC = () => {
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
     const{  getName, getImageUrl } = usePet();
+    const [loading, setLoading] = useState(false);
     const getAutoFilledUserInfo = async () => {
         try {
+            setLoading(true);
           var userId=auth?.user.user_id
           
           const response= await fetch(`/api/forms/autofillForm/${userId}`);
@@ -109,6 +111,9 @@ const SubmitAdoptionForm: React.FC = () => {
         } catch (err) {
             alert(getAxiosErrorMessages(err))
         }
+        finally {
+            setLoading(false);
+          }
       };
 
     function getPetName():string | undefined
@@ -238,6 +243,9 @@ const SubmitAdoptionForm: React.FC = () => {
                 Thank you for your interest in adopting one of our pets! Please fill out the form below with accurate information. Our team will review your application as soon as possible.
             </Typography>
             <FormControl fullWidth>
+            {loading ? (
+            <div>Loading...</div>
+            ) : (
                 <div id="formwrapper">
                     <div className="formsubwrap" id="formsubwrap1">
                         <Typography variant="h5" gutterBottom align="left">
@@ -302,7 +310,7 @@ const SubmitAdoptionForm: React.FC = () => {
                     <div className='formsubwrap' id="formsubwrap3">
                         <Button variant="contained" type="submit" >Submit Form</Button>
                     </div>
-                </div>
+                </div>)}
             </FormControl>
         </Box>
         </>
