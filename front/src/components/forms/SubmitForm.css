@@ -42,6 +42,6 @@
     background-color: transparent;
 }
 
-#formInput{
-    
+.formInput{
+    margin-bottom: 1rem !important;
 }
