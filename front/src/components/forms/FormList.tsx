@@ -1,9 +1,8 @@
-import React, { useEffect, useState , useContext} from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import './FormList.css';
 import { useUser } from '../Users/UserContext';
-import {usePet} from '../Pets/PetContext';
-import { useParams } from "react-router-dom";
+import { usePet } from '../Pets/PetContext';
 import { Typography, Button } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
@@ -23,9 +22,10 @@ const FormList: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { getFullname} = useUser();
-  const {getName} = usePet();
-  const {userId} = useParams();
+  const { getFullname } = useUser();
+  const { getName } = usePet();
+  const { userId } = useParams();
+
   const fetchForms = async () => {
     try {
       setLoading(true);
@@ -46,11 +46,9 @@ const FormList: React.FC = () => {
       const fosterPetData = await fosterPetResponse.json();
       const fosterParentData = await fosterParentResponse.json();
 
-      const allFormData = adoptionData.result.concat(fosterPetData.result, fosterParentData.result)
+      const allFormData = adoptionData.result.concat(fosterPetData.result, fosterParentData.result);
 
-      console.log("data");
-      console.log(allFormData);
-
+      console.log("data", allFormData);
       setForms(allFormData);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to fetch forms");
@@ -72,44 +70,50 @@ const FormList: React.FC = () => {
   return (
     <div id='content'>
       <Typography variant='h4'>Forms Submitted</Typography>
-      <Typography variant='body1'>This page displays all the forms you’ve submitted for pet adoption. You can review your past submissions and track the status of your applications. Any pending forms are currently being processed, and our team will reach out to you soon with updates.</Typography>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th><Typography>Form Type</Typography></th>
-              <th><Typography>Submitted By</Typography></th>
-              <th><Typography>Pet</Typography></th>
-              <th><Typography>Status</Typography></th>
-              <th><Typography>View</Typography></th>
-            </tr>
-          </thead>
-          <tbody>
-            {forms.length > 0 ? (
-              forms.map((form, index) => (
-                <tr key={`${form.form_type}-${form.adoption_form_id || form.foster_parent_form_id || form.foster_pet_form_id || index}`}>
-                  <td><Typography>{form.form_type}</Typography></td>
-                  <td><Typography>{getFullname(form.user_id)}</Typography></td>
-                  <td><Typography>{form.pet_id ? getName(form.pet_id):"--"}</Typography></td>
-                  <td><Typography>{form.processed ? "Processed" : "Needs To Be Process"}</Typography></td>
-                  <td><Typography>
-                  <Button onClick={()=>handleViewForm(form)}><VisibilityIcon sx={{ color: 'white'}}></VisibilityIcon></Button>
-                  </Typography></td>
-                </tr>
-              ))
-            ) : (
+      <Typography variant='body1'>
+        This page displays all the forms you’ve submitted for pet adoption. You can review your past submissions and track the status of your applications. Any pending forms are currently being processed, and our team will reach out to you soon with updates.
+      </Typography>
+      <div id="formlist_container">
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <table>
+            <thead>
               <tr>
-                <td colSpan={5}>No forms found</td>
+                <th><Typography><strong>Form Type</strong></Typography></th>
+                <th><Typography><strong>Submitted By</strong></Typography></th>
+                <th><Typography><strong>Pet</strong></Typography></th>
+                <th><Typography><strong>Status</strong></Typography></th>
+                <th><Typography><strong>View</strong></Typography></th>
               </tr>
-            )}
-          </tbody>
-        </table>
-      )}
-
+            </thead>
+            <tbody>
+              {forms.length > 0 ? (
+                forms.map((form, index) => (
+                  <tr key={`${form.form_type}-${form.adoption_form_id || form.foster_parent_form_id || form.foster_pet_form_id || index}`}>
+                    <td><Typography>{form.form_type}</Typography></td>
+                    <td><Typography>{getFullname(form.user_id)}</Typography></td>
+                    <td><Typography>{form.pet_id ? getName(form.pet_id) : "--"}</Typography></td>
+                    <td><Typography>{form.processed ? "Processed" : "Needs To Be Processed"}</Typography></td>
+                    <td>
+                      <Typography>
+                        <Button onClick={() => handleViewForm(form)}>
+                          <VisibilityIcon sx={{ color: 'white' }} />
+                        </Button>
+                      </Typography>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5}>No forms found</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        )}
+      </div>
       {error && <div style={{ color: 'red' }}>{error}</div>}
-    
     </div>
   );
 };
