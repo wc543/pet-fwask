@@ -55,7 +55,7 @@ export const ConversationPage = () => {
   };
 
   const handleNewMessage = (newMessage : Message) => {
-    setMessages((prevMessages) => [...prevMessages, newMessage]);fdsf
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
   };
 
   useEffect(() => {

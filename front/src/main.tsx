@@ -18,7 +18,7 @@ import Logout from './components/LoginSignUp/Logout.tsx';
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Users/Profile.tsx';
 import { ThemeProvider } from '@mui/material/styles';
-import { AuthContext, AuthProvider } from './components/AuthContext.tsx';
+import {  AuthProvider } from './components/AuthContext.tsx';
 import ViewAdoptionForm from './components/forms/ViewAdoptionForm.tsx';
 import OpenPet from './components/Pets/OpenPet.tsx';
 import EditPet from './components/Pets/EditPet.tsx';
@@ -68,7 +68,7 @@ let router = createBrowserRouter([
       {
         path: "/conversation-history",
         element: <ProtectedRoute />,
-        children: [{ path: "", element:  <ConversationHistory></ConversationHistory>}],
+        children: [{ path: "", element:  <PetProvider><ConversationHistory></ConversationHistory></PetProvider>}],
       },
       {
         path: "/conversation-history/conversation/:conversation_id",

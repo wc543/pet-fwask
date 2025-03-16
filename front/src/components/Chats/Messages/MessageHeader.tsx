@@ -69,7 +69,7 @@ export const MessageHeader = ( {conversation } : {conversation : Conversation}) 
                 {isOwner? 
                   `Chat with customer: ${getFullname(conversation.user_id)}`
                 :
-                `Chat with a staff member: ${getFullname(conversation.owner_id)}!` }
+                `Chat with a staff member: ${getFullname(conversation.owner_id)}` }
               </Typography>
             </div>
           </div>
