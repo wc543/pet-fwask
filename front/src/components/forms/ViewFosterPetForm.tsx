@@ -89,6 +89,20 @@ const ViewFosterPetForm: React.FC = () => {
           <Typography variant="h4" gutterBottom align="left">
             View Foster Pet Form for {getName(form.pet_id)}
           </Typography>
+
+            {/* Header row with status and action buttons */}
+            <Box className="viewHeader" display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+            <Typography variant="body1">
+              <strong>Status:</strong> {form.status}
+            </Typography>
+            {auth?.user.role === "STAFF" && !form.processed && (
+              <Box>
+                <Button variant="contained" onClick={handleApprove}>Approve</Button>
+                <Button variant="contained" onClick={handleDeny}>Deny</Button>
+              </Box>
+            )}
+          </Box>
+
           <Grid container spacing={2} alignItems="stretch">
             {/* Top Row: Personal Information */}
             <Grid item xs={12} md={6}>
@@ -136,9 +150,6 @@ const ViewFosterPetForm: React.FC = () => {
                 <CardHeader title="Foster Application Details" />
                 <CardContent>
                   <Typography variant="body1">
-                    <strong>Status:</strong> {form.status}
-                  </Typography>
-                  <Typography variant="body1">
                     <strong>Foster Reason:</strong> {form.foster_reason}
                   </Typography>
                   <Typography variant="body1">
@@ -157,12 +168,6 @@ const ViewFosterPetForm: React.FC = () => {
               </Card>
             </Grid>
           </Grid>
-          {auth?.user.role === "STAFF" && !form.processed && (
-            <Box className="actionButtons">
-              <Button variant="contained" onClick={handleApprove}>Approve</Button>
-              <Button variant="contained" onClick={handleDeny}>Deny</Button>
-            </Box>
-          )}
         </>
       ) : (
         <Typography variant="body1">Loading form details...</Typography>

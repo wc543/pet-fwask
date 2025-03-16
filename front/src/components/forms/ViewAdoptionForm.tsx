@@ -99,6 +99,20 @@ const ViewAdoptionForm: React.FC = () => {
           <Typography variant="h4" gutterBottom align="left">
             Adoption Form for {getName(form.pet_id)}
           </Typography>
+            
+            {/* Header row with status on left and action buttons on right */}
+            <Box className="viewHeader" display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+            <Typography variant="body1">
+              <strong>Status:</strong> {form.status}
+            </Typography>
+            {auth?.user.role === "STAFF" && !form.processed && (
+              <Box>
+                <Button variant="contained" onClick={handleApprove}>Approve</Button>
+                <Button variant="contained" onClick={handleDeny}>Deny</Button>
+              </Box>
+            )}
+          </Box>
+
           <Grid container spacing={2} alignItems="stretch">
             {/* Personal Information Section */}
             <Grid item xs={12} md={6}>
@@ -180,16 +194,7 @@ const ViewAdoptionForm: React.FC = () => {
               </Card>
             </Grid>
           </Grid>
-          {auth?.user.role === "STAFF" && !form.processed && (
-            <Box className="actionButtons">
-              <Button variant="contained" onClick={handleApprove}>
-                Approve
-              </Button>
-              <Button variant="contained" onClick={handleDeny}>
-                Deny
-              </Button>
-            </Box>
-          )}
+          
         </>
       ) : (
         <Typography variant="body1">Loading form details...</Typography>
