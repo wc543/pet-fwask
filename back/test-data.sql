@@ -37,7 +37,7 @@ INSERT INTO Pets (name, type, breed, size, gender, age, color, created_by_id, fo
 
 -- FosterHistory Table
 INSERT INTO FosterHistory (user_id, pet_id, start_date, end_date) VALUES
-(1, 1, '2025-02-01', '2025-03-20'),
+(1, 16, '2025-02-01', '2025-03-20'),
 (3, 3, '2025-02-10', '2025-03-29');
 
 -- AdoptionHistory Table

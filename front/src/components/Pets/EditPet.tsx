@@ -249,11 +249,11 @@ const EditPet: React.FC = () => {
                                     <img id="image" src={`../../../public/${imageEdit}`}/>
                                     <p>{imageEdit}</p>
                                 </div>
-                                <Button type="button" onClick={handleImageUploadClick}>Change Image</Button>
+                                <Button variant='contained' onClick={handleImageUploadClick}>Change Image</Button>
                                 <input ref={inputRef} type='file' hidden onChange={handleImageUpload} />
                             </div>
                             <div className='formcol' id='formcol3'>
-                                <Button sx={{ color: 'black' }} onClick={handleClickOpen}><DeleteOutlineIcon htmlColor='black'/>Delete Pet</Button>
+                                <Button variant='contained' sx={{ color: 'white' }} onClick={handleClickOpen}><DeleteOutlineIcon htmlColor='white'/>Delete Pet</Button>
                                 <Button variant='contained' type='submit' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Save Changes</Button>
                             </div>
                         </div>

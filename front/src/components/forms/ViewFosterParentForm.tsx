@@ -104,8 +104,8 @@ const ViewFosterParentForm: React.FC = () => {
             </Typography>
             {auth?.user.role === "STAFF" && !form.processed && (
               <Box>
-                <Button variant="contained" onClick={handleApprove}>Approve</Button>
-                <Button variant="contained" onClick={handleDeny}>Deny</Button>
+                <Button variant="contained" style={{ margin: '5px' }} onClick={handleApprove}>Approve</Button>
+                <Button variant="contained" style={{ margin: '5px' }} onClick={handleDeny}>Deny</Button>
               </Box>
             )}
           </Box>

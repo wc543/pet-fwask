@@ -107,8 +107,8 @@ const ViewAdoptionForm: React.FC = () => {
             </Typography>
             {auth?.user.role === "STAFF" && !form.processed && (
               <Box>
-                <Button variant="contained" onClick={handleApprove}>Approve</Button>
-                <Button variant="contained" onClick={handleDeny}>Deny</Button>
+                <Button variant="contained" onClick={handleApprove}  style={{ margin: '5px' }}>Approve</Button>
+                <Button variant="contained" onClick={handleDeny} style={{ margin: '5px' }}>Deny</Button>
               </Box>
             )}
           </Box>

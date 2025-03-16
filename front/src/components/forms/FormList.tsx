@@ -95,7 +95,7 @@ const FormList: React.FC = () => {
                   <td><Typography>{form.pet_id ? getName(form.pet_id):"--"}</Typography></td>
                   <td><Typography>{form.processed ? "Processed" : "Needs To Be Process"}</Typography></td>
                   <td><Typography>
-                  <Button onClick={()=>handleViewForm(form)}><VisibilityIcon sx={{ color: 'black'}}></VisibilityIcon></Button>
+                  <Button onClick={()=>handleViewForm(form)}><VisibilityIcon sx={{ color: 'white'}}></VisibilityIcon></Button>
                   </Typography></td>
                 </tr>
               ))

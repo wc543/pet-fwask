@@ -74,7 +74,7 @@ const OpenPet: React.FC = () => {
                             </div>
                             <div id="employee_buttons">
                                 {(role === 'STAFF' && user_id === selectedPet.created_by_id) ? (
-                                    <Button onClick={() => navigate(`/pets/edit/${selectedPet.pet_id}`)}><EditIcon htmlColor='black'/></Button>
+                                    <Button onClick={() => navigate(`/pets/edit/${selectedPet.pet_id}`)}><EditIcon htmlColor='white'/></Button>
                                 ): (<></>)}
                             </div>
                         </div>
