@@ -57,7 +57,7 @@ INSERT INTO FosterParentForms (user_id, foster_reason, pet_care_agreement, adopt
 
 -- FosterPetForms Table
 INSERT INTO FosterPetForms (user_id, pet_id, foster_start_date, foster_end_date, previous_foster_experience, foster_reason, max_alone_time, processed, status) VALUES
-(1, 2, '2024-12-01', '2026-01-01', 'Fostered 2 dogs before', 'Want to provide a temporary home', '8 hours', TRUE, 'NEEDS PROCESSING'),
+(1, 2, '2024-12-01', '2026-01-01', 'Fostered 2 dogs before', 'Want to provide a temporary home', '8 hours', TRUE, 'DENIED'),
 (5, 3,'2024-10-01', NULL, 'No experience yet', 'Looking to help foster', '6 hours', FALSE, 'NEEDS PROCESSING'); 
 
 -- Conversations Table
@@ -72,10 +72,7 @@ INSERT INTO Conversations (user_id, owner_id) VALUES
 
 -- Messages Table
 INSERT INTO Messages (sender_id, conversation_id, message, read) VALUES
-(7, 1,  'Hello, I am interested in adopting Max.', TRUE),
-(2, 1, 'Hey, Max has been adopted! Sorry!', TRUE),
-(7, 1, 'Thank you anyways!', TRUE),
 (7, 4,  'Hey, I have a question about vaccines', TRUE),
-(4, 4, 'Hey, what up? Have you adopted a dog here before', TRUE),
-(7, 4, 'Thank you anyways!', FALSE),
-(6, 2,  'Hello! I am interested in adopting Max.', TRUE);
+(4, 4, 'Happy to help! What is your question?', TRUE),
+(7, 4, 'Are all adoptable dogs up to date on their vaccines?', FALSE),
+(4, 4, 'Yes they are, we give each animal updated vaccines on intake.', TRUE);
