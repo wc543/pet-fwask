@@ -2,7 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 import { useContext } from "react";
-import ModeCommentIcon from '@mui/icons-material/ModeComment';
+import MessageIcon from '@mui/icons-material/Message';
 import Button from "@mui/material/Button";
 import ProtectedLink from '../ProtectedLink';
 
@@ -43,14 +43,17 @@ export const StartConversationButton = ({ pet_id, employee_id }: {pet_id : numbe
                 message="In order to ask about this pet, you must login."
                 variant='contained'
                 className='actionButton'
-                style={{ marginLeft: '5%'}}>
-            <ModeCommentIcon htmlColor='white' style={{ padding: '5px' }}/> Ask About Me!
+                style={{ marginLeft: '5%', gap: '2px'}}>
+                <MessageIcon sx={{color:"white"}} fontSize="medium"></MessageIcon>
+                <b>Ask About Me!</b>
             </Button>
         );
     } else {
         return (
             <>
-                <Button variant='contained' className='actionButton' style={{ marginLeft: '5%' }} onClick={handleStartClick}> <ModeCommentIcon htmlColor='white' style={{ padding: '5px' }}/> Ask About Me!</Button>
+                <Button variant='contained' className='actionButton' style={{ marginLeft: '5%', gap: '2px'}} onClick={handleStartClick}> <MessageIcon sx={{color:"white"}} fontSize="medium"></MessageIcon>
+                    <b>Ask About Me!</b>
+                </Button>
             </>
         )
     }
