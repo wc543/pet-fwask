@@ -105,7 +105,7 @@ const OpenPet: React.FC = () => {
                                         <Button 
                                         variant='contained' 
                                         className='actionButton' 
-                                        style={{ marginLeft: '5%', color: 'black' }}
+                                        style={{ marginLeft: '5%'}}
                                         onClick={() => navigate(`/forms/submitFosterPetForm/${selectedPet.pet_id}`)}>
                                             <b>Apply to Foster</b>
                                         </Button>
@@ -116,7 +116,7 @@ const OpenPet: React.FC = () => {
                                         message="In order to apply to adopt, you must login."
                                         variant="contained"
                                         className='actionButton'
-                                        style={{ marginLeft: '5%', color: 'black' }}>
+                                        style={{ marginLeft: '5%' }}>
                                         <b>Apply to Adopt</b>
                                     </Button>
                                     </>

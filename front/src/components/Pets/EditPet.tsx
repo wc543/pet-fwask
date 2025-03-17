@@ -254,7 +254,7 @@ const EditPet: React.FC = () => {
                             </div>
                             <div className='formcol' id='formcol3'>
                                 <Button variant='contained' sx={{ color: 'white' }} onClick={handleClickOpen}><DeleteOutlineIcon htmlColor='white'/>Delete Pet</Button>
-                                <Button variant='contained' type='submit' style={{ marginLeft: '5%', backgroundColor: 'black' }}>Save Changes</Button>
+                                <Button variant='contained' type='submit' style={{ marginLeft: '5%' }}>Save Changes</Button>
                             </div>
                         </div>
                     </FormControl>

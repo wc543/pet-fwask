@@ -29,24 +29,23 @@ export const MessageHeader = ( {conversation } : {conversation : Conversation}) 
 
     if (conversation.pet_id){
         return (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#f3d58b', padding: '5px', boxShadow: "0px 5px 5px #cfd6dc;"}}>
+          <div style={{ display: 'flex', alignItems: 'center', backgroundColor: '#f3d58b', padding: '10px', boxShadow: "0px 5px 5px #cfd6dc", position: 'relative', flexGrow: '1'}}>
               <IconButton
                 style={{
-                  left: '2px',
-                  top: '2px'
+                  position: 'absolute'
                 }}
                 onClick={() => handleBackClick()}
                 >
-                <CloseIcon style={{ color: 'black' }} />
+                <CloseIcon style={{ color: 'black'}} />
               </IconButton>
-              <div style={{ textAlign: 'center', width: '100%' }}>
+              <div style={{ flex: '1', textAlign: 'center', width: '100%', flexDirection: 'column', alignItems: 'center', display: 'flex' }}>
                 <img src={ (getImageUrl(conversation.pet_id)) ? (`/${getImageUrl(conversation.pet_id)}`) : ('/no_image.png')} alt={getName(conversation.pet_id)} style={{ width: '100px', height: '100px', borderRadius: '50%', objectFit: 'cover' }} />
                 <Typography  variant="h6" style={{ margin: '5px 0', fontSize: '1.5rem' }}>Getting to Know <b>{getName(conversation.pet_id)}</b>!</Typography>
               </div>
               { (getRole(current_user) !== "STAFF") ?
-              <div style={{ display: 'block', alignItems: 'center', columnGap: '10px' }}>
-                <Button onClick={() => navigate(`/forms/submitAdoptionForm/${conversation.pet_id}`)} variant="contained" style={{ backgroundColor: '#f38c52', color: 'black', fontWeight: 'bold' }}>Adopt Me Today!</Button>
-                { getFosterable(conversation.pet_id) && (getRole(conversation.user_id) === "FOSTER")? <Button onClick={() => navigate(`/forms/submitFosterPetForm/${conversation.pet_id}`)} variant="contained" style={{ backgroundColor: '#f38c52', color: 'black', fontWeight: 'bold' }}>Foster Me Today!</Button> :<></>}
+              <div style={{ display: 'flex', alignItems: 'flex-end', flexDirection: 'column', gap: '10px', marginRight: '2%', position: 'absolute', right: '10px'}}>
+                <Button onClick={() => navigate(`/forms/submitAdoptionForm/${conversation.pet_id}`)} variant="contained" style={{ backgroundColor: '#ED8844', color: 'white', fontWeight: 'bold', width:'180px' }}>Adopt Me Today!</Button>
+                { getFosterable(conversation.pet_id) && (getRole(conversation.user_id) === "FOSTER")? <Button onClick={() => navigate(`/forms/submitFosterPetForm/${conversation.pet_id}`)} variant="contained" style={{ backgroundColor: '#ED8844', color: 'white', fontWeight: 'bold', width:'180px' }}>Foster Me Today!</Button> :<></>}
               </div>
               :<></>}
           </div>

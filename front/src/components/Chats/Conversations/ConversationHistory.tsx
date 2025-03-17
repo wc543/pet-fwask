@@ -54,14 +54,14 @@ export const ConversationHistory: React.FC = () => {
                 <Typography variant="subtitle1">It looks like you haven't started a conversation yet. If you're ready to learn more about one of our amazing pets or have any questions about the adoption process, just click on the pet you're interested in and start a conversation! We're here to help you find your new furry friend. 🐶🐱</Typography>
               </div>  
             :
-              <div className={'convoHistory'} style={{ gap: '2px'}}>
+              <div className={'convoHistory'} style={{ gap: '1px'}}>
                 {(conversations.map((conversation) => (
-                  <Card key={conversation.conversation_id} onClick = {() => handleJoinConversation(conversation.conversation_id)} style={{margin: '3%', backgroundColor: '#cfd6dc'}}>
+                  <Card key={conversation.conversation_id} onClick = {() => handleJoinConversation(conversation.conversation_id)} style={{margin: '1%', backgroundColor: '#cfd6dc'}}>
                     <CardContent>
                       <Grid container spacing={2} alignItems={'center'}>
                         <Grid item xs={8}>
-                          <Typography variant="h6"><b>{(conversation.user_id === user_id)? getFullname(conversation.owner_id) : getFullname(conversation.user_id) }</b>,  {(conversation.user_id === user_id)? getRole(conversation.owner_id) : getFullname(conversation.user_id) }</Typography> 
-                          <Typography variant="body1">{(conversation.pet_id? "Pet Inquiry for: " + getName(conversation.pet_id) : "General Question about Adopting/Fostering")}</Typography>
+                          <Typography variant="h6"><b>{(conversation.user_id === user_id)? getFullname(conversation.owner_id) : getFullname(conversation.user_id) }</b>,  {(conversation.user_id === user_id)? getRole(conversation.owner_id) : getRole(conversation.user_id) }</Typography> 
+                          <Typography variant="body1">{(conversation.pet_id? "Pet Inquiry for " + getName(conversation.pet_id) : "General Question about Adopting/Fostering")}</Typography>
                         </Grid>
                         {conversation.pet_id?                         
                           <Grid item xs={4} container justifyContent={'flex-end'}>
